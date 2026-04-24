@@ -1,0 +1,208 @@
+.container {
+  padding: 18px 16px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 18px;
+  letter-spacing: 0.04em;
+}
+
+.newFileButton {
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(63, 185, 80, 0.9);
+  background: rgba(63, 185, 80, 0.16);
+  color: rgba(238, 255, 242, 0.95);
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.newFileButton:hover {
+  background: rgba(63, 185, 80, 0.26);
+}
+
+.storageBar {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.storageLabel {
+  font-size: 11px;
+  color: rgba(203, 213, 225, 0.6);
+  letter-spacing: 0.08em;
+}
+
+.storageValue {
+  font-size: 13px;
+  color: rgba(203, 213, 225, 0.75);
+}
+
+.progressTrack {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, rgba(88, 166, 255, 0.9), rgba(63, 185, 80, 0.9));
+  border-radius: 999px;
+}
+
+.treeContainer {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.node {
+  margin-top: 10px;
+}
+
+.nodeLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.folderToggle {
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: transparent;
+  color: rgba(203, 213, 225, 0.6);
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nodeButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: none;
+  background: rgba(15, 23, 42, 0.4);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  color: rgba(203, 213, 225, 0.85);
+  cursor: pointer;
+  text-align: left;
+  gap: 10px;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.nodeButton:hover {
+  background: rgba(88, 166, 255, 0.12);
+  transform: translateY(-1px);
+}
+
+.selected {
+  border: 1px solid rgba(88, 166, 255, 0.55);
+  background: rgba(88, 166, 255, 0.12);
+}
+
+.nodeIcon {
+  font-size: 18px;
+  width: 28px;
+}
+
+.nodeName {
+  flex: 1;
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.badge {
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.badgeGreen {
+  background: rgba(63, 185, 80, 0.2);
+  color: rgba(63, 185, 80, 0.95);
+}
+
+.badgeYellow {
+  background: rgba(88, 166, 255, 0.2);
+  color: rgba(88, 166, 255, 0.95);
+}
+
+.badgeBlue {
+  background: rgba(210, 168, 255, 0.25);
+  color: rgba(210, 168, 255, 0.9);
+}
+
+.badgeCoral {
+  background: rgba(247, 129, 102, 0.25);
+  color: rgba(247, 129, 102, 0.9);
+}
+
+.badgePurple {
+  background: rgba(192, 132, 252, 0.22);
+  color: rgba(192, 132, 252, 0.9);
+}
+
+.badgeGray {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(203, 213, 225, 0.75);
+}
+
+.children {
+  padding-left: 14px;
+  border-left: 1px solid rgba(255, 255, 255, 0.05);
+  margin-top: 6px;
+}
+
+.createRow {
+  display: flex;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.input {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(15, 23, 42, 0.8);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  outline: none;
+  text-align: center;
+}
+
+.select {
+  width: 94px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(15, 23, 42, 0.8);
+  color: var(--text);
+  padding: 10px 8px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+}

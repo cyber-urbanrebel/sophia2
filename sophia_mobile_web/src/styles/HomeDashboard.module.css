@@ -1,0 +1,385 @@
+/* HomeDashboard.module.css */
+
+.dashboardContainer {
+  padding: 20px;
+  padding-bottom: 100px;
+  max-width: 600px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  color: white;
+}
+
+.header {
+  margin-bottom: 30px;
+}
+
+.header h1 {
+  margin: 0 0 20px 0;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.levelInfo {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.levelBadge {
+  background: linear-gradient(45deg, #ffd700, #ff8c00);
+  color: #333;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 15px;
+}
+
+.xpProgress {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.xpBar {
+  flex: 1;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.xpFill {
+  height: 100%;
+  background: linear-gradient(90deg, #4ecdc4, #44a08d);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.xpText {
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+/* Score Card */
+.scoreCard {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 25px;
+  border-radius: 20px;
+  margin-bottom: 30px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.scoreHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.scoreHeader h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.scoreValue {
+  font-size: 48px;
+  font-weight: bold;
+  background: linear-gradient(45deg, #ffd700, #ff8c00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.scoreBreakdown {
+  display: flex;
+  justify-content: space-around;
+}
+
+.scoreItem {
+  text-align: center;
+}
+
+.scoreLabel {
+  display: block;
+  font-size: 12px;
+  opacity: 0.8;
+  margin-bottom: 10px;
+}
+
+.progressRing {
+  display: block;
+  margin: 0 auto;
+}
+
+.progressText {
+  font-size: 12px;
+  font-weight: bold;
+  fill: white;
+}
+
+/* Quick Actions */
+.quickActions {
+  margin-bottom: 30px;
+}
+
+.quickActions h3 {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.actionGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.actionButton {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+}
+
+.actionButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.actionIcon {
+  font-size: 24px;
+}
+
+.actionLabel {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Weekly Overview */
+.weeklyOverview {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 25px;
+  border-radius: 20px;
+  margin-bottom: 30px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.sectionHeader h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.periodSelect {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  color: white;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+.periodSelect:focus {
+  outline: none;
+  border-color: #4ecdc4;
+}
+
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.metricCard {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.2s ease;
+}
+
+.metricCard:hover {
+  transform: translateY(-2px);
+}
+
+.metricIcon {
+  font-size: 24px;
+  width: 40px;
+  text-align: center;
+}
+
+.metricInfo {
+  flex: 1;
+}
+
+.metricValue {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+.metricLabel {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+/* Weekly Chart */
+.weeklyChart {
+  margin-top: 30px;
+}
+
+.weeklyChart h4 {
+  margin: 0 0 20px 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.chartContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  height: 120px;
+  padding: 20px 0;
+}
+
+.chartBar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  max-width: 40px;
+}
+
+.barContainer {
+  width: 100%;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px 4px 0 0;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.barFill {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(180deg, #4ecdc4, #44a08d);
+  border-radius: 4px 4px 0 0;
+  transition: height 0.3s ease;
+}
+
+.barLabel {
+  font-size: 12px;
+  opacity: 0.8;
+  text-align: center;
+}
+
+/* Recent Achievements */
+.recentAchievements {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 25px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.recentAchievements h3 {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.activityList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.activityItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.activityDate {
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.activityStats {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+/* Mobile optimizations */
+@media (max-width: 480px) {
+  .dashboardContainer {
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 24px;
+  }
+
+  .scoreValue {
+    font-size: 36px;
+  }
+
+  .actionGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .metricsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .scoreBreakdown {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .chartContainer {
+    height: 100px;
+  }
+
+  .barContainer {
+    height: 60px;
+  }
+}

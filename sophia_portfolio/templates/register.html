@@ -1,0 +1,16 @@
+﻿{% extends "base.html" %}
+{% block title %}Register | Sophia{% endblock %}
+{% block content %}
+<h1>Register</h1>
+<form method="post">{% csrf_token %}
+  {{ form.non_field_errors }}
+  <label>Username</label> {{ form.username }} <div class="field-errors">{{ form.username.errors }}</div>
+  <label>Email</label> {{ form.email }} <div class="field-errors">{{ form.email.errors }}</div>
+  <label>First name</label> {{ form.first_name }}
+  <label>Last name</label> {{ form.last_name }}
+  <label>Password</label> {{ form.password1 }} <div class="field-errors">{{ form.password1.errors }}</div>
+  <label>Password again</label> {{ form.password2 }} <div class="field-errors">{{ form.password2.errors }}</div>
+  <button type="submit" class="btn btn-primary">Create account</button>
+</form>
+<p>Already have an account? <a href="{% url 'login' %}">Log in</a></p>
+{% endblock %}

@@ -1,0 +1,8 @@
+﻿{% extends "base.html" %}
+{% block title %}Home | Sophia{% endblock %}
+{% block content %}
+<h1>Welcome to Sophia Platform</h1>
+<p>This is your self-development dashboard application.</p>
+<p>{% if user.is_authenticated %}Hi {{ user.username }}, you are logged in!{% else %}Please <a href="{% url 'login' %}">log in</a> or <a href="{% url 'register' %}">register</a>.{% endif %}</p>
+{% endblock %}
+

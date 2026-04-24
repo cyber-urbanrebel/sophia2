@@ -1,0 +1,28 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../sophia_mobile_web"
+		},
+		{
+			"path": "../node_modules"
+		},
+		{
+			"path": "../mpesa-test"
+		},
+		{
+			"path": "../Documents"
+		},
+		{
+			"path": "../backend"
+		},
+		{
+			"path": "../api"
+		},
+		{
+			"path": "../.vscode"
+		}
+	]
+}

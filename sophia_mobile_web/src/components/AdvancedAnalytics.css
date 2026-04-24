@@ -1,0 +1,467 @@
+/* AdvancedAnalytics.css - Cyberpunk Dark Theme */
+
+.advanced-analytics {
+  padding: 20px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #000000 100%);
+  color: #ffffff;
+  font-family: 'Courier New', monospace;
+}
+
+.analytics-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.analytics-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #00FFFF;
+  text-shadow: 0 0 20px #00FFFF, 0 0 40px #00FFFF;
+  margin: 0;
+  letter-spacing: 2px;
+}
+
+.analytics-subtitle {
+  font-size: 1rem;
+  color: #00FFFF;
+  opacity: 0.8;
+  margin: 10px 0 0 0;
+}
+
+/* Analytics Cards */
+.analytics-card {
+  background: rgba(0, 255, 255, 0.08);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.analytics-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 40px rgba(0, 255, 255, 0.2);
+  border-color: rgba(0, 255, 255, 0.4);
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #00FFFF;
+  margin: 0 0 15px 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.card-subtitle {
+  font-size: 0.9rem;
+  color: #00FFFF;
+  opacity: 0.7;
+  margin-bottom: 15px;
+}
+
+/* Score Card */
+.score-card {
+  text-align: center;
+}
+
+.score-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.score-ring {
+  filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.5));
+}
+
+.score-number {
+  font-size: 2.5rem;
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+}
+
+.score-label {
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.score-breakdown {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.score-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 255, 255, 0.1);
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 255, 255, 0.2);
+}
+
+.score-label {
+  font-size: 0.85rem;
+  color: #00FFFF;
+  opacity: 0.8;
+}
+
+.score-value {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+/* Trends Card */
+.trends-card {
+  background: rgba(255, 0, 255, 0.08);
+  border-color: rgba(255, 0, 255, 0.2);
+}
+
+.trends-card:hover {
+  box-shadow: 0 15px 40px rgba(255, 0, 255, 0.2);
+  border-color: rgba(255, 0, 255, 0.4);
+}
+
+.trends-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 15px;
+}
+
+.trend-item {
+  background: rgba(255, 0, 255, 0.1);
+  border: 1px solid rgba(255, 0, 255, 0.2);
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.trend-item:hover {
+  background: rgba(255, 0, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.trend-icon {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.trend-data {
+  margin-bottom: 8px;
+}
+
+.trend-value {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #FF00FF;
+  display: block;
+}
+
+.trend-change {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  margin-top: 4px;
+}
+
+.trend-arrow {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.trend-arrow.up {
+  color: #00FF88;
+}
+
+.trend-arrow.down {
+  color: #FF4444;
+}
+
+.trend-arrow.neutral {
+  color: #FFFF00;
+}
+
+.trend-label {
+  font-size: 0.8rem;
+  color: #FF00FF;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Calendar Card */
+.calendar-card {
+  background: rgba(0, 255, 88, 0.08);
+  border-color: rgba(0, 255, 88, 0.2);
+}
+
+.calendar-card:hover {
+  box-shadow: 0 15px 40px rgba(0, 255, 88, 0.2);
+  border-color: rgba(0, 255, 88, 0.4);
+}
+
+.streak-calendar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(13, 1fr);
+  gap: 2px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.calendar-week {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.calendar-day {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  transition: all 0.2s ease;
+}
+
+.calendar-day:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+}
+
+.calendar-legend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: #00FFFF;
+  opacity: 0.8;
+}
+
+.legend-colors {
+  display: flex;
+  gap: 2px;
+}
+
+.legend-colors div {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+/* Goals Card */
+.goals-card {
+  background: rgba(255, 255, 0, 0.08);
+  border-color: rgba(255, 255, 0, 0.2);
+}
+
+.goals-card:hover {
+  box-shadow: 0 15px 40px rgba(255, 255, 0, 0.2);
+  border-color: rgba(255, 255, 0, 0.4);
+}
+
+.goal-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.goal-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.goal-label {
+  font-size: 0.9rem;
+  color: #FFFF00;
+  font-weight: bold;
+}
+
+.goal-bar-container {
+  position: relative;
+  height: 24px;
+  background: rgba(255, 255, 0, 0.1);
+  border: 1px solid rgba(255, 255, 0, 0.3);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.goal-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, rgba(255, 255, 0, 0.8), rgba(255, 255, 0, 0.6));
+  transition: width 0.5s ease;
+  border-radius: 12px;
+}
+
+.goal-percentage {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #000000;
+}
+
+/* Time Breakdown Card */
+.time-card {
+  background: rgba(255, 0, 0, 0.08);
+  border-color: rgba(255, 0, 0, 0.2);
+}
+
+.time-card:hover {
+  box-shadow: 0 15px 40px rgba(255, 0, 0, 0.2);
+  border-color: rgba(255, 0, 0, 0.4);
+}
+
+.time-breakdown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.pie-chart {
+  width: 200px;
+  height: 200px;
+  filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0.3));
+}
+
+.pie-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.legend-text {
+  font-size: 0.85rem;
+  color: #FF4444;
+}
+
+/* Personal Bests Card */
+.bests-card {
+  background: rgba(0, 0, 255, 0.08);
+  border-color: rgba(0, 0, 255, 0.2);
+}
+
+.bests-card:hover {
+  box-shadow: 0 15px 40px rgba(0, 0, 255, 0.2);
+  border-color: rgba(0, 0, 255, 0.4);
+}
+
+.bests-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.best-item {
+  background: rgba(0, 0, 255, 0.1);
+  border: 1px solid rgba(0, 0, 255, 0.2);
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.best-item:hover {
+  background: rgba(0, 0, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.best-icon {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.best-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #4444FF;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.best-label {
+  font-size: 0.8rem;
+  color: #4444FF;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* No Data State */
+.no-data {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  padding: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .analytics-title {
+    font-size: 2rem;
+  }
+
+  .score-breakdown {
+    grid-template-columns: 1fr;
+  }
+
+  .trends-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bests-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .calendar-grid {
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  .pie-legend {
+    align-items: center;
+  }
+
+  .legend-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 5px;
+  }
+}

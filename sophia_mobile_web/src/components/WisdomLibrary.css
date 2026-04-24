@@ -1,0 +1,486 @@
+/* WisdomLibrary.css - Cyberpunk Dark Theme */
+
+.wisdom-library {
+  padding: 20px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #000000 100%);
+  color: #ffffff;
+  font-family: 'Courier New', monospace;
+}
+
+/* Header */
+.wisdom-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.wisdom-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #00FFFF;
+  text-shadow: 0 0 20px #00FFFF, 0 0 40px #00FFFF;
+  margin: 0;
+  letter-spacing: 2px;
+}
+
+.wisdom-subtitle {
+  font-size: 1rem;
+  color: #00FFFF;
+  opacity: 0.8;
+  margin: 10px 0 0 0;
+}
+
+/* Daily Wisdom Card */
+.daily-wisdom-card {
+  background: rgba(0, 255, 255, 0.1);
+  border: 1px solid #00FFFF;
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 30px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 255, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.daily-wisdom-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #00FFFF, transparent);
+}
+
+.daily-badge {
+  background: #00FFFF;
+  color: #000000;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  display: inline-block;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.daily-quote {
+  font-size: 1.4rem;
+  font-style: italic;
+  color: #ffffff;
+  margin: 0 0 15px 0;
+  line-height: 1.6;
+  position: relative;
+}
+
+.daily-author {
+  font-size: 1rem;
+  color: #00FFFF;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.daily-category {
+  font-size: 0.9rem;
+  color: #00FFFF;
+  opacity: 0.7;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Tabs */
+.wisdom-tabs {
+  display: flex;
+  margin-bottom: 20px;
+  background: rgba(0, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 5px;
+  border: 1px solid rgba(0, 255, 255, 0.3);
+}
+
+.tab-button {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #00FFFF;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.tab-button.active {
+  background: #00FFFF;
+  color: #000000;
+  box-shadow: 0 4px 15px rgba(0, 255, 255, 0.4);
+}
+
+.tab-button:hover:not(.active) {
+  background: rgba(0, 255, 255, 0.2);
+}
+
+/* Search */
+.search-container {
+  margin-bottom: 20px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 15px;
+  background: rgba(0, 255, 255, 0.1);
+  border: 1px solid #00FFFF;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 1rem;
+  outline: none;
+  backdrop-filter: blur(10px);
+  text-align: center;
+}
+
+.search-input::placeholder {
+  color: rgba(0, 255, 255, 0.6);
+}
+
+.search-input:focus {
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+}
+
+/* Category Filters */
+.category-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.category-button {
+  background: rgba(0, 255, 255, 0.1);
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  color: #00FFFF;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.category-button:hover {
+  background: rgba(0, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.category-button.active {
+  background: #00FFFF;
+  color: #000000;
+  box-shadow: 0 4px 15px rgba(0, 255, 255, 0.4);
+}
+
+/* Wisdom Grid */
+.wisdom-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+/* Wisdom Cards */
+.wisdom-card {
+  background: rgba(0, 255, 255, 0.08);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  border-radius: 15px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.wisdom-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 255, 255, 0.2);
+  border-color: rgba(0, 255, 255, 0.4);
+}
+
+.wisdom-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #00FFFF, transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.wisdom-card:hover::before {
+  opacity: 1;
+}
+
+.card-category {
+  background: #00FFFF;
+  color: #000000;
+  padding: 4px 12px;
+  border-radius: 15px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  display: inline-block;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.card-quote {
+  font-size: 1.1rem;
+  font-style: italic;
+  color: #ffffff;
+  margin: 0 0 15px 0;
+  line-height: 1.6;
+  position: relative;
+}
+
+.card-author {
+  font-size: 0.9rem;
+  color: #00FFFF;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.card-source {
+  opacity: 0.8;
+  font-weight: normal;
+}
+
+.card-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.favourite-button, .reflect-button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: none;
+}
+
+.favourite-button {
+  background: rgba(0, 255, 255, 0.2);
+  color: #00FFFF;
+  border: 1px solid #00FFFF;
+}
+
+.favourite-button:hover {
+  background: rgba(0, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.favourite-button.favourited {
+  background: #00FFFF;
+  color: #000000;
+  box-shadow: 0 4px 15px rgba(0, 255, 255, 0.4);
+}
+
+.reflect-button {
+  background: rgba(255, 0, 255, 0.2);
+  color: #FF00FF;
+  border: 1px solid #FF00FF;
+}
+
+.reflect-button:hover {
+  background: rgba(255, 0, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 0, 255, 0.4);
+}
+
+/* Reflection Modal */
+.reflection-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.reflection-modal {
+  background: rgba(0, 0, 0, 0.95);
+  border: 1px solid #00FFFF;
+  border-radius: 15px;
+  padding: 25px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 20px 60px rgba(0, 255, 255, 0.3);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-header h3 {
+  color: #00FFFF;
+  margin: 0;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: #00FFFF;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.3s ease;
+}
+
+.modal-close:hover {
+  background: rgba(0, 255, 255, 0.2);
+}
+
+.modal-quote {
+  margin-bottom: 20px;
+  padding: 15px;
+  background: rgba(0, 255, 255, 0.1);
+  border-radius: 10px;
+  border-left: 3px solid #00FFFF;
+}
+
+.modal-quote blockquote {
+  margin: 0 0 10px 0;
+  font-size: 1.1rem;
+  color: #ffffff;
+  font-style: italic;
+}
+
+.modal-author {
+  font-size: 0.9rem;
+  color: #00FFFF;
+  font-weight: bold;
+}
+
+.reflection-textarea {
+  width: 100%;
+  min-height: 120px;
+  background: rgba(0, 255, 255, 0.1);
+  border: 1px solid #00FFFF;
+  border-radius: 10px;
+  color: #ffffff;
+  padding: 15px;
+  font-family: inherit;
+  font-size: 1rem;
+  resize: vertical;
+  outline: none;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.reflection-textarea::placeholder {
+  color: rgba(0, 255, 255, 0.6);
+}
+
+.reflection-textarea:focus {
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+.modal-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
+}
+
+.modal-cancel, .modal-save {
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: none;
+}
+
+.modal-cancel {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.modal-cancel:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.modal-save {
+  background: #00FFFF;
+  color: #000000;
+}
+
+.modal-save:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 255, 255, 0.4);
+}
+
+.modal-save:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .wisdom-title {
+    font-size: 2rem;
+  }
+
+  .wisdom-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .category-filters {
+    justify-content: center;
+  }
+
+  .wisdom-tabs {
+    flex-direction: column;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+  }
+
+  .card-actions {
+    flex-direction: column;
+  }
+}

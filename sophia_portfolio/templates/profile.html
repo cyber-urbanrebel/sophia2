@@ -1,0 +1,11 @@
+﻿{% extends "base.html" %}
+{% block title %}Profile | Sophia{% endblock %}
+{% block content %}
+<h1>Profile</h1>
+<form method="post">{% csrf_token %}
+  {{ form.non_field_errors }}
+  <label>Bio</label> {{ form.bio }}
+  <label>Timezone</label> {{ form.timezone }}
+  <button type="submit" class="btn btn-primary">Save</button>
+</form>
+{% endblock %}

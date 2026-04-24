@@ -1,0 +1,316 @@
+/* ═══════════════════════════════════════════════════════════
+   ANIMATIONS.CSS — All Keyframes & Transitions
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── CORE KEYFRAMES ── */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+@keyframes fadeSlideUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeSlideDown { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeSlideRight { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+@keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes slideOutRight { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
+
+/* ── SPIN ── */
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+
+/* ── PULSE ── */
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+@keyframes pulse-badge { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.2); } }
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(196,169,98,0.15); }
+  50% { box-shadow: 0 0 40px rgba(196,169,98,0.3); }
+}
+
+/* ── ORB (Dashboard 3D CSS) ── */
+@keyframes orb-rotate {
+  0% { transform: rotateX(20deg) rotateY(0deg); }
+  100% { transform: rotateX(20deg) rotateY(360deg); }
+}
+@keyframes orb-pulse {
+  0%, 100% { box-shadow: 0 0 60px rgba(196,169,98,0.2), inset 0 0 40px rgba(196,169,98,0.1); }
+  50% { box-shadow: 0 0 80px rgba(196,169,98,0.35), inset 0 0 60px rgba(196,169,98,0.2); }
+}
+
+.orb-container {
+  perspective: 800px;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 24px;
+}
+
+.orb {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(196,169,98,0.3), transparent 60%),
+              radial-gradient(circle at 70% 70%, rgba(0,206,209,0.2), transparent 50%),
+              radial-gradient(circle at 50% 50%, var(--bg-elevated), var(--bg-surface));
+  animation: orb-rotate 20s linear infinite, orb-pulse 4s ease-in-out infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.orb-score {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--gold);
+  font-family: var(--font-sans);
+  z-index: 2;
+}
+
+.orb::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid rgba(196,169,98,0.15);
+  animation: spin-slow 30s linear infinite;
+}
+
+/* ── SVG ICON ANIMATIONS ── */
+
+/* Flame flicker (streak) */
+@keyframes flame-flicker {
+  0%, 100% { transform: scaleY(1) scaleX(1); opacity: 1; }
+  25% { transform: scaleY(1.05) scaleX(0.97); opacity: 0.9; }
+  50% { transform: scaleY(0.95) scaleX(1.03); opacity: 1; }
+  75% { transform: scaleY(1.03) scaleX(0.98); opacity: 0.95; }
+}
+.svg-flame { animation: flame-flicker 1.5s ease-in-out infinite; transform-origin: bottom center; }
+
+/* Checkmark draw */
+@keyframes draw-check {
+  from { stroke-dashoffset: 24; }
+  to { stroke-dashoffset: 0; }
+}
+.svg-check-animated {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  animation: draw-check 0.4s ease 0.1s forwards;
+}
+
+/* Ripple (meditation) */
+@keyframes ripple-expand {
+  0% { r: 4; opacity: 0.8; }
+  100% { r: 20; opacity: 0; }
+}
+
+/* Dumbbell bounce (workout) */
+@keyframes dumbbell-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+.svg-dumbbell { animation: dumbbell-bounce 1.2s ease-in-out infinite; }
+
+/* Quill writing motion */
+@keyframes quill-write {
+  0%, 100% { transform: translateX(0) rotate(0); }
+  25% { transform: translateX(2px) rotate(-2deg); }
+  75% { transform: translateX(-1px) rotate(1deg); }
+}
+.svg-quill { animation: quill-write 2s ease-in-out infinite; }
+
+/* Brain pulse */
+@keyframes brain-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+.svg-brain-highlight { animation: brain-pulse 2s ease-in-out infinite; }
+
+/* Seedling grow */
+@keyframes seedling-grow {
+  0% { transform: scaleY(0.6); opacity: 0.5; }
+  100% { transform: scaleY(1); opacity: 1; }
+}
+.svg-seedling { animation: seedling-grow 1.5s ease-out forwards; transform-origin: bottom center; }
+
+/* Mountain flag plant */
+@keyframes flag-wave {
+  0%, 100% { transform: skewX(0); }
+  50% { transform: skewX(-3deg); }
+}
+.svg-flag { animation: flag-wave 2s ease-in-out infinite; transform-origin: left center; }
+
+/* Heartbeat pulse line */
+@keyframes heartbeat-draw {
+  from { stroke-dashoffset: 100; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* Lightning glow */
+@keyframes lightning-glow {
+  0%, 100% { filter: drop-shadow(0 0 2px rgba(196,169,98,0.3)); }
+  50% { filter: drop-shadow(0 0 8px rgba(196,169,98,0.6)); }
+}
+.svg-lightning { animation: lightning-glow 2s ease-in-out infinite; }
+
+/* Rising bar */
+@keyframes bar-rise {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+.svg-bar-rise { animation: bar-rise 0.8s ease-out forwards; transform-origin: bottom; }
+
+/* Star scale in */
+@keyframes star-pop {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Trophy shine sweep */
+@keyframes trophy-shine {
+  0% { background-position: -100% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Bell swing */
+@keyframes bell-swing {
+  0%, 100% { transform: rotate(0); }
+  15% { transform: rotate(12deg); }
+  30% { transform: rotate(-10deg); }
+  45% { transform: rotate(6deg); }
+  60% { transform: rotate(-4deg); }
+  75% { transform: rotate(2deg); }
+}
+.svg-bell { animation: bell-swing 2s ease-in-out; transform-origin: top center; }
+
+/* Calendar page flip */
+@keyframes calendar-flip {
+  0% { transform: rotateX(0); }
+  50% { transform: rotateX(-10deg); }
+  100% { transform: rotateX(0); }
+}
+
+/* Padlock shimmer (premium lock) */
+@keyframes shimmer-overlay {
+  0%, 100% { background: rgba(15,15,26,0.85); }
+  50% { background: rgba(15,15,26,0.8); }
+}
+
+/* ── COUNT-UP ANIMATION ── */
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── CONFETTI ── */
+@keyframes confetti-fall {
+  0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+.confetti-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+.confetti-piece {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: -10px;
+  animation: confetti-fall linear forwards;
+}
+
+/* ── STREAK MILESTONE BURST ── */
+@keyframes burst {
+  0% { transform: scale(0); opacity: 1; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+.streak-burst {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  animation: burst 0.6s ease-out forwards;
+  pointer-events: none;
+}
+
+/* ── PAGE TRANSITION ── */
+.page-enter { animation: fadeSlideUp 0.35s ease; }
+.page-exit { animation: fadeOut 0.15s ease forwards; }
+
+/* ── PROGRESS BAR ANIMATED FILL ── */
+@keyframes progress-fill-anim {
+  from { width: 0; }
+}
+.progress-fill-animated { animation: progress-fill-anim var(--t-slow) ease forwards; }
+
+/* ── STRIKETHROUGH ── */
+@keyframes strike {
+  from { width: 0; }
+  to { width: 100%; }
+}
+.strike-through {
+  position: relative;
+  display: inline-block;
+}
+.strike-through::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background: var(--gold);
+  animation: strike 0.3s ease forwards;
+}
+
+/* ── SHIMMER ── */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(196,169,98,0.1) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s infinite;
+}
+
+/* ── SAVED INDICATOR ── */
+@keyframes saved-fade {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+.saved-indicator {
+  font-size: 0.75rem;
+  color: var(--emerald);
+  animation: saved-fade 2s ease forwards;
+}
+
+/* ── BOUNCE ── */
+@keyframes bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+.bounce { animation: bounce 0.3s ease; }
+
+/* ── SKELETON LOADING ── */
+@keyframes skeleton-load {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-surface) 25%, var(--bg-elevated) 50%, var(--bg-surface) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-load 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+/* Pomodoro timer ring */
+@keyframes timer-countdown {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: 283; } /* 2*PI*45 */
+}

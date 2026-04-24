@@ -1,0 +1,28 @@
+{
+	"folders": [
+		{
+			"path": "../../.vscode"
+		},
+		{
+			"path": "../../api"
+		},
+		{
+			"path": "../../backend"
+		},
+		{
+			"path": "../../Documents"
+		},
+		{
+			"path": "../../mpesa-test"
+		},
+		{
+			"path": "../../node_modules"
+		},
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../sophia_portfolio"
+		}
+	]
+}

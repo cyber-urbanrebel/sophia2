@@ -1,0 +1,114 @@
+.appContainer {
+  min-height: 100vh;
+  width: 100%;
+  max-width: 1920px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  isolation: isolate;
+}
+
+.pageContainer {
+  flex: 1;
+  min-height: 100vh;
+  margin-left: 0;
+  padding: 22px 20px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  transition: padding-left 220ms ease, padding-right 220ms ease, width 220ms ease;
+}
+
+.pageContainerWithSidebar {
+  padding-left: 264px;
+}
+
+.pageContainerSidebarHidden {
+  padding-left: 94px;
+}
+
+.pageContainer::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 380px;
+  background:
+    radial-gradient(circle at 18% 10%, rgba(0, 212, 255, 0.14), transparent 22%),
+    radial-gradient(circle at 85% 8%, rgba(123, 47, 255, 0.12), transparent 18%),
+    radial-gradient(circle at 50% -15%, rgba(1, 213, 193, 0.16), transparent 28%),
+    linear-gradient(180deg, rgba(0, 212, 255, 0.07), rgba(0, 0, 0, 0));
+  border-bottom-left-radius: 46px;
+  border-bottom-right-radius: 46px;
+  pointer-events: none;
+}
+
+.pageContainer > * {
+  width: 100%;
+  max-width: var(--content-max-width, 1280px);
+  margin-left: auto;
+  margin-right: auto;
+  padding: var(--spacing-lg, 32px);
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+}
+
+.pageContainer section,
+.pageContainer > div > div {
+  box-sizing: border-box;
+}
+
+.dark {
+  background: linear-gradient(180deg, rgba(3, 6, 16, 0.98), rgba(5, 13, 30, 0.98));
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.light {
+  background: linear-gradient(180deg, rgba(3, 6, 16, 0.98), rgba(5, 13, 30, 0.98));
+  color: var(--sophia-text);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 1024px) {
+  .pageContainer,
+  .pageContainerWithSidebar,
+  .pageContainerSidebarHidden {
+    padding-inline: 18px;
+  }
+
+  .pageContainerWithSidebar {
+    padding-left: 244px;
+  }
+
+  .pageContainerSidebarHidden {
+    padding-left: 88px;
+  }
+
+  .pageContainer > * {
+    padding: var(--spacing-md, 20px);
+  }
+}
+
+@media (max-width: 768px) {
+  .pageContainer,
+  .pageContainerWithSidebar,
+  .pageContainerSidebarHidden {
+    padding: 74px 12px 76px;
+    padding-bottom: 68px;
+  }
+
+  .pageContainer::before {
+    height: 220px;
+  }
+
+  .pageContainer > * {
+    padding: var(--spacing-sm, 12px);
+  }
+}

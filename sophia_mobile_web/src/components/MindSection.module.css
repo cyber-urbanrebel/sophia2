@@ -1,0 +1,262 @@
+New-Item GrowthSystem.jsx -Force
+New-Item NotificationSystem.jsx -Force/* MindSection Styles */
+
+.container {
+  padding: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tabNav {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.tabContent {
+  min-height: 400px;
+}
+
+.card {
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 8px;
+}
+
+.modelsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.modelHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.modelDescription {
+  margin: 0 0 8px 0;
+  font-size: 13px;
+  color: #aaa;
+}
+
+.expandedContent {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tryItSection {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.contextBanner {
+  background-color: rgba(0, 255, 255, 0.1);
+  border: 1px solid #00ffff;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+
+.textarea {
+  background-color: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  color: #fff;
+  padding: 8px;
+  font-family: monospace;
+  font-size: 13px;
+  resize: vertical;
+  min-height: 60px;
+  text-align: center;
+}
+
+.button {
+  background-color: #00ffff;
+  color: #000;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 13px;
+}
+
+.input {
+  background-color: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  color: #fff;
+  padding: 8px 12px;
+  font-size: 13px;
+  margin-bottom: 8px;
+  font-family: inherit;
+  text-align: center;
+}
+
+.slider {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: #333;
+  outline: none;
+  accent-color: #00ffff;
+}
+
+.readingStats {
+  background-color: rgba(0, 255, 255, 0.1);
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+
+.addButton {
+  background-color: #333;
+  color: #00ffff;
+  border: 1px solid #00ffff;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+.addBookForm {
+  background-color: rgba(0, 255, 255, 0.05);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.booksGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+.pillButton {
+  border: 1px solid;
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: none;
+}
+
+.progressSection {
+  background-color: rgba(0, 255, 255, 0.1);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+
+.practicesGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.practiceCard {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 12px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.toolSection {
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.matrix {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.quadrant {
+  border: 2px solid;
+  border-radius: 6px;
+  padding: 12px;
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.details {
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.summary {
+  padding: 8px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.reflectionBanner {
+  background-color: rgba(0, 255, 255, 0.1);
+  border: 2px solid #00ffff;
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.statCard {
+  background-color: rgba(0, 255, 255, 0.05);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  border-radius: 6px;
+  padding: 12px;
+  text-align: center;
+}
+
+.badgeCard {
+  background-color: rgba(0, 255, 255, 0.1);
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  border-radius: 6px;
+  padding: 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.wellnessTrigger {
+  background-color: rgba(255, 170, 0, 0.1);
+  border: 2px solid #ffaa00;
+  border-radius: 6px;
+  padding: 16px;
+  margin-top: 16px;
+  font-size: 13px;
+  line-height: 1.6;
+}

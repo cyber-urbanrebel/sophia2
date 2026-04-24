@@ -1,0 +1,512 @@
+/* Onboarding Flow Styles */
+.onboardingContainer {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.progressBar {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #00d4ff, #0099cc);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.stepContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.stepHeader {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.stepHeader h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #00d4ff;
+}
+
+.subtitle {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 16px;
+}
+
+.stepContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Welcome Step */
+.welcomeStep {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.logo {
+  font-size: 48px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #00d4ff, #0099cc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+.welcomeStep p {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 40px;
+}
+
+/* Identity Step */
+.identityStep {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.nameInput {
+  width: 100%;
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  color: white;
+  font-size: 18px;
+  text-align: center;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.nameInput:focus {
+  border-color: #00d4ff;
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.2);
+}
+
+.question h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #00d4ff;
+}
+
+.pillGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* Body Step */
+.bodyStep {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inputGroup label {
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.inputGroup input {
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s;
+  text-align: center;
+}
+
+.inputGroup input:focus {
+  border-color: #00d4ff;
+  box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.2);
+}
+
+.radioGroup {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.radioLabel input[type="radio"] {
+  display: none;
+}
+
+.radioText {
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  transition: all 0.3s;
+}
+
+.radioLabel input[type="radio"]:checked + .radioText {
+  background: #00d4ff;
+  color: white;
+  border-color: #00d4ff;
+}
+
+/* Goals Step */
+.goalsStep {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.goalsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.goalCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: center;
+}
+
+.goalCard:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.goalCard.selected {
+  background: rgba(0, 212, 255, 0.2);
+  border-color: #00d4ff;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.goalCard.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.goalIcon {
+  font-size: 24px;
+}
+
+.goalLabel {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.goalsCount {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+}
+
+/* Schedule Step */
+.scheduleStep {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sliderGroup {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.slider {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #00d4ff;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+.sliderValue {
+  font-size: 16px;
+  font-weight: 600;
+  color: #00d4ff;
+  min-width: 60px;
+}
+
+.pillGroup {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+/* Targets Step */
+.targetsStep {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.targetsNote {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  font-style: italic;
+}
+
+/* Ready Step */
+.readyStep {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.checkmark {
+  font-size: 64px;
+  color: #00e676;
+  margin-bottom: 20px;
+  animation: checkmarkPulse 2s infinite;
+}
+
+.readyStep h2 {
+  font-size: 24px;
+  margin-bottom: 30px;
+  color: #00d4ff;
+}
+
+.readyCards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.readyCard {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.readyIcon {
+  font-size: 24px;
+}
+
+.readyCard span:last-child {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+/* Buttons */
+.primaryButton {
+  background: linear-gradient(135deg, #00d4ff, #0099cc);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  padding: 16px 32px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4);
+}
+
+.primaryButton:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 25px rgba(0, 212, 255, 0.6);
+}
+
+.secondaryButton {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+  align-self: center;
+}
+
+.secondaryButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Navigation */
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 40px;
+}
+
+.backButton, .nextButton {
+  flex: 1;
+  padding: 14px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.backButton {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+.backButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.nextButton {
+  background: linear-gradient(135deg, #00d4ff, #0099cc);
+  border: none;
+  color: white;
+  box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4);
+}
+
+.nextButton:hover:not(:disabled) {
+  transform: scale(1.02);
+  box-shadow: 0 6px 25px rgba(0, 212, 255, 0.6);
+}
+
+.nextButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Pills */
+.pill {
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: center;
+}
+
+.pill:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.pill.selected {
+  background: #00d4ff;
+  border-color: #00d4ff;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+/* Animations */
+@keyframes checkmarkPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 480px) {
+  .stepContainer {
+    padding: 16px;
+  }
+
+  .stepHeader h1 {
+    font-size: 24px;
+  }
+
+  .goalsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .goalCard {
+    padding: 12px;
+  }
+
+  .goalIcon {
+    font-size: 20px;
+  }
+
+  .goalLabel {
+    font-size: 12px;
+  }
+
+  .pillGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .radioGroup {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .navigation {
+    flex-direction: column;
+  }
+
+  .readyCards {
+    gap: 12px;
+  }
+
+  .readyCard {
+    padding: 12px;
+  }
+}

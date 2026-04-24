@@ -1,0 +1,384 @@
+/* Growth System Styles */
+.growthContainer {
+  background: #0a0a0a;
+  color: white;
+  min-height: 100vh;
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Tab Navigation */
+.tabBar {
+  display: flex;
+  background: rgba(22, 22, 22, 0.8);
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 24px;
+  backdrop-filter: blur(10px);
+}
+
+.tab {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.activeTab {
+  background: #00d4ff;
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 212, 255, 0.3);
+}
+
+/* XP Section */
+.xpSection {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.levelBadge {
+  display: flex;
+  align-items: center;
+  background: rgba(22, 22, 22, 0.8);
+  border: 2px solid #00d4ff;
+  border-radius: 16px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.levelIcon {
+  font-size: 48px;
+  margin-right: 16px;
+}
+
+.levelInfo {
+  flex: 1;
+}
+
+.levelNumber {
+  font-size: 24px;
+  font-weight: 700;
+  color: #00d4ff;
+}
+
+.levelName {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.xpProgress {
+  background: rgba(22, 22, 22, 0.8);
+  border-radius: 12px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.xpBar {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.xpFill {
+  height: 100%;
+  background: linear-gradient(90deg, #00d4ff, #0099cc);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.xpText {
+  text-align: center;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  font-family: 'DM Mono', 'Fira Code', monospace;
+}
+
+.xpStats {
+  display: flex;
+  gap: 16px;
+}
+
+.statCard {
+  flex: 1;
+  background: rgba(22, 22, 22, 0.8);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+}
+
+.statValue {
+  font-size: 24px;
+  font-weight: 700;
+  color: #00d4ff;
+  font-family: 'DM Mono', 'Fira Code', monospace;
+}
+
+.statLabel {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 4px;
+}
+
+/* Chart Section */
+.chartSection {
+  background: rgba(22, 22, 22, 0.8);
+  border-radius: 12px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.chartSection h3 {
+  margin-bottom: 16px;
+  color: #00d4ff;
+}
+
+.chart {
+  height: 100px;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+}
+
+.chartSvg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Achievements */
+.achievementsSection {
+  background: rgba(22, 22, 22, 0.8);
+  border-radius: 12px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.achievementsSection h3 {
+  margin-bottom: 16px;
+  color: #00d4ff;
+}
+
+.achievementsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+.achievementCard {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s;
+}
+
+.locked {
+  background: rgba(255, 255, 255, 0.05);
+  opacity: 0.6;
+}
+
+.unlocked {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 156, 204, 0.1));
+  border-color: #00d4ff;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+}
+
+.achievementIcon {
+  font-size: 32px;
+  margin-right: 16px;
+}
+
+.achievementInfo {
+  flex: 1;
+}
+
+.achievementName {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.achievementDesc {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 8px;
+}
+
+.achievementDate {
+  font-size: 12px;
+  color: #00d4ff;
+}
+
+/* Programs Section */
+.programsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.availablePrograms, .activePrograms {
+  background: rgba(22, 22, 22, 0.8);
+  border-radius: 12px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.availablePrograms h3, .activePrograms h3 {
+  margin-bottom: 16px;
+  color: #00d4ff;
+}
+
+.programCard {
+  background: rgba(16, 16, 16, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.programHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.programHeader h4 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.difficulty {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.extreme {
+  background: linear-gradient(135deg, #ff1744, #d50000);
+  color: white;
+}
+
+.hard {
+  background: linear-gradient(135deg, #ff6b35, #ff3c00);
+  color: white;
+}
+
+.medium {
+  background: linear-gradient(135deg, #ff8c00, #ff6b00);
+  color: white;
+}
+
+.easy {
+  background: linear-gradient(135deg, #00e676, #00c853);
+  color: white;
+}
+
+.programDesc {
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 16px;
+}
+
+.programRequirements {
+  margin-bottom: 16px;
+}
+
+.programRequirements h5 {
+  margin-bottom: 8px;
+  color: #00d4ff;
+}
+
+.programRequirements ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.programRequirements li {
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 4px;
+}
+
+.enrollButton {
+  background: linear-gradient(135deg, #00d4ff, #0099cc);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  width: 100%;
+}
+
+.enrollButton:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4);
+}
+
+.programStatus {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.programProgress {
+  font-size: 16px;
+  font-weight: 600;
+  color: #00d4ff;
+}
+
+.abandonButton {
+  background: rgba(255, 71, 87, 0.2);
+  border: 1px solid #ff4757;
+  border-radius: 8px;
+  color: #ff4757;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.abandonButton:hover {
+  background: rgba(255, 71, 87, 0.3);
+}
+
+/* Mobile optimizations */
+@media (max-width: 480px) {
+  .growthContainer {
+    padding: 16px;
+  }
+
+  .achievementsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .xpStats {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .levelBadge {
+    padding: 16px;
+  }
+
+  .levelIcon {
+    font-size: 40px;
+  }
+
+  .programCard {
+    padding: 16px;
+  }
+}

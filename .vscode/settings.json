@@ -1,0 +1,12 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^cd \\.\\. ; python manage\\.py makemigrations core$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python manage\\.py migrate$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}

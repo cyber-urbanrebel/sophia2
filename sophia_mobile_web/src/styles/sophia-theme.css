@@ -1,0 +1,602 @@
+:root {
+  --sophia-bg: #030610;
+  --sophia-bg-2: #050d1e;
+  --sophia-panel: rgba(7, 15, 32, 0.82);
+  --sophia-panel-strong: rgba(10, 19, 39, 0.94);
+  --sophia-border: rgba(0, 212, 255, 0.34);
+  --sophia-border-alt: rgba(123, 47, 255, 0.28);
+  --sophia-text: #f5fbff;
+  --sophia-text-dim: #9ab2ca;
+  --sophia-cyan: #00d4ff;
+  --sophia-purple: #7b2fff;
+  --sophia-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --sophia-body: 'Space Grotesk', system-ui, sans-serif;
+  --sophia-display: 'Orbitron', 'Space Grotesk', sans-serif;
+  --sophia-shadow: 0 0 0 1px rgba(0, 212, 255, 0.08), 0 20px 60px rgba(0, 10, 24, 0.55);
+  --sophia-glow: 0 0 24px rgba(0, 212, 255, 0.18), 0 0 42px rgba(123, 47, 255, 0.14);
+  --sophia-ease: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  background:
+    radial-gradient(circle at top center, rgba(0, 212, 255, 0.09), transparent 28%),
+    radial-gradient(circle at 80% 20%, rgba(123, 47, 255, 0.08), transparent 24%),
+    linear-gradient(180deg, var(--sophia-bg) 0%, var(--sophia-bg-2) 100%) !important;
+  color: var(--sophia-text) !important;
+  font-family: var(--sophia-body) !important;
+}
+
+body {
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.065;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.5) 0.7px, transparent 0.8px),
+    radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.45) 0.8px, transparent 0.9px),
+    radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.35) 0.6px, transparent 0.7px);
+  background-size: 180px 180px, 220px 220px, 140px 140px;
+  mix-blend-mode: soft-light;
+}
+
+#particle-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 1;
+  mix-blend-mode: screen;
+  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.82) 74%, rgba(0, 0, 0, 0.42) 100%);
+}
+
+body[data-sophia-ambient='calm'] #particle-canvas {
+  opacity: 0.42;
+}
+
+body[data-sophia-ambient='calm'] .sophia-particles {
+  opacity: 0.12;
+}
+
+#sophia-scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  z-index: 9999;
+  background: linear-gradient(90deg, var(--sophia-cyan), var(--sophia-purple));
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.42), 0 0 18px rgba(123, 47, 255, 0.24);
+}
+
+#root,
+.dark,
+.light,
+.appContainer,
+.pageContainer,
+.pageContainer > * {
+  position: relative;
+  z-index: 2;
+}
+
+.sophia-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sophia-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #particle-canvas {
+    opacity: 0.38;
+  }
+
+  .sophia-reveal,
+  .sophia-reveal.is-visible,
+  .sophia-card-hover,
+  .dashboard-card,
+  .section-card,
+  .stat-card,
+  .activity-item,
+  .sophia-feature-card,
+  .sophia-orb,
+  .sophia-orbit,
+  .sophia-orbit.reverse,
+  .sophia-orb-core,
+  .sophia-orb-ring {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+.sophia-surface,
+.dashboard-card,
+.section-card,
+.stat-card,
+.activity-item,
+.sophia-card,
+.sophia-feature-card,
+.sophia-quote,
+.sophia-timeline,
+.sophia-footer,
+.sophia-panel {
+  background: linear-gradient(180deg, rgba(6, 14, 30, 0.92), rgba(5, 12, 24, 0.92)) !important;
+  border: 1px solid transparent !important;
+  border-radius: 26px !important;
+  box-shadow: var(--sophia-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.sophia-surface::before,
+.dashboard-card::before,
+.section-card::before,
+.stat-card::before,
+.activity-item::before,
+.sophia-card::before,
+.sophia-feature-card::before,
+.sophia-quote::before,
+.sophia-timeline::before,
+.sophia-footer::before,
+.sophia-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.72), rgba(123, 47, 255, 0.44));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.sophia-card-hover,
+.dashboard-card,
+.section-card,
+.stat-card,
+.activity-item,
+.sophia-feature-card {
+  transition: transform var(--sophia-ease), box-shadow var(--sophia-ease), border-color var(--sophia-ease), background var(--sophia-ease);
+}
+
+.sophia-card-hover:hover,
+.dashboard-card:hover,
+.section-card:hover,
+.stat-card:hover,
+.activity-item:hover,
+.sophia-feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 0 1px rgba(0, 212, 255, 0.18), 0 24px 70px rgba(0, 14, 35, 0.68), 0 0 28px rgba(0, 212, 255, 0.12);
+}
+
+.sophia-card-hover::after,
+.dashboard-card::after,
+.section-card::after,
+.stat-card::after,
+.activity-item::after,
+.sophia-feature-card::after {
+  content: '';
+  position: absolute;
+  top: -150%;
+  left: -30%;
+  width: 45%;
+  height: 320%;
+  transform: rotate(18deg);
+  background: linear-gradient(180deg, transparent, rgba(255,255,255,0.08), transparent);
+  opacity: 0;
+  transition: opacity var(--sophia-ease), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.sophia-card-hover:hover::after,
+.dashboard-card:hover::after,
+.section-card:hover::after,
+.stat-card:hover::after,
+.activity-item:hover::after,
+.sophia-feature-card:hover::after {
+  opacity: 1;
+  transform: translateX(240%) rotate(18deg);
+}
+
+.sophia-heading,
+.hero-title,
+.spotlight-title,
+.section-heading h3,
+.title,
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--sophia-display) !important;
+  color: var(--sophia-text) !important;
+  letter-spacing: -0.04em;
+}
+
+.hero-title,
+.title {
+  text-shadow: 0 0 26px rgba(0, 212, 255, 0.22);
+}
+
+.sophia-gradient-text,
+.hero-title strong,
+.sophia-wordmark {
+  background: linear-gradient(135deg, #ffffff 0%, var(--sophia-cyan) 42%, #b2e9ff 75%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.sophia-body,
+p,
+span,
+div,
+a,
+button,
+input,
+textarea,
+label,
+select,
+option,
+th,
+td,
+small {
+  font-family: var(--sophia-body);
+}
+
+body,
+p,
+span,
+div,
+a,
+button,
+input,
+textarea,
+label,
+select,
+option,
+li {
+  font-size: max(16px, 1rem);
+}
+
+.sophia-data,
+.hero-pill,
+.metric-pill,
+.eyebrow,
+.mini-stat-value,
+.sophia-stat-number,
+.sophia-mono,
+.sophia-footer-meta,
+.button,
+.brandChip {
+  font-family: var(--sophia-mono) !important;
+}
+
+.hero-pill,
+.metric-pill,
+.brandChip,
+.hero-kicker,
+.eyebrow {
+  border: 1px solid rgba(0, 212, 255, 0.2) !important;
+  background: rgba(0, 212, 255, 0.06) !important;
+  color: #bfeaff !important;
+}
+
+.sophia-primary-btn,
+.primaryButton,
+.onb-next {
+  background: linear-gradient(135deg, var(--sophia-cyan), var(--sophia-purple)) !important;
+  color: #04111f !important;
+  box-shadow: 0 0 22px rgba(0, 212, 255, 0.24), 0 0 38px rgba(123, 47, 255, 0.22) !important;
+  border: none !important;
+}
+
+.sophia-secondary-btn {
+  background: transparent !important;
+  color: var(--sophia-text) !important;
+  border: 1px solid rgba(0, 212, 255, 0.34) !important;
+  box-shadow: inset 0 0 0 1px rgba(123, 47, 255, 0.1), 0 0 20px rgba(0, 212, 255, 0.08);
+}
+
+.sophia-stat-number {
+  color: var(--sophia-cyan) !important;
+  font-size: clamp(30px, 4vw, 54px);
+  font-weight: 800;
+  letter-spacing: -0.06em;
+}
+
+.sophia-progress-meter {
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(0, 212, 255, 0.12);
+}
+
+.sophia-progress-meter > span {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--sophia-cyan), var(--sophia-purple));
+  box-shadow: 0 0 16px rgba(0, 212, 255, 0.34);
+  position: relative;
+}
+
+.sophia-progress-meter > span::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  transform: translate(40%, -50%);
+  background: radial-gradient(circle, #ffffff, var(--sophia-cyan));
+  box-shadow: 0 0 16px rgba(0, 212, 255, 0.72);
+  animation: sophia-pulse 1.8s ease-in-out infinite;
+}
+
+.sophia-quote {
+  padding: 26px 24px 24px 28px;
+}
+
+.sophia-quote .quote-line {
+  position: absolute;
+  left: 16px;
+  top: 22px;
+  bottom: 22px;
+  width: 3px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--sophia-cyan), var(--sophia-purple));
+  box-shadow: 0 0 18px rgba(0, 212, 255, 0.44);
+}
+
+.sophia-timeline {
+  padding: 24px 24px 24px 30px;
+}
+
+.sophia-timeline-list {
+  position: relative;
+  display: grid;
+  gap: 18px;
+}
+
+.sophia-timeline-list::before {
+  content: '';
+  position: absolute;
+  left: 11px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: linear-gradient(180deg, rgba(0, 212, 255, 0.55), rgba(123, 47, 255, 0.38));
+  box-shadow: 0 0 14px rgba(0, 212, 255, 0.16);
+}
+
+.sophia-timeline-item {
+  position: relative;
+  padding-left: 34px;
+}
+
+.sophia-timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff, var(--sophia-cyan));
+  box-shadow: 0 0 14px rgba(0, 212, 255, 0.46);
+  animation: sophia-pulse 1.8s ease-in-out infinite;
+}
+
+.sophia-footer {
+  margin-top: 22px;
+  padding: 26px 28px;
+}
+
+.sophia-footer-divider {
+  height: 1px;
+  width: 100%;
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.82), rgba(123, 47, 255, 0.78), transparent);
+  box-shadow: 0 0 18px rgba(0, 212, 255, 0.22);
+}
+
+.sophia-footer-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 18px;
+}
+
+.sophia-orb-field {
+  position: relative;
+  min-height: 420px;
+  display: grid;
+  place-items: center;
+}
+
+.sophia-orb {
+  position: relative;
+  width: min(320px, 72vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transition: transform var(--sophia-ease), filter var(--sophia-ease);
+}
+
+.sophia-orb:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 24px rgba(0, 212, 255, 0.34)) drop-shadow(0 0 36px rgba(123, 47, 255, 0.24));
+}
+
+.sophia-orb-core {
+  position: absolute;
+  inset: 26%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #ffffff 0%, #9befff 24%, #00d4ff 54%, #7b2fff 100%);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.72), 0 0 42px rgba(123, 47, 255, 0.3);
+  animation: sophia-breathe 5.4s ease-in-out infinite;
+}
+
+.sophia-orb-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 212, 255, 0.36);
+  box-shadow: 0 0 16px rgba(0, 212, 255, 0.18), inset 0 0 14px rgba(123, 47, 255, 0.1);
+  animation: sophia-breathe 5.4s ease-in-out infinite;
+}
+
+.sophia-orb-ring.ring-2 {
+  inset: 9%;
+  border-color: rgba(123, 47, 255, 0.28);
+  animation-duration: 6.4s;
+}
+
+.sophia-orb-ring.ring-3 {
+  inset: 18%;
+  border-color: rgba(0, 212, 255, 0.22);
+  animation-duration: 7s;
+}
+
+.sophia-orbit {
+  position: absolute;
+  inset: 10%;
+  animation: sophia-spin 12s linear infinite;
+}
+
+.sophia-orbit.reverse {
+  inset: 18%;
+  animation: sophia-spin-reverse 9s linear infinite;
+}
+
+.sophia-orbit-dot {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, #ffffff, var(--sophia-cyan));
+  box-shadow: 0 0 14px rgba(0, 212, 255, 0.58);
+}
+
+.sophia-orbit.reverse .sophia-orbit-dot {
+  background: radial-gradient(circle, #ffffff, var(--sophia-purple));
+  box-shadow: 0 0 14px rgba(123, 47, 255, 0.6);
+}
+
+.sophia-orb-chip {
+  position: absolute;
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--sophia-text);
+  background: rgba(5, 13, 30, 0.82);
+  border: 1px solid rgba(0, 212, 255, 0.26);
+  box-shadow: 0 0 16px rgba(0, 212, 255, 0.12);
+  backdrop-filter: blur(10px);
+  animation: sophia-float 4.2s ease-in-out infinite;
+}
+
+.sophia-orb-chip.top-right { top: 14%; right: 2%; animation-delay: 0.2s; }
+.sophia-orb-chip.left { left: -2%; top: 38%; animation-delay: 0.8s; }
+.sophia-orb-chip.bottom-right { right: 4%; bottom: 15%; animation-delay: 1.2s; }
+.sophia-orb-chip.bottom-left { left: 6%; bottom: 9%; animation-delay: 1.7s; }
+
+.sophia-input,
+.inputWrap input,
+input,
+textarea,
+select {
+  background: rgba(6, 14, 30, 0.82) !important;
+  border: 1px solid rgba(0, 212, 255, 0.18) !important;
+  color: var(--sophia-text) !important;
+}
+
+.sophia-input::placeholder,
+.inputWrap input::placeholder,
+input::placeholder,
+textarea::placeholder {
+  color: rgba(154, 178, 202, 0.72) !important;
+}
+
+.sophia-shell-copy,
+.section-note,
+.hero-sub,
+.subtitle,
+.forgotLink,
+.signupLink,
+.fieldError,
+.performance-label,
+.mini-stat-label,
+.section-card div,
+.activity-item p:last-child {
+  color: var(--sophia-text-dim) !important;
+}
+
+@keyframes sophia-breathe {
+  0%, 100% { transform: scale(1); opacity: 0.92; }
+  50% { transform: scale(1.04); opacity: 1; }
+}
+
+@keyframes sophia-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes sophia-spin-reverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes sophia-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes sophia-pulse {
+  0%, 100% { transform: translate(40%, -50%) scale(0.95); opacity: 0.8; }
+  50% { transform: translate(40%, -50%) scale(1.1); opacity: 1; }
+}
+
+@media (max-width: 980px) {
+  .sophia-footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sophia-orb-field {
+    min-height: 360px;
+  }
+}
+
+@media (max-width: 640px) {
+  .sophia-orb-chip {
+    font-size: 11px;
+    padding: 8px 10px;
+  }
+
+  .sophia-orb-chip.left {
+    left: 0;
+  }
+}

@@ -1,0 +1,217 @@
+import { initializeApp } from 'firebase/app';
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  sendPasswordResetEmail,
+} from 'firebase/auth';
+import {
+  getFirestore,
+  collection,
+  doc,
+  setDoc,
+  getDoc,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  query,
+  where,
+} from 'firebase/firestore';
+
+const firebaseConfig = {
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || '',
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || '',
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || '',
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || '',
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || '',
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || '',
+};
+
+const useFirebase = import.meta.env.VITE_USE_FIREBASE === 'true';
+
+let app = null;
+let auth = null;
+let db = null;
+
+if (useFirebase) {
+  app = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+  db = getFirestore(app);
+}
+
+const ensureFirebaseEnabled = () => {
+  if (!useFirebase) {
+    throw new Error('Firebase support is not enabled. Set VITE_USE_FIREBASE=true in .env.');
+  }
+  if (!auth || !db) {
+    throw new Error('Firebase is not initialized. Check configuration values.');
+  }
+};
+
+const getUserUid = () => {
+  ensureFirebaseEnabled();
+  const user = auth.currentUser;
+  if (!user) {
+    throw new Error('Firebase user not signed in.');
+  }
+  return user.uid;
+};
+
+async function firebaseRegister(email, password, firstName, lastName) {
+  ensureFirebaseEnabled();
+  const result = await createUserWithEmailAndPassword(auth, email, password);
+  const user = result.user;
+
+  const profile = {
+    email,
+    firstName: firstName || '',
+    lastName: lastName || '',
+    createdAt: new Date().toISOString(),
+  };
+
+  await setDoc(doc(db, 'users', user.uid), profile);
+
+  return {
+    user: { uid: user.uid, email, firstName, lastName },
+    token: await user.getIdToken(),
+  };
+}
+
+async function firebaseLogin(email, password) {
+  ensureFirebaseEnabled();
+  const result = await signInWithEmailAndPassword(auth, email, password);
+  const user = result.user;
+
+  const userDoc = await getDoc(doc(db, 'users', user.uid));
+  const profile = userDoc.exists() ? userDoc.data() : { email };
+
+  return {
+    user: { uid: user.uid, email: user.email, ...profile },
+    token: await user.getIdToken(),
+  };
+}
+
+async function firebaseLogout() {
+  ensureFirebaseEnabled();
+  await signOut(auth);
+  return { message: 'Logged out' };
+}
+
+async function firebaseForgotPassword(email) {
+  ensureFirebaseEnabled();
+  await sendPasswordResetEmail(auth, email);
+  return { message: 'Password reset email sent' };
+}
+
+async function firebaseRefreshToken() {
+  ensureFirebaseEnabled();
+  const user = auth.currentUser;
+  if (!user) {
+    throw new Error('No user signed in to refresh token.');
+  }
+  const token = await user.getIdToken(true);
+  return { token };
+}
+
+async function firebaseGetProfile() {
+  ensureFirebaseEnabled();
+  const uid = getUserUid();
+  const userDoc = await getDoc(doc(db, 'users', uid));
+  if (!userDoc.exists()) {
+    throw new Error('Profile not found');
+  }
+  return { uid, ...userDoc.data() };
+}
+
+async function firebaseUpdateProfile(data) {
+  ensureFirebaseEnabled();
+  const uid = getUserUid();
+  await updateDoc(doc(db, 'users', uid), data);
+  const userDoc = await getDoc(doc(db, 'users', uid));
+  return { uid, ...userDoc.data() };
+}
+
+async function getCollectionData(collectionName) {
+  ensureFirebaseEnabled();
+  const uid = getUserUid();
+  const q = collection(db, 'users', uid, collectionName);
+  const querySnapshot = await getDocs(q);
+  return querySnapshot.docs.map((docItem) => ({ id: docItem.id, ...docItem.data() }));
+}
+
+async function addCollectionItem(collectionName, data) {
+  ensureFirebaseEnabled();
+  const uid = getUserUid();
+  const colRef = collection(db, 'users', uid, collectionName);
+  const docRef = await addDoc(colRef, { ...data, updatedAt: new Date().toISOString() });
+  return { id: docRef.id, ...data };
+}
+
+async function updateCollectionItem(collectionName, id, data) {
+  ensureFirebaseEnabled();
+  const uid = getUserUid();
+  const docRef = doc(db, 'users', uid, collectionName, id);
+  await updateDoc(docRef, { ...data, updatedAt: new Date().toISOString() });
+  const updatedDoc = await getDoc(docRef);
+  return { id: updatedDoc.id, ...updatedDoc.data() };
+}
+
+async function deleteCollectionItem(collectionName, id) {
+  ensureFirebaseEnabled();
+  const uid = getUserUid();
+  await deleteDoc(doc(db, 'users', uid, collectionName, id));
+  return { id, deleted: true };
+}
+
+async function completeCollectionItem(collectionName, id) {
+  return updateCollectionItem(collectionName, id, { completed: true, completedAt: new Date().toISOString() });
+}
+
+async function firebaseGetHabitStats() {
+  const habits = await getCollectionData('habits');
+  return {
+    total: habits.length,
+    completed: habits.filter((h) => h.completed).length,
+    active: habits.filter((h) => !h.completed).length,
+  };
+}
+
+async function firebaseGetJournalStats() {
+  const entries = await getCollectionData('journal');
+  return {
+    total: entries.length,
+    today: entries.filter((e) => new Date(e.createdAt || e.updatedAt || e.date).toDateString() === new Date().toDateString()).length,
+  };
+}
+
+async function firebaseGetStudyStats() {
+  const sessions = await getCollectionData('study');
+  const totalMinutes = sessions.reduce((sum, s) => sum + (s.duration || 0), 0);
+  return {
+    totalSessions: sessions.length,
+    totalMinutes,
+  };
+}
+
+export {
+  useFirebase,
+  db,
+  getUserUid,
+  firebaseRegister,
+  firebaseLogin,
+  firebaseLogout,
+  firebaseForgotPassword,
+  firebaseGetProfile,
+  firebaseUpdateProfile,
+  getCollectionData,
+  addCollectionItem,
+  updateCollectionItem,
+  deleteCollectionItem,
+  completeCollectionItem,
+  firebaseGetHabitStats,
+  firebaseGetJournalStats,
+  firebaseGetStudyStats,
+  firebaseRefreshToken,
+};
