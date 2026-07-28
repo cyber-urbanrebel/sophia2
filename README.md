@@ -104,6 +104,48 @@ sophia2/
   _archive/             Superseded prior attempts, kept for reference only
 ```
 
+## Going Live (Free Tier)
+
+Two separate deploys: the frontend (static site → Vercel) and the backend
+(Python server → Render). Both connect straight to this GitHub repo
+(`cyber-urbanrebel/sophia2`), so every `git push` to `main` redeploys
+automatically once set up.
+
+**Backend first (Render)**
+1. Sign up at render.com, click **New → Blueprint**, connect this GitHub repo.
+2. Render reads `render.yaml` at the repo root automatically and proposes a
+   `sophia-api` web service rooted at `backend/` — accept it.
+3. It'll ask for the env vars marked `sync: false` in `render.yaml`
+   (`WEB_ORIGIN`, and optionally `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` /
+   `ELEVENLABS_API_KEY` if you have real ones). Leave `WEB_ORIGIN` blank for
+   now — you'll fill it in after the frontend is deployed, in step 3 below.
+   `JWT_SECRET` is generated for you automatically.
+4. Deploy. Note the URL Render gives you, e.g. `https://sophia-api.onrender.com`.
+
+**Frontend (Vercel)**
+1. Sign up at vercel.com, **Add New → Project**, import the same repo.
+2. Set **Root Directory** to `sophia_mobile_web` (Vercel auto-detects Vite;
+   `vercel.json` inside that folder handles the rest).
+3. Add an environment variable: `VITE_API_URL` = your Render URL from above
+   (e.g. `https://sophia-api.onrender.com`).
+4. Deploy. Note the URL Vercel gives you, e.g. `https://sophia.vercel.app`.
+
+**Connect them**
+Back in Render → your `sophia-api` service → Environment, set `WEB_ORIGIN` to
+your Vercel URL (exact, no trailing slash) so the backend's CORS allows the
+frontend to call it. Redeploy the backend.
+
+Visit your Vercel URL — that's Sophia, live.
+
+**Free tier caveats**: Render's free web service sleeps after inactivity
+(first request after a while has a ~30-60s cold-start delay) and doesn't
+include a persistent disk, so the SQLite database resets on redeploy/restart
+— fine for trying it out or demoing, not for real user data yet. When you're
+ready for that to stop happening, either upgrade to a paid Render instance
+with a persistent disk, or move `DATABASE_PATH` to a managed Postgres
+database (Render offers free Postgres instances — this needs a small code
+change in `backend/app/db.py` to point at a Postgres URL instead of SQLite).
+
 ## Known Gaps (Not Built In This Pass)
 
 - Payments (M-Pesa), production deployment/hosting, native mobile app
