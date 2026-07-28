@@ -4,16 +4,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../store/slices/authSlice.js';
 
 const navItems = [
-  { id: 'dashboard', label: 'Dashboard', path: '/dashboard', icon: DashboardIcon },
-  { id: 'tasks', label: 'Tasks', path: '/discipline', icon: TasksIcon },
+  // Primary six — Path / Mind / Body / Discipline / Shadow / Progress
+  { id: 'path', label: 'Path', path: '/path', icon: PathIcon },
   { id: 'mind', label: 'Mind', path: '/mind', icon: MindIcon },
   { id: 'body', label: 'Body', path: '/body', icon: BodyIcon },
   { id: 'discipline', label: 'Discipline', path: '/discipline', icon: DisciplineIcon },
-  { id: 'growth', label: 'Inner Growth', path: '/growth', icon: GrowthIcon },
-  { id: 'habits', label: 'Habits', path: '/discipline', icon: HabitsIcon },
-  { id: 'journal', label: 'Journal', path: '/mind', icon: JournalIcon },
-  { id: 'projects', label: 'Projects', path: '/projects', icon: ProjectsIcon },
+  { id: 'shadow', label: 'Shadow', path: '/shadow', icon: ShadowIcon },
   { id: 'progress', label: 'Progress', path: '/progress', icon: ProgressIcon },
+  // Secondary — Explore
+  { id: 'voice', label: 'Voice', path: '/voice', icon: VoiceIcon },
+  { id: 'growth', label: 'Inner Growth', path: '/growth', icon: GrowthIcon },
+  { id: 'wisdom', label: 'Wisdom Library', path: '/wisdom', icon: WisdomIcon },
+  { id: 'philosophy', label: 'Philosophy', path: '/philosophy', icon: JournalIcon },
+  { id: 'goals', label: 'Goals', path: '/goals', icon: TasksIcon },
+  { id: 'community', label: 'Community', path: '/community', icon: CommunityIcon },
+  { id: 'analytics', label: 'Analytics', path: '/analytics', icon: ReportIcon },
   { id: 'focus', label: 'Focus Timer', path: '/focus', icon: FocusIcon },
   { id: 'achievements', label: 'Achievements', path: '/achievements', icon: TrophyIcon },
   { id: 'reminders', label: 'Reminders', path: '/reminders', icon: BellIcon },
@@ -68,6 +73,18 @@ function ReportIcon() {
 }
 function PremiumIcon() {
   return (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>);
+}
+function ShadowIcon() {
+  return (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 000 18 9 9 0 010-18z" fill="currentColor" opacity="0.5"/></svg>);
+}
+function VoiceIcon() {
+  return (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0014 0"/><line x1="12" y1="17" x2="12" y2="22"/></svg>);
+}
+function WisdomIcon() {
+  return (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/><circle cx="12" cy="12" r="4"/></svg>);
+}
+function CommunityIcon() {
+  return (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>);
 }
 function AdminIcon() {
   return (<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>);
@@ -180,8 +197,8 @@ export default function Sidebar({ activeTab, setActiveTab, sidebarOpen = true, s
   const allNavItems = isAdmin
     ? [...navItems, { id: 'admin', label: 'Admin', path: '/admin', icon: AdminIcon }]
     : navItems;
-  const primaryNavItems = allNavItems.slice(0, 8);
-  const secondaryNavItems = allNavItems.slice(8);
+  const primaryNavItems = allNavItems.slice(0, 6);
+  const secondaryNavItems = allNavItems.slice(6);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' && window.innerWidth < 768);
   const initials = String(user?.name || user?.email || 'Sophia')
@@ -248,7 +265,7 @@ export default function Sidebar({ activeTab, setActiveTab, sidebarOpen = true, s
 
   const renderNavItems = (items) => items.map((item) => {
     const isActive = location.pathname === item.path ||
-      (item.id === 'dashboard' && location.pathname === '/dashboard') ||
+      (item.id === 'path' && location.pathname === '/path') ||
       (item.id === activeTab);
     const Icon = item.icon;
     return (
@@ -290,9 +307,6 @@ export default function Sidebar({ activeTab, setActiveTab, sidebarOpen = true, s
       >
         <Icon />
         {!isDesktopCollapsed && <span>{item.label}</span>}
-        {item.id === 'projects' && location.pathname.startsWith('/projects') && (
-          <span style={styles.goldDot} />
-        )}
       </NavLink>
     );
   });
@@ -393,7 +407,7 @@ export default function Sidebar({ activeTab, setActiveTab, sidebarOpen = true, s
             <>
               <div style={styles.brandSub}>
                 <span style={styles.brandChip}>Hyper Mode</span>
-                <span style={{ ...styles.brandChip, color: '#f5fbff' }}>Body. Mind. Discipline.</span>
+                <span style={{ ...styles.brandChip, color: '#f5fbff' }}>Path. Mind. Body. Shadow.</span>
               </div>
               <div style={styles.userCard}>
                 <div style={styles.avatar}>{initials || 'SO'}</div>
@@ -426,7 +440,7 @@ export default function Sidebar({ activeTab, setActiveTab, sidebarOpen = true, s
         {!isDesktopCollapsed && (
           <div style={styles.footerNote}>
             <div style={styles.footerKicker}>Daily System</div>
-            <div style={styles.footerText}>A brighter command center for habits, journaling, focus, projects, and progress.</div>
+            <div style={styles.footerText}>A conscious operating system for habits, shadow work, wisdom, and the path to who you're becoming.</div>
           </div>
         )}
       <button

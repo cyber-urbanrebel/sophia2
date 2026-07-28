@@ -1,12 +1,45 @@
 import React, { useCallback } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 import styles from '../styles/BottomNav.module.css';
-import { ProjectProvider } from '../features/projects/projectStore.js';
-import WorkspaceSwitcher from '../features/projects/WorkspaceSwitcher.jsx';
 
 /* ── Animated SVG icons ── */
+const PathIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="pathG" x1="0" y1="0" x2="24" y2="24">
+        <stop offset="0%" stopColor="#c9a44c" />
+        <stop offset="100%" stopColor="#7b2fff" />
+      </linearGradient>
+    </defs>
+    <circle cx="12" cy="12" r="9" stroke="url(#pathG)" strokeWidth="1.6">
+      <animate attributeName="stroke-dasharray" from="0 60" to="60 0" dur="1.2s" fill="freeze" />
+    </circle>
+    <path d="M12 3a14.5 14.5 0 000 18" stroke="url(#pathG)" strokeWidth="1.2" opacity="0.6" />
+    <circle cx="12" cy="12" r="2" fill="url(#pathG)">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2.4s" repeatCount="indefinite" />
+    </circle>
+  </svg>
+);
+
+const ShadowIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="shadowG" x1="0" y1="0" x2="24" y2="24">
+        <stop offset="0%" stopColor="#4b3a6e" />
+        <stop offset="100%" stopColor="#1a1028" />
+      </linearGradient>
+    </defs>
+    <circle cx="12" cy="12" r="9" stroke="#a855f7" strokeWidth="1.5">
+      <animate attributeName="stroke-dasharray" values="0 60;60 0" dur="1.5s" fill="freeze" />
+    </circle>
+    <path d="M12 3a9 9 0 000 18 9 9 0 010-18z" fill="url(#shadowG)" opacity="0.75">
+      <animate attributeName="opacity" values="0.5;0.85;0.5" dur="3s" repeatCount="indefinite" />
+    </path>
+  </svg>
+);
+
 const HomeIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
@@ -122,14 +155,6 @@ const AiIcon = () => (
   </svg>
 );
 
-const ProjectsIcon = () => (
-  <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="1.5" y="3" width="12" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
-    <path d="M5 3V2a1 1 0 011-1h3a1 1 0 011 1v1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <line x1="1.5" y1="7" x2="13.5" y2="7" stroke="currentColor" strokeWidth="1.5" />
-  </svg>
-);
-
 const AdminIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
@@ -148,21 +173,21 @@ const AdminIcon = () => (
 );
 
 const iconMap = {
-  home: <HomeIcon />,
-  body: <BodyIcon />,
+  path: <PathIcon />,
   mind: <MindIcon />,
+  body: <BodyIcon />,
   discipline: <DisciplineIcon />,
-  projects: <ProjectsIcon />,
+  shadow: <ShadowIcon />,
   progress: <ProgressIcon />,
   admin: <AdminIcon />,
 };
 
 const baseTabs = [
-  { id: 'home', label: 'Home', path: '/home' },
-  { id: 'body', label: 'Body', path: '/body' },
+  { id: 'path', label: 'Path', path: '/path' },
   { id: 'mind', label: 'Mind', path: '/mind' },
+  { id: 'body', label: 'Body', path: '/body' },
   { id: 'discipline', label: 'Discipline', path: '/discipline' },
-  { id: 'projects', label: 'Projects', path: '/projects' },
+  { id: 'shadow', label: 'Shadow', path: '/shadow' },
   { id: 'progress', label: 'Progress', path: '/progress' },
 ];
 
@@ -170,9 +195,7 @@ const adminTab = { id: 'admin', label: 'Admin', path: '/admin' };
 
 export default function BottomNav({ activeTab, setActiveTab }) {
   const navigate = useNavigate();
-  const location = useLocation();
   const user = useSelector(s => s.auth.user);
-  const isOnProjects = location.pathname.startsWith('/projects');
 
   const tabs = user?.role === 'admin' ? [...baseTabs, adminTab] : baseTabs;
 
@@ -227,23 +250,15 @@ export default function BottomNav({ activeTab, setActiveTab }) {
           >
             <span className={styles.icon}>{iconMap[tab.id]}</span>
             <span className={styles.label}>{tab.label}</span>
-            {tab.id === 'projects' && isOnProjects && (
-              <span style={{width:5,height:5,borderRadius:'50%',background:'#c9a84c',marginLeft:'auto',flexShrink:0}} />
-            )}
           </button>
         );
       })}
 
-      {/* Workspace switcher — below nav tabs */}
-      <ProjectProvider>
-        <WorkspaceSwitcher />
-      </ProjectProvider>
-
       <button
         className={styles.fab}
-        onClick={() => handleTabClick({ id: 'ai', path: '/ai' })}
-        aria-label="AI Coach"
-        title="Chat with AI Coach"
+        onClick={() => handleTabClick({ id: 'voice', path: '/voice' })}
+        aria-label="Voice Assistant"
+        title="Talk to Sophia"
       >
         <span className={styles.fabIcon}><AiIcon /></span>
       </button>

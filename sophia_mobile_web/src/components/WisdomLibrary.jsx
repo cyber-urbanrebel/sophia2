@@ -1,284 +1,256 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import api from '../services/api.js';
 
-const WisdomLibrary = ({ favourites, setFavourites }) => {
+const C = {
+  card: "#150e22",
+  surface: "#0f0a17",
+  border: "#2a1f3d",
+  gold: "#c9a44c",
+  goldSoft: "#e8cf8a",
+  violet: "#7b2fff",
+  violetSoft: "#a855f7",
+  cyan: "#00d4ff",
+  text: "#e9e2f5",
+  muted: "#8f80a8",
+};
+
+const styles = {
+  wrap: { color: C.text, fontFamily: "'DM Mono', 'Fira Code', monospace", paddingBottom: 40 },
+  header: { display: "flex", alignItems: "center", gap: 14, marginBottom: 22, paddingBottom: 18, borderBottom: `1px solid ${C.border}` },
+  icon: { width: 42, height: 42, borderRadius: 10, background: `linear-gradient(135deg, ${C.gold}, ${C.violet})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 },
+  title: { fontSize: 20, fontWeight: 700, letterSpacing: "-0.02em", color: C.goldSoft },
+  subtitle: { fontSize: 11, color: C.muted, textTransform: "uppercase", letterSpacing: "0.14em", marginTop: 2 },
+  dailyCard: { background: `linear-gradient(135deg, ${C.violet}18, ${C.gold}12)`, border: `1px solid ${C.gold}44`, borderRadius: 16, padding: 24, marginBottom: 22 },
+  pill: (color) => ({ display: "inline-block", padding: "4px 12px", borderRadius: 999, fontSize: 10, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", background: color + "22", color, border: `1px solid ${color}44` }),
+  quote: { fontSize: 19, fontStyle: "italic", color: C.text, lineHeight: 1.6, margin: "14px 0 10px" },
+  cite: { fontSize: 12, color: C.muted },
+  controls: { display: "flex", flexDirection: "column", gap: 12, marginBottom: 18 },
+  input: { background: C.surface, border: `1px solid ${C.border}`, borderRadius: 10, color: C.text, padding: "11px 16px", fontSize: 13, fontFamily: "inherit", outline: "none", width: "100%", boxSizing: "border-box" },
+  filterRow: { display: "flex", gap: 8, flexWrap: "wrap" },
+  filterBtn: (active) => ({
+    padding: "7px 14px", borderRadius: 999, fontSize: 11, fontWeight: 700, letterSpacing: "0.02em",
+    cursor: "pointer", fontFamily: "inherit", border: `1px solid ${active ? C.gold : C.border}`,
+    background: active ? `${C.gold}22` : "transparent", color: active ? C.goldSoft : C.muted,
+  }),
+  tabs: { display: "flex", gap: 8, marginBottom: 18 },
+  tabBtn: (active) => ({
+    padding: "8px 16px", borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: "pointer",
+    fontFamily: "inherit", border: "none",
+    background: active ? `linear-gradient(135deg, ${C.violet}, ${C.violetSoft})` : "transparent",
+    color: active ? "#fff" : C.muted,
+  }),
+  grid: { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 16 },
+  card: { background: C.card, border: `1px solid ${C.border}`, borderRadius: 14, padding: 20, display: "flex", flexDirection: "column" },
+  cardHead: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12, gap: 8 },
+  star: { background: "none", border: "none", fontSize: 20, cursor: "pointer", color: C.gold, flexShrink: 0 },
+  reflectionText: { fontSize: 12, color: C.muted, fontStyle: "italic", marginTop: 10, paddingTop: 10, borderTop: `1px solid ${C.border}` },
+  reflectBtn: { background: "none", border: "none", color: C.cyan, fontSize: 11, cursor: "pointer", marginTop: 10, padding: 0, textAlign: "left", fontFamily: "inherit" },
+  empty: { textAlign: "center", color: C.muted, padding: "40px 0", fontSize: 13 },
+  modalOverlay: { position: "fixed", inset: 0, background: "rgba(5,3,10,0.8)", backdropFilter: "blur(6px)", display: "flex", alignItems: "center", justifyContent: "center", padding: 20, zIndex: 500 },
+  modal: { background: C.card, border: `1px solid ${C.gold}44`, borderRadius: 16, padding: 24, maxWidth: 520, width: "100%" },
+  textarea: { background: C.surface, border: `1px solid ${C.border}`, borderRadius: 10, color: C.text, padding: "12px 14px", fontSize: 13, fontFamily: "inherit", outline: "none", width: "100%", height: 100, resize: "vertical", boxSizing: "border-box", marginBottom: 14 },
+  btn: { background: `linear-gradient(135deg, ${C.violet}, ${C.violetSoft})`, color: "#fff", border: "none", borderRadius: 8, padding: "10px 20px", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "inherit" },
+  btnGhost: { background: "transparent", color: C.muted, border: `1px solid ${C.border}`, borderRadius: 8, padding: "9px 16px", fontSize: 12, cursor: "pointer", fontFamily: "inherit" },
+};
+
+// Sophia's original secular quote set, kept as its own pseudo-tradition so
+// nothing already built here gets lost when the interfaith library merges in.
+const LEGACY_THEMES = {
+  stoicism: '#00FFFF', habits: '#00FF88', growth: '#FFD23F', purpose: '#FF6B35',
+  motivation: '#BB88FF', relationships: '#FF88AA', health: '#44AAFF',
+};
+
+const LEGACY_QUOTES = [
+  { id: 'legacy-1', tradition: 'modern-quotes', theme: 'stoicism', teaching: 'The happiness of your life depends upon the quality of your thoughts.', source: 'Marcus Aurelius, Meditations' },
+  { id: 'legacy-2', tradition: 'modern-quotes', theme: 'stoicism', teaching: 'It is not the man who has too little, but the man who craves more, that is poor.', source: 'Seneca, Letters from a Stoic' },
+  { id: 'legacy-3', tradition: 'modern-quotes', theme: 'stoicism', teaching: 'Man is disturbed not by things, but by the views he takes of them.', source: 'Epictetus, Enchiridion' },
+  { id: 'legacy-6', tradition: 'modern-quotes', theme: 'habits', teaching: 'We are what we repeatedly do. Excellence, then, is not an act, but a habit.', source: 'Aristotle, Nicomachean Ethics' },
+  { id: 'legacy-8', tradition: 'modern-quotes', theme: 'habits', teaching: 'The chains of habit are too weak to be felt until they are too strong to be broken.', source: 'Samuel Johnson, The Rambler' },
+  { id: 'legacy-11', tradition: 'modern-quotes', theme: 'growth', teaching: 'Be not afraid of growing slowly; be afraid only of standing still.', source: 'Chinese Proverb' },
+  { id: 'legacy-13', tradition: 'modern-quotes', theme: 'growth', teaching: 'What lies behind us and what lies before us are tiny matters compared to what lies within us.', source: 'Ralph Waldo Emerson, Essays' },
+  { id: 'legacy-16', tradition: 'modern-quotes', theme: 'purpose', teaching: 'The two most important days in your life are the day you are born and the day you find out why.', source: 'Mark Twain' },
+  { id: 'legacy-19', tradition: 'modern-quotes', theme: 'purpose', teaching: 'He who has a why to live can bear almost any how.', source: 'Friedrich Nietzsche, Twilight of the Idols' },
+  { id: 'legacy-21', tradition: 'modern-quotes', theme: 'motivation', teaching: 'The only way to do great work is to love what you do.', source: 'Steve Jobs, Stanford Commencement' },
+  { id: 'legacy-30', tradition: 'modern-quotes', theme: 'relationships', teaching: "Friendship is born at that moment when one person says to another, 'What! You too? I thought I was the only one.'", source: 'C.S. Lewis, The Four Loves' },
+  { id: 'legacy-31', tradition: 'modern-quotes', theme: 'health', teaching: "Take care of your body. It's the only place you have to live.", source: 'Jim Rohn' },
+];
+
+function getDayOfYear() {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  return Math.floor((now - start) / (1000 * 60 * 60 * 24));
+}
+
+export default function WisdomLibrary({ favourites, setFavourites }) {
+  const [remote, setRemote] = useState({ traditions: {}, themes: [], entries: [] });
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedTradition, setSelectedTradition] = useState('All');
   const [activeTab, setActiveTab] = useState('Library');
   const [reflectionModal, setReflectionModal] = useState(null);
   const [reflectionText, setReflectionText] = useState('');
-
-  const categoryColors = {
-    stoicism: '#00FFFF',
-    habits: '#00FF88',
-    growth: '#FFD23F',
-    purpose: '#FF6B35',
-    motivation: '#BB88FF',
-    relationships: '#FF88AA',
-    health: '#44AAFF'
-  };
-
-  const wisdomData = [
-    // Stoicism - 5 entries
-    { id: 1, category: 'stoicism', quote: 'The happiness of your life depends upon the quality of your thoughts.', author: 'Marcus Aurelius', source: 'Meditations' },
-    { id: 2, category: 'stoicism', quote: 'It is not the man who has too little, but the man who craves more, that is poor.', author: 'Seneca', source: 'Letters from a Stoic' },
-    { id: 3, category: 'stoicism', quote: 'Man is disturbed not by things, but by the views he takes of them.', author: 'Epictetus', source: 'Enchiridion' },
-    { id: 4, category: 'stoicism', quote: 'Waste no more time arguing about what a good man should be. Be one.', author: 'Marcus Aurelius', source: 'Meditations' },
-    { id: 5, category: 'stoicism', quote: 'The best revenge is not to be like your enemy.', author: 'Marcus Aurelius', source: 'Meditations' },
-
-    // Habits - 5 entries
-    { id: 6, category: 'habits', quote: 'We are what we repeatedly do. Excellence, then, is not an act, but a habit.', author: 'Aristotle', source: 'Nicomachean Ethics' },
-    { id: 7, category: 'habits', quote: 'Your habits will determine your future.', author: 'Jack Canfield', source: 'The Success Principles' },
-    { id: 8, category: 'habits', quote: 'The chains of habit are too weak to be felt until they are too strong to be broken.', author: 'Samuel Johnson', source: 'The Rambler' },
-    { id: 9, category: 'habits', quote: 'Habit is a cable; we weave a thread each day, and at last we cannot break it.', author: 'Horace Mann', source: 'Lectures and Annual Reports' },
-    { id: 10, category: 'habits', quote: 'Successful people are simply those with successful habits.', author: 'Brian Tracy', source: 'Maximum Achievement' },
-
-    // Growth - 5 entries
-    { id: 11, category: 'growth', quote: 'Be not afraid of growing slowly; be afraid only of standing still.', author: 'Chinese Proverb', source: 'Traditional Wisdom' },
-    { id: 12, category: 'growth', quote: 'The only way to make sense out of change is to plunge into it, move with it, and join the dance.', author: 'Alan Watts', source: 'The Wisdom of Insecurity' },
-    { id: 13, category: 'growth', quote: 'What lies behind us and what lies before us are tiny matters compared to what lies within us.', author: 'Ralph Waldo Emerson', source: 'Essays' },
-    { id: 14, category: 'growth', quote: 'The beautiful thing about learning is that no one can take it away from you.', author: 'B.B. King', source: 'Interview' },
-    { id: 15, category: 'growth', quote: 'Growth is the only evidence of life.', author: 'John Henry Newman', source: 'Sermons' },
-
-    // Purpose - 5 entries
-    { id: 16, category: 'purpose', quote: 'The two most important days in your life are the day you are born and the day you find out why.', author: 'Mark Twain', source: 'Quote' },
-    { id: 17, category: 'purpose', quote: 'Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work.', author: 'Steve Jobs', source: 'Stanford Commencement' },
-    { id: 18, category: 'purpose', quote: 'The meaning of life is to find your gift. The purpose of life is to give it away.', author: 'Pablo Picasso', source: 'Quote' },
-    { id: 19, category: 'purpose', quote: 'He who has a why to live can bear almost any how.', author: 'Friedrich Nietzsche', source: 'Twilight of the Idols' },
-    { id: 20, category: 'purpose', quote: 'Your purpose in life is to find your purpose and give your whole heart and soul to it.', author: 'Buddha', source: 'Teaching' },
-
-    // Motivation - 5 entries
-    { id: 21, category: 'motivation', quote: 'The only way to do great work is to love what you do.', author: 'Steve Jobs', source: 'Stanford Commencement' },
-    { id: 22, category: 'motivation', quote: 'Believe you can and you\'re halfway there.', author: 'Theodore Roosevelt', source: 'Quote' },
-    { id: 23, category: 'motivation', quote: 'The future belongs to those who believe in the beauty of their dreams.', author: 'Eleanor Roosevelt', source: 'Quote' },
-    { id: 24, category: 'motivation', quote: 'You miss 100% of the shots you don\'t take.', author: 'Wayne Gretzky', source: 'Quote' },
-    { id: 25, category: 'motivation', quote: 'The only limit to our realization of tomorrow will be our doubts of today.', author: 'Franklin D. Roosevelt', source: 'Quote' },
-
-    // Relationships - 5 entries
-    { id: 26, category: 'relationships', quote: 'The best and most beautiful things in the world cannot be seen or even touched - they must be felt with the heart.', author: 'Helen Keller', source: 'Quote' },
-    { id: 27, category: 'relationships', quote: 'A real friend is one who walks in when the rest of the world walks out.', author: 'Walter Winchell', source: 'Quote' },
-    { id: 28, category: 'relationships', quote: 'Love is not about how many days, months, or years you have been together. Love is about how much you love each other every single day.', author: 'Unknown', source: 'Quote' },
-    { id: 29, category: 'relationships', quote: 'The greatest happiness of life is the conviction that we are loved; loved for ourselves, or rather, loved in spite of ourselves.', author: 'Victor Hugo', source: 'Les Misérables' },
-    { id: 30, category: 'relationships', quote: 'Friendship is born at that moment when one person says to another, \'What! You too? I thought I was the only one.\'', author: 'C.S. Lewis', source: 'The Four Loves' },
-
-    // Health - 5 entries
-    { id: 31, category: 'health', quote: 'Take care of your body. It\'s the only place you have to live.', author: 'Jim Rohn', source: 'Quote' },
-    { id: 32, category: 'health', quote: 'Health is not valued till sickness comes.', author: 'Thomas Fuller', source: 'Gnomologia' },
-    { id: 33, category: 'health', quote: 'The first wealth is health.', author: 'Ralph Waldo Emerson', source: 'Essays' },
-    { id: 34, category: 'health', quote: 'A healthy outside starts from the inside.', author: 'Robert Urich', source: 'Quote' },
-    { id: 35, category: 'health', quote: 'Your body hears everything your mind says.', author: 'Naomi Judd', source: 'Quote' }
-  ];
-
-  // Get day of year for deterministic daily wisdom
-  const getDayOfYear = () => {
-    const now = new Date();
-    const start = new Date(now.getFullYear(), 0, 0);
-    const diff = now - start;
-    const oneDay = 1000 * 60 * 60 * 24;
-    return Math.floor(diff / oneDay);
-  };
-
-  const dailyWisdom = wisdomData[getDayOfYear() % wisdomData.length];
-
-  const filteredWisdom = wisdomData.filter(item => {
-    const matchesSearch = item.quote.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         item.author.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'All' || item.category === selectedCategory;
-    return matchesSearch && matchesCategory;
+  const [reflections, setReflections] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('sophia_reflections') || '{}'); } catch { return {}; }
   });
 
-  const displayedWisdom = activeTab === 'Library' ? filteredWisdom : 
-                         wisdomData.filter(item => favourites.includes(item.id));
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const data = await fetch(`${api.baseURL}/api/wisdom`).then((r) => (r.ok ? r.json() : null));
+        if (!cancelled && data) setRemote(data);
+      } catch {
+        // Backend unavailable — the legacy quote set below still renders fine.
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, []);
 
-  const toggleFavourite = (id) => {
-    setFavourites(prev => 
-      prev.includes(id) ? prev.filter(fav => fav !== id) : [...prev, id]
-    );
-  };
+  const allEntries = useMemo(() => {
+    const backendEntries = (remote.entries || []).map((e) => ({
+      id: e.id, tradition: e.tradition, theme: e.theme, teaching: e.teaching, source: e.source, reflectionPrompt: e.reflection,
+    }));
+    return [...backendEntries, ...LEGACY_QUOTES];
+  }, [remote.entries]);
 
-  const openReflectionModal = (wisdom) => {
-    const reflections = JSON.parse(localStorage.getItem('sophia_reflections') || '{}');
-    setReflectionText(reflections[wisdom.id] || '');
-    setReflectionModal(wisdom);
+  const traditions = useMemo(() => ({
+    ...(remote.traditions || {}),
+    'modern-quotes': 'Modern Quotes',
+  }), [remote.traditions]);
+
+  const dailyWisdom = useMemo(() => allEntries[getDayOfYear() % Math.max(allEntries.length, 1)], [allEntries]);
+
+  const filtered = useMemo(() => allEntries.filter((e) => {
+    const matchesSearch = !searchTerm
+      || e.teaching.toLowerCase().includes(searchTerm.toLowerCase())
+      || e.source.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesTradition = selectedTradition === 'All' || e.tradition === selectedTradition;
+    return matchesSearch && matchesTradition;
+  }), [allEntries, searchTerm, selectedTradition]);
+
+  const displayed = activeTab === 'Library' ? filtered : allEntries.filter((e) => favourites.includes(e.id));
+
+  const toggleFavourite = useCallback((id) => {
+    setFavourites((prev) => (prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id]));
+  }, [setFavourites]);
+
+  const openReflection = (entry) => {
+    setReflectionText(reflections[entry.id] || '');
+    setReflectionModal(entry);
   };
 
   const saveReflection = () => {
-    const reflections = JSON.parse(localStorage.getItem('sophia_reflections') || '{}');
-    reflections[reflectionModal.id] = reflectionText;
-    localStorage.setItem('sophia_reflections', JSON.stringify(reflections));
+    const next = { ...reflections, [reflectionModal.id]: reflectionText };
+    setReflections(next);
+    localStorage.setItem('sophia_reflections', JSON.stringify(next));
     setReflectionModal(null);
     setReflectionText('');
   };
 
-  const getReflections = () => {
-    return JSON.parse(localStorage.getItem('sophia_reflections') || '{}');
-  };
+  const themeColor = (entry) => (
+    entry.tradition === 'modern-quotes' ? (LEGACY_THEMES[entry.theme] || C.cyan) : C.gold
+  );
 
-  const reflections = getReflections();
+  if (!dailyWisdom) return null;
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
-      {/* Daily Wisdom Card */}
-      <div className="bg-cyan-400 bg-opacity-10 border border-cyan-400 rounded-2xl p-6 mb-8">
-        <div className="flex items-center gap-3 mb-4">
-          <div
-            className="px-3 py-1 rounded-full text-xs font-semibold text-black"
-            style={{ backgroundColor: categoryColors[dailyWisdom.category] }}
-          >
-            {dailyWisdom.category.toUpperCase()}
-          </div>
+    <div style={styles.wrap}>
+      <div style={styles.header}>
+        <div style={styles.icon}>📜</div>
+        <div>
+          <div style={styles.title}>Wisdom Library</div>
+          <div style={styles.subtitle}>{loading ? 'Loading interfaith teachings…' : 'Every path, one library — Christianity, Islam, Judaism, Buddhism, Hinduism, Taoism, Stoicism & modern thought'}</div>
         </div>
-        <blockquote className="text-2xl font-heading italic text-neutral-200 mb-4">
-          "{dailyWisdom.quote}"
-        </blockquote>
-        <cite className="text-neutral-400 text-sm">
-          — {dailyWisdom.author}, {dailyWisdom.source}
-        </cite>
       </div>
 
-      {/* Search and Filter */}
-      <div className="mb-6">
+      <div style={styles.dailyCard}>
+        <span style={styles.pill(themeColor(dailyWisdom))}>
+          {traditions[dailyWisdom.tradition] || dailyWisdom.tradition} · {dailyWisdom.theme}
+        </span>
+        <div style={styles.quote}>"{dailyWisdom.teaching}"</div>
+        <div style={styles.cite}>— {dailyWisdom.source}</div>
+        {dailyWisdom.reflectionPrompt && (
+          <div style={{ ...styles.reflectionText, borderTop: 'none', paddingTop: 10, color: C.violetSoft }}>
+            Reflect: {dailyWisdom.reflectionPrompt}
+          </div>
+        )}
+      </div>
+
+      <div style={styles.controls}>
         <input
+          style={styles.input}
           type="text"
-          placeholder="Search quotes or authors..."
+          placeholder="Search teachings or sources…"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="bg-black bg-opacity-50 border border-cyan-400 border-opacity-30 rounded-lg px-4 py-3 text-neutral-200 w-full focus:outline-none focus:ring-1 focus:ring-cyan-400 mb-4"
         />
-        
-        <div className="flex flex-wrap gap-2">
-          {['All', 'stoicism', 'habits', 'growth', 'purpose', 'motivation', 'relationships', 'health'].map(category => (
-            <button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              className={`px-3 py-1 rounded-full text-xs font-semibold transition-all ${
-                selectedCategory === category 
-                  ? 'bg-cyan-400 text-black' 
-                  : 'bg-neutral-700 text-neutral-300 hover:bg-neutral-600'
-              }`}
-            >
-              {category === 'All' ? 'All' : category.charAt(0).toUpperCase() + category.slice(1)}
+        <div style={styles.filterRow}>
+          <button style={styles.filterBtn(selectedTradition === 'All')} onClick={() => setSelectedTradition('All')}>All</button>
+          {Object.entries(traditions).map(([key, label]) => (
+            <button key={key} style={styles.filterBtn(selectedTradition === key)} onClick={() => setSelectedTradition(key)}>
+              {label}
             </button>
           ))}
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="flex mb-6">
-        <button
-          onClick={() => setActiveTab('Library')}
-          className={`px-4 py-2 font-semibold transition-all ${
-            activeTab === 'Library' 
-              ? 'bg-cyan-400 text-black' 
-              : 'text-neutral-400 hover:text-neutral-200'
-          }`}
-        >
-          Library ({filteredWisdom.length})
-        </button>
-        <button
-          onClick={() => setActiveTab('Favourites')}
-          className={`px-4 py-2 font-semibold transition-all ${
-            activeTab === 'Favourites' 
-              ? 'bg-cyan-400 text-black' 
-              : 'text-neutral-400 hover:text-neutral-200'
-          }`}
-        >
-          Favourites ({favourites.length})
-        </button>
+      <div style={styles.tabs}>
+        <button style={styles.tabBtn(activeTab === 'Library')} onClick={() => setActiveTab('Library')}>Library ({filtered.length})</button>
+        <button style={styles.tabBtn(activeTab === 'Favourites')} onClick={() => setActiveTab('Favourites')}>Favourites ({favourites.length})</button>
       </div>
 
-      {/* Wisdom Grid */}
-      {displayedWisdom.length === 0 && activeTab === 'Favourites' ? (
-        <div className="bg-black bg-opacity-50 backdrop-blur-lg border border-cyan-400 border-opacity-20 rounded-2xl p-8 text-center">
-          <div className="text-6xl mb-4">⭐</div>
-          <h3 className="text-2xl font-display font-bold text-cyan-400 mb-2">No favourites yet</h3>
-          <p className="text-neutral-400">Star some wisdom entries to see them here.</p>
+      {displayed.length === 0 ? (
+        <div style={styles.empty}>
+          {activeTab === 'Favourites' ? 'Star some teachings to see them here.' : 'Nothing matches that search.'}
         </div>
       ) : (
-        <div className="grid md:grid-cols-2 gap-6">
-          {displayedWisdom.map(wisdom => (
-            <div key={wisdom.id} className="bg-black bg-opacity-50 backdrop-blur-lg border border-cyan-400 border-opacity-20 rounded-2xl p-6">
-              <div className="flex justify-between items-start mb-4">
-                <div
-                  className="px-3 py-1 rounded-full text-xs font-semibold text-black"
-                  style={{ backgroundColor: categoryColors[wisdom.category] }}
-                >
-                  {wisdom.category.toUpperCase()}
-                </div>
-                <button
-                  onClick={() => toggleFavourite(wisdom.id)}
-                  className="text-2xl"
-                >
-                  {favourites.includes(wisdom.id) ? '★' : '☆'}
+        <div style={styles.grid}>
+          {displayed.map((entry) => (
+            <div key={entry.id} style={styles.card}>
+              <div style={styles.cardHead}>
+                <span style={styles.pill(themeColor(entry))}>
+                  {(traditions[entry.tradition] || entry.tradition)} · {entry.theme}
+                </span>
+                <button style={styles.star} onClick={() => toggleFavourite(entry.id)} aria-label="Toggle favourite">
+                  {favourites.includes(entry.id) ? '★' : '☆'}
                 </button>
               </div>
-              
-              <blockquote className="text-lg font-heading italic text-neutral-200 mb-3">
-                "{wisdom.quote}"
-              </blockquote>
-              
-              <cite className="text-neutral-400 text-xs mb-4 block">
-                — {wisdom.author}, {wisdom.source}
-              </cite>
-              
-              {reflections[wisdom.id] && (
-                <>
-                  <hr className="border-neutral-700 mb-2" />
-                  <p className="text-neutral-500 italic text-sm mb-2">My reflection:</p>
-                  <p className="text-neutral-400 text-sm italic">{reflections[wisdom.id]}</p>
-                </>
+              <div style={{ fontSize: 14, fontStyle: 'italic', color: C.text, lineHeight: 1.6, flex: 1 }}>
+                "{entry.teaching}"
+              </div>
+              <div style={{ fontSize: 11, color: C.muted, marginTop: 10 }}>— {entry.source}</div>
+              {reflections[entry.id] && (
+                <div style={styles.reflectionText}>My reflection: {reflections[entry.id]}</div>
               )}
-              
-              <button
-                onClick={() => openReflectionModal(wisdom)}
-                className="text-cyan-400 hover:text-cyan-300 text-sm mt-2"
-              >
-                {reflections[wisdom.id] ? '✏️ Edit reflection' : '💭 Add reflection'}
+              <button style={styles.reflectBtn} onClick={() => openReflection(entry)}>
+                {reflections[entry.id] ? '✏️ Edit reflection' : '💭 Add reflection'}
               </button>
             </div>
           ))}
         </div>
       )}
 
-      {/* Reflection Modal */}
       {reflectionModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50">
-          <div className="bg-black bg-opacity-90 backdrop-blur-lg border border-cyan-400 rounded-2xl p-6 max-w-2xl w-full">
-            <h3 className="text-xl font-display font-bold text-cyan-400 mb-4">Reflect on this wisdom</h3>
-            
-            <blockquote className="text-lg font-heading italic text-neutral-200 mb-4">
-              "{reflectionModal.quote}"
-            </blockquote>
-            
-            <cite className="text-neutral-400 text-sm mb-6 block">
-              — {reflectionModal.author}, {reflectionModal.source}
-            </cite>
-            
+        <div style={styles.modalOverlay} onClick={() => setReflectionModal(null)}>
+          <div style={styles.modal} onClick={(e) => e.stopPropagation()}>
+            <div style={{ fontSize: 16, fontWeight: 700, color: C.goldSoft, marginBottom: 12 }}>Reflect on this teaching</div>
+            <div style={{ fontSize: 13, fontStyle: 'italic', color: C.text, marginBottom: 6, lineHeight: 1.6 }}>"{reflectionModal.teaching}"</div>
+            <div style={{ fontSize: 11, color: C.muted, marginBottom: 16 }}>— {reflectionModal.source}</div>
             <textarea
+              style={styles.textarea}
               placeholder="What does this mean to you? How can you apply it today?"
               value={reflectionText}
               onChange={(e) => setReflectionText(e.target.value)}
-              className="bg-black bg-opacity-50 border border-cyan-400 border-opacity-30 rounded-lg px-4 py-3 text-neutral-200 w-full focus:outline-none focus:ring-1 focus:ring-cyan-400 h-32 mb-4"
             />
-            
-            <div className="flex gap-2">
-              <button
-                onClick={saveReflection}
-                className="bg-cyan-400 hover:bg-cyan-300 text-black font-semibold py-2 px-5 rounded-lg transition-all duration-200"
-              >
-                Save Reflection
-              </button>
-              <button
-                onClick={() => setReflectionModal(null)}
-                className="bg-red-400 hover:bg-red-300 text-white font-semibold py-2 px-5 rounded-lg transition-all duration-200"
-              >
-                Cancel
-              </button>
+            <div style={{ display: 'flex', gap: 10 }}>
+              <button style={styles.btn} onClick={saveReflection}>Save Reflection</button>
+              <button style={styles.btnGhost} onClick={() => setReflectionModal(null)}>Cancel</button>
             </div>
           </div>
         </div>
       )}
     </div>
   );
-};
-
-export default WisdomLibrary;
+}

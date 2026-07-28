@@ -1,5 +1,60 @@
 import React, { useState } from 'react';
 
+const C = {
+  card: "#150e22",
+  surface: "#0f0a17",
+  border: "#2a1f3d",
+  gold: "#c9a44c",
+  goldSoft: "#e8cf8a",
+  violet: "#7b2fff",
+  violetSoft: "#a855f7",
+  cyan: "#00d4ff",
+  text: "#e9e2f5",
+  muted: "#8f80a8",
+  danger: "#e0664f",
+};
+
+const styles = {
+  wrap: { color: C.text, fontFamily: "'DM Mono', 'Fira Code', monospace", paddingBottom: 40 },
+  header: { display: "flex", alignItems: "center", gap: 14, marginBottom: 22, paddingBottom: 18, borderBottom: `1px solid ${C.border}` },
+  icon: { width: 42, height: 42, borderRadius: 10, background: `linear-gradient(135deg, ${C.violet}, ${C.gold})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 },
+  title: { fontSize: 20, fontWeight: 700, letterSpacing: "-0.02em", color: C.goldSoft },
+  subtitle: { fontSize: 11, color: C.muted, textTransform: "uppercase", letterSpacing: "0.14em", marginTop: 2 },
+  tabs: { display: "flex", gap: 8, marginBottom: 22, flexWrap: "wrap" },
+  tabBtn: (active) => ({
+    padding: "10px 18px", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer",
+    fontFamily: "inherit", border: "none",
+    background: active ? `linear-gradient(135deg, ${C.violet}, ${C.violetSoft})` : "transparent",
+    color: active ? "#fff" : C.muted,
+  }),
+  h2: { fontSize: 18, fontWeight: 700, color: C.goldSoft, marginBottom: 18 },
+  h3: { fontSize: 13, fontWeight: 700, color: C.text, marginBottom: 12, textTransform: "uppercase", letterSpacing: "0.08em" },
+  card: { background: C.card, border: `1px solid ${C.border}`, borderRadius: 14, padding: 20, marginBottom: 20 },
+  valueGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))", gap: 10, marginBottom: 24 },
+  valueBtn: (active) => ({
+    padding: "10px 8px", borderRadius: 10, fontWeight: 700, fontSize: 12, cursor: "pointer",
+    fontFamily: "inherit", border: `1px solid ${active ? C.gold : C.border}`,
+    background: active ? `${C.gold}22` : "transparent", color: active ? C.goldSoft : C.muted,
+    transition: "all 0.15s",
+  }),
+  warn: { background: `${C.danger}18`, border: `1px solid ${C.danger}44`, borderRadius: 10, padding: 12, marginBottom: 18, fontSize: 12, color: C.text },
+  chip: { background: `linear-gradient(135deg, ${C.gold}, ${C.goldSoft})`, color: "#1a1208", padding: "5px 12px", borderRadius: 999, fontSize: 12, fontWeight: 700 },
+  para: { color: C.muted, fontSize: 13, lineHeight: 1.7 },
+  ikigaiGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16, marginBottom: 20 },
+  ikigaiIcon: { fontSize: 22, marginBottom: 8 },
+  label: { fontSize: 14, fontWeight: 700, color: C.text, marginBottom: 4 },
+  hint: { fontSize: 11, color: C.muted, marginBottom: 10 },
+  textarea: { background: C.surface, border: `1px solid ${C.border}`, borderRadius: 10, color: C.text, padding: "12px 14px", fontSize: 13, fontFamily: "inherit", outline: "none", width: "100%", height: 90, resize: "vertical", boxSizing: "border-box" },
+  statement: { fontSize: 16, fontStyle: "italic", color: C.text, lineHeight: 1.7 },
+  questionCard: { background: C.card, border: `1px solid ${C.border}`, borderRadius: 12, marginBottom: 10, overflow: "hidden" },
+  questionBtn: { width: "100%", textAlign: "left", padding: "14px 16px", background: "transparent", border: "none", color: C.text, fontWeight: 700, fontSize: 13, cursor: "pointer", fontFamily: "inherit" },
+  questionBody: { padding: "0 16px 16px", fontSize: 12, color: C.muted, lineHeight: 1.7 },
+  btn: { background: `linear-gradient(135deg, ${C.violet}, ${C.violetSoft})`, color: "#fff", border: "none", borderRadius: 8, padding: "10px 22px", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "inherit" },
+  btnDisabled: { opacity: 0.4, cursor: "not-allowed" },
+  pre: { color: C.muted, fontSize: 12, whiteSpace: "pre-wrap", fontFamily: "'DM Mono', monospace", lineHeight: 1.7, padding: "0 16px 16px" },
+  summary: { padding: "14px 16px", fontWeight: 700, color: C.text, fontSize: 13, cursor: "pointer" },
+};
+
 const PhilosophyExplorer = ({ profile, setProfile }) => {
   const [activeTab, setActiveTab] = useState('values');
   const [ikigaiAnswers, setIkigaiAnswers] = useState(profile.ikigaiAnswers || {});
@@ -19,7 +74,7 @@ const PhilosophyExplorer = ({ profile, setProfile }) => {
     if (selectedValues.includes(value)) {
       setProfile(prev => ({ ...prev, values: prev.values.filter(v => v !== value) }));
     } else if (selectedValues.length < 7) {
-      setProfile(prev => ({ ...prev, values: [...prev.values, value] }));
+      setProfile(prev => ({ ...prev, values: [...(prev.values || []), value] }));
     }
   };
 
@@ -40,7 +95,6 @@ const PhilosophyExplorer = ({ profile, setProfile }) => {
   const analyzeDilemma = () => {
     if (!dilemmaText.trim()) return;
 
-    // Simple analysis logic
     const analysis = `────────────────────────────────────
 STOIC ANALYSIS: "${dilemmaText}"
 ────────────────────────────────────
@@ -92,7 +146,7 @@ SUMMARY: Trust your judgment. You know what aligns with your values. Take the st
     {
       id: 2,
       question: 'What is the worst realistic case?',
-      expanded: 'This is premeditatio malorum — negative visualization. Seneca wrote: \'Let us prepare our minds as if we had come to the very end of life.\' Imagining the worst removes its power. Now ask: could I survive it? Could I recover? Almost always — yes.'
+      expanded: "This is premeditatio malorum — negative visualization. Seneca wrote: 'Let us prepare our minds as if we had come to the very end of life.' Imagining the worst removes its power. Now ask: could I survive it? Could I recover? Almost always — yes."
     },
     {
       id: 3,
@@ -107,225 +161,140 @@ SUMMARY: Trust your judgment. You know what aligns with your values. Take the st
     {
       id: 5,
       question: 'Will this matter in 5 years?',
-      expanded: 'Marcus Aurelius wrote: \'How soon will you be ashes or bare bones, and either a name or not even a name.\' This is not pessimism — it is perspective. Most urgent-feeling problems dissolve under long-term view.'
+      expanded: "Marcus Aurelius wrote: 'How soon will you be ashes or bare bones, and either a name or not even a name.' This is not pessimism — it is perspective. Most urgent-feeling problems dissolve under long-term view."
     }
   ];
 
+  const ikigaiFields = [
+    { key: 'love', icon: '💚', label: 'What do you love doing?', hint: 'things that make you lose track of time', placeholder: 'e.g. helping others learn, creating art, solving complex problems...' },
+    { key: 'goodAt', icon: '💛', label: 'What are you good at?', hint: 'your natural talents and trained skills', placeholder: 'e.g. teaching, writing, coding, leadership...' },
+    { key: 'worldNeeds', icon: '🧡', label: 'What does the world need?', hint: 'problems you care about solving', placeholder: 'e.g. education access, mental health support, environmental protection...' },
+    { key: 'paidFor', icon: '💙', label: 'What can you be paid for?', hint: 'skills others value and will compensate', placeholder: 'e.g. consulting, content creation, software development...' },
+  ];
+
   return (
-    <div className="p-6 max-w-6xl mx-auto">
-      {/* Tab Navigation */}
-      <div className="flex mb-8">
-        <button
-          onClick={() => setActiveTab('values')}
-          className={`px-6 py-3 font-semibold transition-all ${
-            activeTab === 'values' ? 'bg-cyan-400 text-black' : 'text-neutral-400 hover:text-neutral-200'
-          }`}
-        >
-          ⚖️ Values
-        </button>
-        <button
-          onClick={() => setActiveTab('purpose')}
-          className={`px-6 py-3 font-semibold transition-all ${
-            activeTab === 'purpose' ? 'bg-cyan-400 text-black' : 'text-neutral-400 hover:text-neutral-200'
-          }`}
-        >
-          🌟 Purpose
-        </button>
-        <button
-          onClick={() => setActiveTab('decisions')}
-          className={`px-6 py-3 font-semibold transition-all ${
-            activeTab === 'decisions' ? 'bg-cyan-400 text-black' : 'text-neutral-400 hover:text-neutral-200'
-          }`}
-        >
-          🧭 Decisions
-        </button>
+    <div style={styles.wrap}>
+      <div style={styles.header}>
+        <div style={styles.icon}>🧭</div>
+        <div>
+          <div style={styles.title}>Philosophy</div>
+          <div style={styles.subtitle}>Values, purpose, and a Stoic lens on hard decisions</div>
+        </div>
       </div>
 
-      {/* Values Tab */}
+      <div style={styles.tabs}>
+        <button style={styles.tabBtn(activeTab === 'values')} onClick={() => setActiveTab('values')}>⚖️ Values</button>
+        <button style={styles.tabBtn(activeTab === 'purpose')} onClick={() => setActiveTab('purpose')}>🌟 Purpose</button>
+        <button style={styles.tabBtn(activeTab === 'decisions')} onClick={() => setActiveTab('decisions')}>🧭 Decisions</button>
+      </div>
+
       {activeTab === 'values' && (
         <div>
-          <h2 className="text-2xl font-display font-bold text-cyan-400 mb-6">Core Values Assessment</h2>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+          <div style={styles.h2}>Core Values Assessment</div>
+          <div style={styles.valueGrid}>
             {values.map(value => (
-              <button
-                key={value}
-                onClick={() => toggleValue(value)}
-                className={`p-3 rounded-lg font-semibold transition-all ${
-                  selectedValues.includes(value)
-                    ? 'bg-cyan-400 text-black'
-                    : 'bg-neutral-700 text-neutral-300 hover:bg-neutral-600'
-                }`}
-              >
+              <button key={value} style={styles.valueBtn(selectedValues.includes(value))} onClick={() => toggleValue(value)}>
                 {value}
               </button>
             ))}
           </div>
 
           {selectedValues.length >= 7 && (
-            <div className="bg-red-400 bg-opacity-20 border border-red-400 rounded-lg p-3 mb-6">
-              Choose your top 7. More values = less clarity.
-            </div>
+            <div style={styles.warn}>Choose your top 7. More values = less clarity.</div>
           )}
 
-          <div className="bg-black bg-opacity-50 backdrop-blur-lg border border-cyan-400 border-opacity-20 rounded-2xl p-6">
-            <h3 className="text-xl font-display font-bold text-cyan-400 mb-4">Your Core Identity</h3>
-            <div className="flex flex-wrap gap-2 mb-4">
-              {selectedValues.map(value => (
-                <span key={value} className="bg-cyan-400 text-black px-3 py-1 rounded-full text-sm font-semibold">
-                  {value}
-                </span>
-              ))}
+          <div style={styles.card}>
+            <div style={styles.h3}>Your Core Identity</div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 14 }}>
+              {selectedValues.map(value => <span key={value} style={styles.chip}>{value}</span>)}
             </div>
-            <p className="text-neutral-400 text-sm">
-              These values are your compass. Every major decision should align with at least one.
-            </p>
+            <div style={styles.para}>These values are your compass. Every major decision should align with at least one.</div>
           </div>
         </div>
       )}
 
-      {/* Purpose Tab */}
       {activeTab === 'purpose' && (
         <div>
-          <h2 className="text-2xl font-display font-bold text-cyan-400 mb-6">Purpose Builder</h2>
-          
-          <div className="mb-6">
-            <p className="text-neutral-300 mb-4">
-              Ikigai is the Japanese concept of your 'reason for being'. It sits at the intersection of four questions.
-            </p>
+          <div style={styles.h2}>Purpose Builder</div>
+          <div style={{ ...styles.para, marginBottom: 20 }}>
+            Ikigai is the Japanese concept of your 'reason for being'. It sits at the intersection of four questions.
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
-            <div className="bg-black bg-opacity-50 backdrop-blur-lg border border-cyan-400 border-opacity-20 rounded-2xl p-6">
-              <div className="text-green-400 text-2xl mb-2">💚</div>
-              <h3 className="text-lg font-semibold text-neutral-200 mb-2">What do you love doing?</h3>
-              <p className="text-neutral-400 text-sm mb-4">things that make you lose track of time</p>
-              <textarea
-                value={ikigaiAnswers.love || ''}
-                onChange={(e) => updateIkigaiAnswer('love', e.target.value)}
-                placeholder="e.g. helping others learn, creating art, solving complex problems..."
-                className="bg-black bg-opacity-50 border border-cyan-400 border-opacity-30 rounded-lg px-4 py-3 text-neutral-200 w-full focus:outline-none focus:ring-1 focus:ring-cyan-400 h-24"
-              />
-            </div>
-
-            <div className="bg-black bg-opacity-50 backdrop-blur-lg border border-cyan-400 border-opacity-20 rounded-2xl p-6">
-              <div className="text-yellow-400 text-2xl mb-2">💛</div>
-              <h3 className="text-lg font-semibold text-neutral-200 mb-2">What are you good at?</h3>
-              <p className="text-neutral-400 text-sm mb-4">your natural talents and trained skills</p>
-              <textarea
-                value={ikigaiAnswers.goodAt || ''}
-                onChange={(e) => updateIkigaiAnswer('goodAt', e.target.value)}
-                placeholder="e.g. teaching, writing, coding, leadership..."
-                className="bg-black bg-opacity-50 border border-cyan-400 border-opacity-30 rounded-lg px-4 py-3 text-neutral-200 w-full focus:outline-none focus:ring-1 focus:ring-cyan-400 h-24"
-              />
-            </div>
-
-            <div className="bg-black bg-opacity-50 backdrop-blur-lg border border-cyan-400 border-opacity-20 rounded-2xl p-6">
-              <div className="text-orange-400 text-2xl mb-2">🧡</div>
-              <h3 className="text-lg font-semibold text-neutral-200 mb-2">What does the world need?</h3>
-              <p className="text-neutral-400 text-sm mb-4">problems you care about solving</p>
-              <textarea
-                value={ikigaiAnswers.worldNeeds || ''}
-                onChange={(e) => updateIkigaiAnswer('worldNeeds', e.target.value)}
-                placeholder="e.g. education access, mental health support, environmental protection..."
-                className="bg-black bg-opacity-50 border border-cyan-400 border-opacity-30 rounded-lg px-4 py-3 text-neutral-200 w-full focus:outline-none focus:ring-1 focus:ring-cyan-400 h-24"
-              />
-            </div>
-
-            <div className="bg-black bg-opacity-50 backdrop-blur-lg border border-cyan-400 border-opacity-20 rounded-2xl p-6">
-              <div className="text-blue-400 text-2xl mb-2">💙</div>
-              <h3 className="text-lg font-semibold text-neutral-200 mb-2">What can you be paid for?</h3>
-              <p className="text-neutral-400 text-sm mb-4">skills others value and will compensate</p>
-              <textarea
-                value={ikigaiAnswers.paidFor || ''}
-                onChange={(e) => updateIkigaiAnswer('paidFor', e.target.value)}
-                placeholder="e.g. consulting, content creation, software development..."
-                className="bg-black bg-opacity-50 border border-cyan-400 border-opacity-30 rounded-lg px-4 py-3 text-neutral-200 w-full focus:outline-none focus:ring-1 focus:ring-cyan-400 h-24"
-              />
-            </div>
+          <div style={styles.ikigaiGrid}>
+            {ikigaiFields.map((f) => (
+              <div key={f.key} style={styles.card}>
+                <div style={styles.ikigaiIcon}>{f.icon}</div>
+                <div style={styles.label}>{f.label}</div>
+                <div style={styles.hint}>{f.hint}</div>
+                <textarea
+                  style={styles.textarea}
+                  value={ikigaiAnswers[f.key] || ''}
+                  onChange={(e) => updateIkigaiAnswer(f.key, e.target.value)}
+                  placeholder={f.placeholder}
+                />
+              </div>
+            ))}
           </div>
 
-          <div className="bg-black bg-opacity-50 backdrop-blur-lg border border-cyan-400 border-opacity-20 rounded-2xl p-6">
-            <h3 className="text-xl font-display font-bold text-cyan-400 mb-4">YOUR IKIGAI STATEMENT</h3>
+          <div style={styles.card}>
+            <div style={styles.h3}>Your Ikigai Statement</div>
             {getIkigaiStatement() ? (
-              <p className="text-neutral-200 font-heading italic text-lg leading-relaxed">
-                {getIkigaiStatement()}
-              </p>
+              <div style={styles.statement}>{getIkigaiStatement()}</div>
             ) : (
-              <p className="text-neutral-400">
-                Answer all four questions to reveal your purpose statement.
-              </p>
+              <div style={styles.para}>Answer all four questions to reveal your purpose statement.</div>
             )}
           </div>
         </div>
       )}
 
-      {/* Decisions Tab */}
       {activeTab === 'decisions' && (
         <div>
-          <h2 className="text-2xl font-display font-bold text-cyan-400 mb-6">Stoic Decision Framework</h2>
+          <div style={styles.h2}>Stoic Decision Framework</div>
 
-          {/* Stoic Questions */}
-          <div className="mb-8">
-            <h3 className="text-xl font-semibold text-neutral-200 mb-4">THE 5 STOIC QUESTIONS</h3>
-            <div className="space-y-3">
-              {stoicQuestions.map(question => (
-                <div key={question.id} className="bg-black bg-opacity-50 backdrop-blur-lg border border-cyan-400 border-opacity-20 rounded-2xl">
-                  <button
-                    onClick={() => setExpandedQuestion(expandedQuestion === question.id ? null : question.id)}
-                    className="w-full text-left p-4 font-semibold text-neutral-200 hover:text-cyan-400 transition-colors"
-                  >
-                    {question.question}
-                  </button>
-                  {expandedQuestion === question.id && (
-                    <div className="px-4 pb-4 text-neutral-400 text-sm">
-                      {question.expanded}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
+          <div style={{ marginBottom: 24 }}>
+            <div style={styles.h3}>The 5 Stoic Questions</div>
+            {stoicQuestions.map((q) => (
+              <div key={q.id} style={styles.questionCard}>
+                <button
+                  style={styles.questionBtn}
+                  onClick={() => setExpandedQuestion(expandedQuestion === q.id ? null : q.id)}
+                >
+                  {q.question}
+                </button>
+                {expandedQuestion === q.id && <div style={styles.questionBody}>{q.expanded}</div>}
+              </div>
+            ))}
           </div>
 
-          {/* Personal Dilemma Tool */}
-          <div className="bg-black bg-opacity-50 backdrop-blur-lg border border-cyan-400 border-opacity-20 rounded-2xl p-6 mb-8">
-            <h3 className="text-xl font-semibold text-neutral-200 mb-4">PERSONAL DILEMMA TOOL</h3>
-            <p className="text-neutral-400 mb-4">Describe a decision you're facing right now</p>
-            
+          <div style={styles.card}>
+            <div style={styles.h3}>Personal Dilemma Tool</div>
+            <div style={{ ...styles.para, marginBottom: 12 }}>Describe a decision you're facing right now</div>
             <textarea
+              style={{ ...styles.textarea, height: 90, marginBottom: 14 }}
               value={dilemmaText}
               onChange={(e) => setDilemmaText(e.target.value)}
               placeholder="e.g. Should I drop out to start my business? Should I confront my friend? Should I take this job offer?"
-              className="bg-black bg-opacity-50 border border-cyan-400 border-opacity-30 rounded-lg px-4 py-3 text-neutral-200 w-full focus:outline-none focus:ring-1 focus:ring-cyan-400 h-24 mb-4"
             />
-            
             <button
+              style={{ ...styles.btn, ...(dilemmaText.trim() ? {} : styles.btnDisabled) }}
               onClick={analyzeDilemma}
               disabled={!dilemmaText.trim()}
-              className="bg-cyan-400 hover:bg-cyan-300 disabled:bg-neutral-600 text-black font-semibold py-2 px-5 rounded-lg transition-all duration-200"
             >
               Analyse with Stoic Filter
             </button>
           </div>
 
-          {/* Dilemma History */}
           {(profile.dilemmaHistory || []).length > 0 && (
             <div>
-              <h3 className="text-xl font-semibold text-neutral-200 mb-4">RECENT ANALYSES</h3>
-              <div className="space-y-4">
-                {(profile.dilemmaHistory || []).slice(0, 3).map((item, index) => (
-                  <details key={index} className="bg-black bg-opacity-50 backdrop-blur-lg border border-cyan-400 border-opacity-20 rounded-2xl">
-                    <summary className="p-4 font-semibold text-neutral-200 cursor-pointer">
-                      {item.dilemma.length > 50 ? item.dilemma.substring(0, 50) + '...' : item.dilemma}
-                    </summary>
-                    <div className="px-4 pb-4">
-                      <pre className="text-neutral-400 text-sm whitespace-pre-wrap font-mono">
-                        {item.analysis}
-                      </pre>
-                    </div>
-                  </details>
-                ))}
-              </div>
+              <div style={styles.h3}>Recent Analyses</div>
+              {(profile.dilemmaHistory || []).slice(0, 3).map((item, index) => (
+                <details key={index} style={styles.questionCard}>
+                  <summary style={styles.summary}>
+                    {item.dilemma.length > 50 ? `${item.dilemma.substring(0, 50)}...` : item.dilemma}
+                  </summary>
+                  <pre style={styles.pre}>{item.analysis}</pre>
+                </details>
+              ))}
             </div>
           )}
         </div>

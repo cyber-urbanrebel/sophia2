@@ -1,4 +1,8 @@
 ﻿import React, { useState, useCallback, useRef, useEffect } from 'react';
+import api from '../services/api.js';
+
+const CONVERSATION_ID_KEY = 'sophia_ai_coach_conversation_id';
+const uid = () => Math.random().toString(36).slice(2, 9);
 
 const AICoach = () => {
   const [messages, setMessages] = useState(() => {
@@ -25,10 +29,17 @@ const AICoach = () => {
     scrollToBottom();
   }, [messages]);
 
+  const [conversationId] = useState(() => {
+    const existing = localStorage.getItem(CONVERSATION_ID_KEY);
+    if (existing) return existing;
+    const next = uid();
+    localStorage.setItem(CONVERSATION_ID_KEY, next);
+    return next;
+  });
+
   const sendMessage = useCallback(async (userMessage) => {
     if (!userMessage.trim()) return;
 
-    // Add user message
     const userMsg = {
       id: Date.now(),
       role: 'user',
@@ -45,32 +56,29 @@ const AICoach = () => {
     setInput('');
     setLoading(true);
 
-    // Simulate AI response (in production, call your Anthropic API)
-    setTimeout(() => {
-      const responses = [
-        "That's an interesting question! Based on your recent activity, I recommend focusing on consistency. How can I help you improve your discipline score?",
-        "I've noticed you've been on a great streak! Keep up this momentum. What area would you like to work on next?",
-        "Your body metrics look good. For optimal results, consider adjusting your hydration habits. Would you like specific recommendations?",
-        "Your mind seems a bit cluttered based on your journal entries. Have you considered starting a meditation practice?",
-        "Amazing progress! You're 15% closer to your next level. What motivates you the most in your journey?",
-      ];
+    let replyText;
+    try {
+      const res = await api.getCoachReply(userMessage, conversationId);
+      replyText = res?.assistant_text;
+    } catch {
+      replyText = null;
+    }
 
-      const aiMsg = {
-        id: Date.now() + 1,
-        role: 'assistant',
-        content: responses[Math.floor(Math.random() * responses.length)],
-        timestamp: new Date(),
-      };
+    const aiMsg = {
+      id: Date.now() + 1,
+      role: 'assistant',
+      content: replyText || "I couldn't reach the backend just now — check that the Sophia API is running, then try again.",
+      timestamp: new Date(),
+    };
 
-      setMessages(prev => {
-        const updated = [...prev, aiMsg];
-        localStorage.setItem('sophia_ai_coach_messages', JSON.stringify(updated));
-        return updated;
-      });
+    setMessages(prev => {
+      const updated = [...prev, aiMsg];
+      localStorage.setItem('sophia_ai_coach_messages', JSON.stringify(updated));
+      return updated;
+    });
 
-      setLoading(false);
-    }, 800);
-  }, []);
+    setLoading(false);
+  }, [conversationId]);
 
   const handleSend = () => {
     sendMessage(input);

@@ -482,6 +482,32 @@ class API {
     return this.request('GET', `/api/payments/status/${transactionId}`);
   }
 
+  // ============ COACH ENDPOINTS ============
+  async getCoachReply(message, conversationId) {
+    return this.request('POST', '/api/coach/reply', { message, conversation_id: conversationId });
+  }
+
+  async getCoachBriefing(conversationId) {
+    return this.request('POST', '/api/coach/briefing', { conversation_id: conversationId });
+  }
+
+  // ============ SHADOW WORK ENDPOINTS ============
+  async getShadowEntries() {
+    return this.request('GET', '/api/shadow');
+  }
+
+  async createShadowEntry(entryData) {
+    return this.request('POST', '/api/shadow', entryData);
+  }
+
+  async updateShadowEntry(id, entryData) {
+    return this.request('PUT', `/api/shadow/${id}`, entryData);
+  }
+
+  async deleteShadowEntry(id) {
+    return this.request('DELETE', `/api/shadow/${id}`);
+  }
+
   // ============ ADMIN ENDPOINTS ============
   async getAdminDashboard() {
     return this.request('GET', '/api/admin/dashboard');

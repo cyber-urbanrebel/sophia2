@@ -8,8 +8,10 @@ import Sidebar from './components/Sidebar.jsx';
 import MindSection from './components/MindSection.jsx';
 import BodySection from './components/BodySection.jsx';
 import DisciplineSection from './components/DisciplineSection.jsx';
+import ShadowSection from './components/ShadowSection.jsx';
 import ProgressSection from './components/ProgressSection.jsx';
 import FloatingAI from './components/FloatingAI.jsx';
+import VoiceAssistant from './components/VoiceAssistant.jsx';
 import NotificationSystem from './components/NotificationSystem.jsx';
 import GrowthSystem from './components/GrowthSystem.jsx';
 import HomeDashboard from './components/HomeDashboard.jsx';
@@ -21,6 +23,11 @@ import GamificationPage from './components/GamificationPage.jsx';
 import SmartReminders from './components/SmartReminders.jsx';
 import ProgressReports from './components/ProgressReports.jsx';
 import PremiumPage from './components/PremiumPage.jsx';
+import WisdomLibrary from './components/WisdomLibrary.jsx';
+import PhilosophyExplorer from './components/PhilosophyExplorer.jsx';
+import CommunityPage from './components/CommunityPage.jsx';
+import GoalsPage from './components/GoalsPage.jsx';
+import AdvancedAnalytics from './components/AdvancedAnalytics.jsx';
 import SophiaCursor from './components/SophiaCursor.jsx';
 import PageTransition from './components/PageTransition.jsx';
 import CommandPalette from './components/CommandPalette.jsx';
@@ -30,8 +37,6 @@ import { completeOnboarding as completeOnboardingSlice } from './store/slices/on
 import { logout } from './store/slices/authSlice.js';
 import { resetOnboarding } from './store/slices/onboardingSlice.js';
 import styles from './styles/App.module.css';
-
-const ProjectsFeature = React.lazy(() => import('./features/projects/index.jsx'));
 
 const AUTH_TOKEN_KEY = 'sophia-auth-token';
 const ONBOARDING_KEY = 'sophia-onboarding-complete';
@@ -75,8 +80,42 @@ export default function App() {
   const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [activeTab, setActiveTab] = useState('dashboard');
+  const [activeTab, setActiveTab] = useState('path');
   const [loading, setLoading] = useState(true);
+  const [goals, setGoals] = useState(() => {
+    if (typeof window === 'undefined') return [];
+    try {
+      return JSON.parse(window.localStorage.getItem('sophia_goals')) || [];
+    } catch {
+      return [];
+    }
+  });
+  const [philosophyProfile, setPhilosophyProfile] = useState(() => {
+    if (typeof window === 'undefined') return { values: [] };
+    try {
+      return JSON.parse(window.localStorage.getItem('sophia_philosophy_profile')) || { values: [] };
+    } catch {
+      return { values: [] };
+    }
+  });
+  const [wisdomFavourites, setWisdomFavourites] = useState(() => {
+    if (typeof window === 'undefined') return [];
+    try {
+      return JSON.parse(window.localStorage.getItem('sophia_wisdom_favourites')) || [];
+    } catch {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    window.localStorage.setItem('sophia_goals', JSON.stringify(goals));
+  }, [goals]);
+  useEffect(() => {
+    window.localStorage.setItem('sophia_philosophy_profile', JSON.stringify(philosophyProfile));
+  }, [philosophyProfile]);
+  useEffect(() => {
+    window.localStorage.setItem('sophia_wisdom_favourites', JSON.stringify(wisdomFavourites));
+  }, [wisdomFavourites]);
   const [sidebarOpen, setSidebarOpen] = useState(() => {
     if (typeof window === 'undefined') return true;
     const stored = window.localStorage.getItem(SIDEBAR_KEY);
@@ -107,19 +146,24 @@ export default function App() {
     if (!token || !isAuthenticated) return '/auth';
     const onboarded = localStorage.getItem(ONBOARDING_KEY) === 'true';
     if (!onboarded || !hasCompletedOnboarding) return '/onboarding';
-    return '/dashboard';
+    return '/path';
   }, [hasCompletedOnboarding, isAuthenticated]);
 
   useEffect(() => {
     const path = location.pathname.toLowerCase();
-    if (path.startsWith('/dashboard')) setActiveTab('dashboard');
+    if (path.startsWith('/path') || path.startsWith('/dashboard')) setActiveTab('path');
     else if (path.startsWith('/body')) setActiveTab('body');
     else if (path.startsWith('/mind')) setActiveTab('mind');
     else if (path.startsWith('/discipline')) setActiveTab('discipline');
+    else if (path.startsWith('/shadow')) setActiveTab('shadow');
     else if (path.startsWith('/progress')) setActiveTab('progress');
     else if (path.startsWith('/profile')) setActiveTab('profile');
     else if (path.startsWith('/growth')) setActiveTab('growth');
-    else if (path.startsWith('/projects')) setActiveTab('projects');
+    else if (path.startsWith('/wisdom')) setActiveTab('wisdom');
+    else if (path.startsWith('/philosophy')) setActiveTab('philosophy');
+    else if (path.startsWith('/goals')) setActiveTab('goals');
+    else if (path.startsWith('/community')) setActiveTab('community');
+    else if (path.startsWith('/analytics')) setActiveTab('analytics');
     else if (path.startsWith('/admin')) setActiveTab('admin');
     else if (path.startsWith('/notifications')) setActiveTab('notifications');
     else if (path.startsWith('/focus')) setActiveTab('focus');
@@ -127,6 +171,7 @@ export default function App() {
     else if (path.startsWith('/reminders')) setActiveTab('reminders');
     else if (path.startsWith('/reports')) setActiveTab('reports');
     else if (path.startsWith('/premium')) setActiveTab('premium');
+    else if (path.startsWith('/voice')) setActiveTab('voice');
   }, [location.pathname]);
 
   useEffect(() => {
@@ -163,26 +208,28 @@ export default function App() {
     localStorage.setItem('sophia-onboarding-complete', 'true');
     dispatch(completeOnboardingSlice(profile));
 
-    // Smooth transition to dashboard
-    setTransitionMessage(`Welcome, ${profile.name || 'Friend'}! Preparing your dashboard...`);
+    // Smooth transition to the Path dashboard
+    setTransitionMessage(`Welcome, ${profile.name || 'Friend'}! Preparing your path...`);
     setTransitioning(true);
     setTimeout(() => {
-      navigate('/dashboard', { replace: true });
+      navigate('/path', { replace: true });
       setTimeout(() => setTransitioning(false), 600);
     }, 1800);
   };
 
   const handleHomeNavigate = (destination) => {
-    const nextTab = String(destination || 'dashboard').trim().toLowerCase();
+    const nextTab = String(destination || 'path').trim().toLowerCase();
     const nextPath = {
-      dashboard: '/dashboard',
+      path: '/path',
+      dashboard: '/path',
       body: '/body',
       mind: '/mind',
       discipline: '/discipline',
+      shadow: '/shadow',
       progress: '/progress',
-    }[nextTab] || '/dashboard';
+    }[nextTab] || '/path';
 
-    setActiveTab(nextTab);
+    setActiveTab(nextTab === 'dashboard' ? 'path' : nextTab);
     navigate(nextPath);
   };
 
@@ -224,23 +271,36 @@ export default function App() {
               !isAuthenticated || !localStorage.getItem(AUTH_TOKEN_KEY) ? (
                 <Navigate to="/auth" replace />
               ) : hasCompletedOnboarding && localStorage.getItem(ONBOARDING_KEY) === 'true' ? (
-                <Navigate to="/dashboard" replace />
+                <Navigate to="/path" replace />
               ) : (
                 <OnboardingFlow onComplete={handleOnboardingComplete} />
               )
             }
           />
-          {/* Legacy /home redirect */}
-          <Route path="/home" element={<Navigate to="/dashboard" replace />} />
-          <Route path="/dashboard" element={renderProtected(<HomeDashboard onNavigate={handleHomeNavigate} />)} />
-          <Route path="/body" element={renderProtected(<BodySection />)} />
+          {/* Legacy redirects to the renamed Path dashboard */}
+          <Route path="/home" element={<Navigate to="/path" replace />} />
+          <Route path="/dashboard" element={<Navigate to="/path" replace />} />
+
+          {/* Primary six — Path / Mind / Body / Discipline / Shadow / Progress */}
+          <Route path="/path" element={renderProtected(<HomeDashboard onNavigate={handleHomeNavigate} />)} />
           <Route path="/mind" element={renderProtected(<MindSection />)} />
+          <Route path="/body" element={renderProtected(<BodySection />)} />
           <Route path="/discipline" element={renderProtected(<DisciplineSection />)} />
+          <Route path="/shadow" element={renderProtected(<ShadowSection />)} />
           <Route path="/progress" element={renderProtected(<ProgressSection />)} />
-          <Route path="/ai" element={<Navigate to="/dashboard" replace />} />
+
+          {/* Voice assistant + floating AI */}
+          <Route path="/voice" element={renderProtected(<VoiceAssistant />)} />
+          <Route path="/ai" element={<Navigate to="/voice" replace />} />
+
+          {/* Secondary / "More" menu */}
           <Route path="/profile" element={renderProtected(<ProfilePage />)} />
           <Route path="/growth" element={renderProtected(<GrowthSystem />)} />
-          <Route path="/projects" element={renderProtected(<React.Suspense fallback={<div style={{color:'#4a4a62',padding:40,textAlign:'center'}}>Loading…</div>}><ProjectsFeature /></React.Suspense>)} />
+          <Route path="/wisdom" element={renderProtected(<WisdomLibrary favourites={wisdomFavourites} setFavourites={setWisdomFavourites} />)} />
+          <Route path="/philosophy" element={renderProtected(<PhilosophyExplorer profile={philosophyProfile} setProfile={setPhilosophyProfile} />)} />
+          <Route path="/goals" element={renderProtected(<GoalsPage goals={goals} setGoals={setGoals} />)} />
+          <Route path="/community" element={renderProtected(<CommunityPage user={user} />)} />
+          <Route path="/analytics" element={renderProtected(<AdvancedAnalytics />)} />
           <Route path="/notifications" element={renderProtected(<NotificationSystem />)} />
           <Route path="/focus" element={renderProtected(<PomodoroTimer />)} />
           <Route path="/achievements" element={renderProtected(<GamificationPage />)} />

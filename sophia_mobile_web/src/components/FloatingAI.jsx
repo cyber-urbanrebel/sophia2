@@ -1,9 +1,12 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import api from '../services/api.js';
 
 // ---------- Onboarding data helpers ----------
 const ONBOARDING_DATA_KEY = 'sophia_onboarding_data';
 const AI_WELCOMED_KEY = 'sophia_ai_welcomed';
+const CONVERSATION_ID_KEY = 'sophia_floating_ai_conversation_id';
+const uid = () => Math.random().toString(36).slice(2, 9);
 
 function getOnboardingData() {
   try {
@@ -337,7 +340,15 @@ export default function FloatingAI() {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  const sendMessage = useCallback((text) => {
+  const [conversationId] = useState(() => {
+    const existing = localStorage.getItem(CONVERSATION_ID_KEY);
+    if (existing) return existing;
+    const next = uid();
+    localStorage.setItem(CONVERSATION_ID_KEY, next);
+    return next;
+  });
+
+  const sendMessage = useCallback(async (text) => {
     if (!text.trim()) return;
     const userMsg = { id: Date.now(), role: 'user', content: text, ts: Date.now() };
     setMessages(prev => {
@@ -348,17 +359,24 @@ export default function FloatingAI() {
     setInput('');
     setLoading(true);
 
-    setTimeout(() => {
-      const reply = generateReply(text, guidance.label);
-      const aiMsg = { id: Date.now() + 1, role: 'assistant', content: reply, ts: Date.now() };
-      setMessages(prev => {
-        const next = [...prev, aiMsg];
-        localStorage.setItem('sophia_floating_ai_msgs', JSON.stringify(next));
-        return next;
-      });
-      setLoading(false);
-    }, 700);
-  }, [guidance.label]);
+    let reply;
+    try {
+      const res = await api.getCoachReply(text, conversationId);
+      reply = res?.assistant_text;
+    } catch {
+      reply = null;
+    }
+    // Fall back to the local contextual guidance if the backend is unreachable.
+    if (!reply) reply = generateReply(text, guidance.label);
+
+    const aiMsg = { id: Date.now() + 1, role: 'assistant', content: reply, ts: Date.now() };
+    setMessages(prev => {
+      const next = [...prev, aiMsg];
+      localStorage.setItem('sophia_floating_ai_msgs', JSON.stringify(next));
+      return next;
+    });
+    setLoading(false);
+  }, [guidance.label, conversationId]);
 
   return (
     <>

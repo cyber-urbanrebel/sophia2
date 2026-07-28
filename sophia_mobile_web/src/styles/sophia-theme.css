@@ -9,6 +9,9 @@
   --sophia-text-dim: #9ab2ca;
   --sophia-cyan: #00d4ff;
   --sophia-purple: #7b2fff;
+  --sophia-gold: #c9a44c;
+  --sophia-gold-soft: #e8cf8a;
+  --sophia-obsidian: #050308;
   --sophia-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --sophia-body: 'Space Grotesk', system-ui, sans-serif;
   --sophia-display: 'Orbitron', 'Space Grotesk', sans-serif;
@@ -476,6 +479,21 @@ li {
   inset: 18%;
   border-color: rgba(0, 212, 255, 0.22);
   animation-duration: 7s;
+}
+
+.sophia-orb-ring.ring-gold {
+  inset: -4%;
+  border-color: rgba(201, 164, 76, 0.32);
+  border-style: dashed;
+  animation: sophia-spin 40s linear infinite;
+}
+
+.sophia-orb-geometry {
+  position: absolute;
+  inset: -10%;
+  opacity: 0.55;
+  animation: sophia-spin 90s linear infinite;
+  pointer-events: none;
 }
 
 .sophia-orbit {
