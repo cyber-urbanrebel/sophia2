@@ -104,47 +104,52 @@ sophia2/
   _archive/             Superseded prior attempts, kept for reference only
 ```
 
-## Going Live (Free Tier)
+## Going Live
 
 Two separate deploys: the frontend (static site → Vercel) and the backend
-(Python server → Render). Both connect straight to this GitHub repo
+(Python server → Railway). Both connect straight to this GitHub repo
 (`cyber-urbanrebel/sophia2`), so every `git push` to `main` redeploys
-automatically once set up.
+automatically once set up. Everything below is dashboard clicks — no local
+CLI install needed.
 
-**Backend first (Render)**
-1. Sign up at render.com, click **New → Blueprint**, connect this GitHub repo.
-2. Render reads `render.yaml` at the repo root automatically and proposes a
-   `sophia-api` web service rooted at `backend/` — accept it.
-3. It'll ask for the env vars marked `sync: false` in `render.yaml`
-   (`WEB_ORIGIN`, and optionally `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` /
-   `ELEVENLABS_API_KEY` if you have real ones). Leave `WEB_ORIGIN` blank for
-   now — you'll fill it in after the frontend is deployed, in step 3 below.
-   `JWT_SECRET` is generated for you automatically.
-4. Deploy. Note the URL Render gives you, e.g. `https://sophia-api.onrender.com`.
+**Backend first (Railway)**
+1. Sign up at railway.app, **New Project → Deploy from GitHub repo**, pick
+   `sophia2`.
+2. In the new service's **Settings → Source**, set **Root Directory** to
+   `backend`. Railway reads `backend/railway.json` automatically and detects
+   Python via `requirements.txt` (Nixpacks) — no build command to type in.
+3. **Settings → Variables**, add:
+   - `JWT_SECRET` — any long random string (e.g. mash the keyboard for 40+ characters)
+   - `WEB_ORIGIN` — leave as a placeholder for now, e.g. `http://localhost:5173`, you'll update it in step 3 below
+   - `DATABASE_PATH` — `/data/sophia.db` (see the volume step next — this path only persists once a volume is mounted there)
+   - Optional: `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `ELEVENLABS_API_KEY` if you have real ones
+4. **To make the database actually persist** (survive redeploys): in the
+   service, go to **Settings → Volumes → New Volume**, mount path `/data`.
+   Without this step the SQLite file resets on every redeploy.
+5. **Settings → Networking → Generate Domain** to get a public URL, e.g.
+   `https://sophia-api-production.up.railway.app`.
 
 **Frontend (Vercel)**
 1. Sign up at vercel.com, **Add New → Project**, import the same repo.
 2. Set **Root Directory** to `sophia_mobile_web` (Vercel auto-detects Vite;
    `vercel.json` inside that folder handles the rest).
-3. Add an environment variable: `VITE_API_URL` = your Render URL from above
-   (e.g. `https://sophia-api.onrender.com`).
+3. Add an environment variable: `VITE_API_URL` = your Railway URL from above.
 4. Deploy. Note the URL Vercel gives you, e.g. `https://sophia.vercel.app`.
 
 **Connect them**
-Back in Render → your `sophia-api` service → Environment, set `WEB_ORIGIN` to
-your Vercel URL (exact, no trailing slash) so the backend's CORS allows the
-frontend to call it. Redeploy the backend.
+Back in Railway → your service → Variables, set `WEB_ORIGIN` to your Vercel
+URL (exact, no trailing slash) so the backend's CORS allows the frontend to
+call it. Railway redeploys automatically when you save a variable.
 
 Visit your Vercel URL — that's Sophia, live.
 
-**Free tier caveats**: Render's free web service sleeps after inactivity
-(first request after a while has a ~30-60s cold-start delay) and doesn't
-include a persistent disk, so the SQLite database resets on redeploy/restart
-— fine for trying it out or demoing, not for real user data yet. When you're
-ready for that to stop happening, either upgrade to a paid Render instance
-with a persistent disk, or move `DATABASE_PATH` to a managed Postgres
-database (Render offers free Postgres instances — this needs a small code
-change in `backend/app/db.py` to point at a Postgres URL instead of SQLite).
+**Cost note**: Railway's free trial is credit-based, not unlimited — check
+current pricing on their site before relying on it long-term; a hobby plan
+is a few dollars/month once the trial credit runs out. If you'd rather avoid
+that entirely, say so and I'll switch the backend config to a platform with
+an uncapped free tier instead (e.g. Google Cloud Run, though it needs a
+Google Cloud account and doesn't do persistent local disk either, so the
+database would need to move to a managed Postgres either way).
 
 ## Known Gaps (Not Built In This Pass)
 
