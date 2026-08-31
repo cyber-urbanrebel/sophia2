@@ -13,7 +13,6 @@ export default function HudBar({ room = 'PATH' }) {
   return (
     <div className="hud-bar" role="status">
       <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-        <img src="/assets/sophia-gyrate.svg" className="hud-gyrate" width="22" height="22" alt="" aria-hidden="true" />
         <span className="dot" aria-hidden="true" />
         SYS // SOPHIA
       </span>

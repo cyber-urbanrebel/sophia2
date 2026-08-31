@@ -1,10 +1,8 @@
 import React from 'react';
-import SophiaGyrate from './SophiaGyrate.jsx';
 
 export default function SophiaOrb() {
   return (
     <div className="sophia-orb-field sophia-reveal" data-sophia-reveal>
-      <SophiaGyrate className="sophia-gyrate-behind" size={520} />
       <div className="sophia-orb-chip top-right">Consciousness Level Active</div>
       <div className="sophia-orb-chip left">Habit Tracking On</div>
       <div className="sophia-orb-chip bottom-right">Path Synced</div>

@@ -188,9 +188,6 @@ export default function AuthPage() {
 
   return (
     <div className={`${styles.background} authRoot`}>
-      <img src="/assets/sophia-gyrate.svg" className={styles.gyrate} alt="" aria-hidden="true" />
-      <div className={styles.neonRing} />
-
       <div className={styles.container}>
         <p className={styles.kicker}>01 / welcome · est. 2026</p>
         <h1 className={styles.title}>
