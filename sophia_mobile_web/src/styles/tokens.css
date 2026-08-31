@@ -32,10 +32,10 @@
   --duration-base: 0.4s;
   --duration-slow: 0.6s;
 
-  --font-display: 'Dark Castle';
-  --font-ui: 'Dark Castle';
-  --font-charm: 'Urban Jungle';
-  --font-mono: 'Dark Castle';
+  --font-display: 'Dark Castle', Georgia, serif;
+  --font-ui: 'Dark Castle', Georgia, serif;
+  --font-charm: 'Urban Jungle', Georgia, serif;
+  --font-mono: 'Dark Castle', Georgia, serif;
 
   --sophia-bg: #5B1FA8;
   --sophia-bg-2: #6E2BC4;

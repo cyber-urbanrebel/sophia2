@@ -1,4 +1,5 @@
 from pathlib import Path
+import mimetypes
 import os
 
 from fastapi import FastAPI
@@ -51,6 +52,10 @@ app.include_router(wisdom.router)
 app.include_router(coach.router)
 app.include_router(voice.router)
 app.include_router(insights.router)
+
+mimetypes.add_type("font/otf", ".otf")
+mimetypes.add_type("font/ttf", ".ttf")
+mimetypes.add_type("image/svg+xml", ".svg")
 
 STATIC_DIR = Path(os.getenv("STATIC_DIR", "/app/static"))
 _API_ONLY_PREFIXES = ("api/", "docs", "redoc", "openapi.json")

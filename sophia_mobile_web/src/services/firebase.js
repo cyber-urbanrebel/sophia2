@@ -1,4 +1,4 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApps } from 'firebase/app';
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -28,16 +28,25 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID || '',
 };
 
-const useFirebase = import.meta.env.VITE_USE_FIREBASE === 'true';
+const wantsFirebase = import.meta.env.VITE_USE_FIREBASE === 'true';
+const hasFirebaseConfig = Boolean(
+  firebaseConfig.apiKey && firebaseConfig.projectId && firebaseConfig.appId
+);
 
 let app = null;
 let auth = null;
 let db = null;
+let useFirebase = false;
 
-if (useFirebase) {
-  app = initializeApp(firebaseConfig);
-  auth = getAuth(app);
-  db = getFirestore(app);
+if (wantsFirebase && hasFirebaseConfig) {
+  try {
+    app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    db = getFirestore(app);
+    useFirebase = true;
+  } catch (error) {
+    console.error('Firebase did not start. Using the Sophia API instead.', error);
+  }
 }
 
 const ensureFirebaseEnabled = () => {

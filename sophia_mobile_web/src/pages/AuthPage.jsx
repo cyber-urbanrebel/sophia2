@@ -21,13 +21,12 @@ export default function AuthPage() {
   const [fieldErrors, setFieldErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
   const [isOffline, setIsOffline] = useState(typeof navigator !== 'undefined' ? !navigator.onLine : false);
 
   useEffect(() => {
     dispatch(logout());
     dispatch(resetOnboarding());
-    requestAnimationFrame(() => setVisible(true));
   }, [dispatch]);
 
   useEffect(() => {

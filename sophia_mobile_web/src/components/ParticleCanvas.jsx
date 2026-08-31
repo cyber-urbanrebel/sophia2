@@ -11,7 +11,7 @@ const COLORS = [
 
 function rand(a, b) { return a + Math.random() * (b - a); }
 
-export default function ParticleCanvas({ opacity = 0.9, zIndex = 12, count = 220 }) {
+export default function ParticleCanvas({ opacity = 0.9, zIndex = 1, count = 220 }) {
   const ref = useRef(null);
   const mouse = useRef({ x: -9999, y: -9999 });
 
@@ -193,6 +193,7 @@ export default function ParticleCanvas({ opacity = 0.9, zIndex = 12, count = 220
         pointerEvents: 'none',
         zIndex,
         opacity,
+        background: 'transparent',
       }}
     />
   );
