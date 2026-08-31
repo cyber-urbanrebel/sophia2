@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   FlameIcon,
   MeditationIcon,
@@ -237,7 +237,7 @@ export default function GamificationPage() {
       <div style={st.levelCard}>
         <div style={st.levelNum}>{levelInfo.level}</div>
         <div style={st.levelTitle}>{title}</div>
-        <div style={st.xpText}>{state.totalXP.toLocaleString()} total XP â€¢ {levelInfo.xpInLevel} / {levelInfo.nextThreshold} to next level</div>
+        <div style={st.xpText}>{state.totalXP.toLocaleString()} total XP • {levelInfo.xpInLevel} / {levelInfo.nextThreshold} to next level</div>
         <div style={st.progOuter}>
           <div style={{ ...st.progInner, width: `${progressPct}%` }} />
         </div>

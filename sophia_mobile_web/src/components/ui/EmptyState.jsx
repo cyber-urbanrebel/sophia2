@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 
 /**
  * Reusable empty state for pages with no data.
@@ -8,7 +8,7 @@
  * @param {string} actionLabel - Button label
  * @param {function} onAction - Button callback
  */
-export default function EmptyState({ icon = 'ðŸ“­', title, subtitle, actionLabel, onAction }) {
+export default function EmptyState({ icon = '📭', title, subtitle, actionLabel, onAction }) {
   return (
     <div style={{
       display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import JournalPage from './JournalPage';
 import { renderIcon } from './SophiaIcons.jsx';
+import { MOOD_MARKS, moodMark } from '../ui/marks.js';
 
 // Custom useLocalStorage hook
 const useLocalStorage = (key, initialValue) => {
@@ -118,12 +119,12 @@ const styles = {
     fontSize: '13px',
   },
   input: {
-    backgroundColor: '#1a1a1a',
-    border: '1px solid rgba(255,255,255,0.1)',
-    borderRadius: '4px',
-    color: '#fff',
+    backgroundColor: '#ffffff',
+    border: '1px solid rgba(0,0,0,0.2)',
+    borderRadius: '8px',
+    color: '#000000',
     padding: '8px 12px',
-    fontSize: '13px',
+    fontSize: '15px',
     marginBottom: '8px',
     fontFamily: 'inherit',
   },
@@ -177,11 +178,12 @@ const styles = {
     background: 'none',
   },
   progressSection: {
-    backgroundColor: 'rgba(0,255,255,0.1)',
-    border: '1px solid rgba(0,255,255,0.2)',
-    borderRadius: '6px',
-    padding: '12px',
+    backgroundColor: 'rgba(255, 255, 255, 0.94)',
+    border: '1px solid rgba(0, 0, 0, 0.16)',
+    borderRadius: '14px',
+    padding: '14px',
     marginBottom: '16px',
+    color: '#000000',
   },
   practicesGrid: {
     display: 'flex',
@@ -190,20 +192,22 @@ const styles = {
     marginBottom: '24px',
   },
   practiceCard: {
-    backgroundColor: 'rgba(255,255,255,0.05)',
-    border: '1px solid rgba(255,255,255,0.1)',
-    borderRadius: '6px',
-    padding: '12px',
+    backgroundColor: 'rgba(255,255,255,0.94)',
+    border: '1px solid rgba(0,0,0,0.18)',
+    borderRadius: '14px',
+    padding: '14px',
     display: 'flex',
     gap: '12px',
     alignItems: 'flex-start',
+    color: '#000000',
   },
   toolSection: {
-    backgroundColor: 'rgba(255,255,255,0.03)',
-    border: '1px solid rgba(255,255,255,0.05)',
-    borderRadius: '6px',
+    backgroundColor: 'rgba(255,255,255,0.94)',
+    border: '1px solid rgba(0,0,0,0.16)',
+    borderRadius: '14px',
     padding: '16px',
     marginBottom: '16px',
+    color: '#000000',
   },
   matrix: {
     display: 'grid',
@@ -404,12 +408,12 @@ const REFLECTION_PROMPTS = [
 // DAILY PRACTICES
 // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 const DEFAULT_PRACTICES = [
-  { id: 1, emoji: 'ðŸ§˜', name: 'Meditation', description: 'Sit quietly for 10 minutes, observe your thoughts without judgment.' },
-  { id: 2, emoji: 'ðŸ“–', name: 'Read', description: 'Read 20 minutes from a book that challenges your thinking.' },
-  { id: 3, emoji: 'ðŸ¤”', name: 'Reflect', description: 'Write one insight about yourself or the world.' },
-  { id: 4, emoji: 'ðŸ’ª', name: 'Move', description: 'Exercise for 20 minutes. Walk, run, or strength train.' },
-  { id: 5, emoji: 'ðŸ™', name: 'Gratitude', description: 'Write down 3 things you\'re grateful for today.' },
-  { id: 6, emoji: 'ðŸ’¤', name: 'Rest', description: 'Get 7-8 hours of quality sleep.' },
+  { id: 1, icon: 'mask', name: 'Meditation', description: 'Sit quietly for 10 minutes, observe your thoughts without judgment.' },
+  { id: 2, icon: 'book', name: 'Read', description: 'Read 20 minutes from a book that challenges your thinking.' },
+  { id: 3, icon: 'idea', name: 'Reflect', description: 'Write one insight about yourself or the world.' },
+  { id: 4, icon: 'body', name: 'Move', description: 'Exercise for 20 minutes. Walk, run, or strength train.' },
+  { id: 5, icon: 'check', name: 'Gratitude', description: 'Write down 3 things you are grateful for today.' },
+  { id: 6, icon: 'waves', name: 'Rest', description: 'Get 7-8 hours of quality sleep.' },
 ];
 
 // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
@@ -419,7 +423,7 @@ export default function MindSection() {
   const [activeTab, setActiveTab] = useState('models');
   
   // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-  // TAB 1 â€” MENTAL MODELS
+  // TAB 1 — MENTAL MODELS
   // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   const [expandedModels, setExpandedModels] = useState({});
   const [masteredModels, setMasteredModels] = useLocalStorage('sophia_mastered_models', {});
@@ -460,7 +464,7 @@ export default function MindSection() {
   };
 
   // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-  // TAB 2 â€” READING LIST
+  // TAB 2 — READING LIST
   // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   const [books, setBooks] = useLocalStorage('sophia_reading_list', DEFAULT_BOOKS);
   const [bookNotes, setBookNotes] = useLocalStorage('sophia_book_notes', {});
@@ -499,7 +503,7 @@ export default function MindSection() {
   };
 
   // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-  // TAB 3 â€” DAILY PRACTICES
+  // TAB 3 — DAILY PRACTICES
   // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   const [todayCompletions, setTodayCompletions] = useLocalStorage('sophia_today_completions', '');
   const [fiveWhyAnalysis, setFiveWhyAnalysis] = useState('');
@@ -578,7 +582,7 @@ export default function MindSection() {
   };
 
   // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-  // TAB 4 â€” QUIZ
+  // TAB 4 — QUIZ
   // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   const [quizStarted, setQuizStarted] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -623,7 +627,7 @@ export default function MindSection() {
   };
 
   // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-  // TAB 5 â€” REFLECT
+  // TAB 5 — REFLECT
   // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   const [reflectionStep, setReflectionStep] = useState(1);
   const [reflectionResponse, setReflectionResponse] = useLocalStorage('sophia_reflection_response', '');
@@ -648,7 +652,7 @@ export default function MindSection() {
   };
 
   // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-  // TAB 6 â€” MOOD
+  // TAB 6 — MOOD
   // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   const [moodLog, setMoodLog] = useLocalStorage('sophia_mood_log', []);
   const [moodNote, setMoodNote] = useState('');
@@ -724,7 +728,7 @@ export default function MindSection() {
     const chartHeight = 150;
     const barWidth = 30;
     const moodColors = { 1: '#FF4444', 2: '#FFAA00', 3: '#888888', 4: '#00FFFF', 5: '#00FF88' };
-    const moodEmojis = { 1: 'ðŸ˜”', 2: 'ðŸ˜', 3: 'ðŸ™‚', 4: 'ðŸ˜Š', 5: 'ðŸ”¥' };
+    const moodEmojis = { 1: '○', 2: '◔', 3: '◑', 4: '◕', 5: '●' };
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -780,7 +784,7 @@ export default function MindSection() {
       {/* TAB CONTENT */}
       <div style={styles.tabContent}>
 
-        {/* TAB 1 â€” MENTAL MODELS */}
+        {/* TAB 1 — MENTAL MODELS */}
         {activeTab === 'models' && (
           <div>
             <div style={styles.contextBanner}>
@@ -793,9 +797,23 @@ export default function MindSection() {
                   <div style={styles.modelHeader}>
                     <span style={{ fontSize: '28px' }}>{renderIcon(model.icon, 28)}</span>
                     <span style={{ fontSize: '16px', fontWeight: '600' }}>{model.name}</span>
-                    {masteredModels[model.id] && <span style={{ color: '#00FFFF', marginLeft: 'auto' }}>âœ“</span>}
+                    {masteredModels[model.id] && <span style={{ color: '#00FFFF', marginLeft: 'auto' }}>✓</span>}
                   </div>
                   <p style={styles.modelDescription}>{model.description}</p>
+                  <button
+                    type="button"
+                    onClick={(e) => { e.stopPropagation(); toggleModelExpand(model.id); }}
+                    style={{
+                      ...styles.button,
+                      width: '100%',
+                      marginTop: 4,
+                      background: expandedModels[model.id] ? '#111' : '#30cfd0',
+                      color: expandedModels[model.id] ? '#fff' : '#000',
+                      borderRadius: 12,
+                    }}
+                  >
+                    {expandedModels[model.id] ? 'Close this model' : 'Click to open this model'}
+                  </button>
 
                   {expandedModels[model.id] && (
                     <div style={styles.expandedContent} onClick={(e) => e.stopPropagation()}>
@@ -809,7 +827,7 @@ export default function MindSection() {
                         transition: 'all 0.3s ease',
                       }}>
                         <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 600, color: 'var(--color-primary)', fontSize: '14px', marginBottom: '4px' }}>
-                          {renderIcon('ðŸ’¡', 18)} Try it now
+                          {renderIcon('💡', 18)} Try it now
                         </label>
                         <textarea 
                           placeholder={model.tryItPrompt}
@@ -842,7 +860,7 @@ export default function MindSection() {
                               transition: 'all 0.3s ease',
                             }}
                           >
-                            {savedFlash[model.id] ? 'âœ“ Saved!' : 'ðŸ’¾ Save Response'}
+                            {savedFlash[model.id] ? '✓ Saved' : 'Save response'}
                           </button>
                           {modelResponses[model.id]?.trim() && (
                             <span style={{ fontSize: '11px', color: '#888' }}>
@@ -866,7 +884,7 @@ export default function MindSection() {
                         onMouseEnter={(e) => { e.target.style.transform = 'translateY(-1px)'; e.target.style.boxShadow = '0 4px 12px rgba(0,255,255,0.2)'; }}
                         onMouseLeave={(e) => { e.target.style.transform = 'translateY(0)'; e.target.style.boxShadow = 'none'; }}
                       >
-                        {masteredModels[model.id] ? 'âœ“ Mastered' : 'Mark as mastered'}
+                        {masteredModels[model.id] ? '✓ Mastered' : 'Mark as mastered'}
                       </button>
                     </div>
                   )}
@@ -876,7 +894,7 @@ export default function MindSection() {
           </div>
         )}
 
-        {/* TAB 2 â€” READING LIST */}
+        {/* TAB 2 — READING LIST */}
         {activeTab === 'reading' && (
           <div>
             <div style={styles.readingStats}>
@@ -960,7 +978,7 @@ export default function MindSection() {
                   {book.status === 'finished' && (
                     <div style={{ marginBottom: '8px' }}>
                       <div style={{ fontSize: '12px', marginBottom: '4px' }}>Rating</div>
-                      <div>{'â­'.repeat(3)}</div>
+                      <div>{'⭐'.repeat(3)}</div>
                     </div>
                   )}
 
@@ -980,7 +998,7 @@ export default function MindSection() {
                       </button>
                       {book.category && (
                         <p style={{ fontSize: '12px', marginTop: '8px', fontStyle: 'italic', color: '#00FFFF' }}>
-                          ðŸ’­ {getReflectionPrompt(book.category)}
+                          💭 {getReflectionPrompt(book.category)}
                         </p>
                       )}
                     </div>
@@ -991,11 +1009,11 @@ export default function MindSection() {
           </div>
         )}
 
-        {/* TAB 3 â€” DAILY PRACTICES */}
+        {/* TAB 3 — DAILY PRACTICES */}
         {activeTab === 'practices' && (
           <div>
             <div style={styles.progressSection}>
-              <p>{getCompletedToday()} of 6 completed</p>
+              <p style={{ color: '#000', fontWeight: 700 }}>{getCompletedToday()} of 6 completed</p>
               <div style={{ backgroundColor: '#333', height: '6px', borderRadius: '3px', overflow: 'hidden' }}>
                 <div style={{ backgroundColor: '#00FFFF', height: '100%', width: `${(getCompletedToday() / 6) * 100}%` }} />
               </div>
@@ -1020,13 +1038,13 @@ export default function MindSection() {
                       justifyContent: 'center',
                     }}
                   >
-                    {isPracticeComplete(practice.id) ? 'âœ“' : ''}
+                    {isPracticeComplete(practice.id) ? '✓' : ''}
                   </button>
                   <div>
-                    <p style={{ margin: '0 0 4px 0', fontWeight: '600', textDecoration: isPracticeComplete(practice.id) ? 'line-through' : 'none' }}>
-                      {renderIcon(practice.emoji, 18)} {practice.name}
+                    <p style={{ margin: '0 0 4px 0', fontWeight: '700', color: '#000', textDecoration: isPracticeComplete(practice.id) ? 'line-through' : 'none' }}>
+                      {renderIcon(practice.icon, 18)} {practice.name}
                     </p>
-                    <p style={{ margin: 0, fontSize: '12px', color: '#888' }}>{practice.description}</p>
+                    <p style={{ margin: 0, fontSize: '14px', color: '#000', fontWeight: 500, opacity: 1 }}>{practice.description}</p>
                   </div>
                 </div>
               ))}
@@ -1074,7 +1092,7 @@ export default function MindSection() {
 
             {/* EISENHOWER MATRIX */}
             <div style={styles.toolSection}>
-              <h3>Priority Matrix â€” What matters most right now?</h3>
+              <h3>Priority Matrix — What matters most right now?</h3>
               <div style={styles.matrix}>
                 {['q1', 'q2', 'q3', 'q4'].map((q, idx) => {
                   const labels = ['Urgent + Important\nDO NOW', 'Not urgent + Important\nSCHEDULE', 'Urgent + Not Important\nDELEGATE', 'Not urgent + Not Important\nDELETE'];
@@ -1086,7 +1104,7 @@ export default function MindSection() {
                         {matrixTasks[q].map(task => (
                           <div key={task.id} style={{ display: 'flex', gap: '4px', marginBottom: '4px' }}>
                             <span style={{ padding: '2px 6px', backgroundColor: '#333', borderRadius: '4px', fontSize: '11px' }}>{task.text}</span>
-                            <button onClick={() => removeMatrixTask(q, task.id)} style={{ background: 'none', border: 'none', color: '#888', cursor: 'pointer' }}>âœ•</button>
+                            <button onClick={() => removeMatrixTask(q, task.id)} style={{ background: 'none', border: 'none', color: '#888', cursor: 'pointer' }}>✕</button>
                           </div>
                         ))}
                       </div>
@@ -1108,27 +1126,38 @@ export default function MindSection() {
 
             {/* EVENING CHECK-IN */}
             <div style={styles.toolSection}>
-              <h3>ðŸŒ™ Evening Check-in</h3>
+              <h3>Evening check-in</h3>
               {isCheckinDoneToday() ? (
-                <p style={{ color: '#00FFFF' }}>âœ“ Check-in saved for today</p>
+                <p style={{ color: '#00FFFF' }}>✓ Check-in saved for today</p>
               ) : (
                 <div>
-                  <label style={{ fontSize: '12px', display: 'block', marginBottom: '8px' }}>How was today overall?</label>
-                  <div style={{ display: 'flex', gap: '12px', marginBottom: '12px' }}>
-                    {['ðŸ˜”', 'ðŸ˜', 'ðŸ™‚', 'ðŸ˜Š', 'ðŸ”¥'].map((emoji, idx) => (
-                      <button 
-                        key={idx}
-                        onClick={() => setCheckinData(prev => ({ ...prev, mood: emoji }))}
+                  <label style={{ fontSize: '12px', display: 'block', marginBottom: '8px', color: '#000' }}>How was today overall?</label>
+                  <div style={{ display: 'flex', gap: '8px', marginBottom: '12px', flexWrap: 'wrap' }}>
+                    {[
+                      { mark: '○', label: 'Hard' },
+                      { mark: '◔', label: 'Low' },
+                      { mark: '◑', label: 'Steady' },
+                      { mark: '◕', label: 'Good' },
+                      { mark: '●', label: 'Bright' },
+                    ].map((mood) => (
+                      <button
+                        key={mood.label}
+                        type="button"
+                        onClick={() => setCheckinData((prev) => ({ ...prev, mood: mood.label }))}
                         style={{
-                          fontSize: '28px',
-                          background: checkinData.mood === emoji ? '#333' : 'transparent',
-                          border: checkinData.mood === emoji ? '2px solid #00FFFF' : 'none',
+                          flex: '1 1 72px',
+                          padding: '10px 8px',
+                          borderRadius: 12,
+                          background: checkinData.mood === mood.label ? '#111' : '#fff',
+                          color: checkinData.mood === mood.label ? '#fff' : '#000',
+                          border: '2px solid #111',
                           cursor: 'pointer',
-                          borderRadius: '6px',
-                          padding: '4px',
+                          fontWeight: 700,
+                          fontSize: 13,
                         }}
                       >
-                        {emoji}
+                        <div style={{ fontSize: 18, lineHeight: 1 }}>{mood.mark}</div>
+                        <div>{mood.label}</div>
                       </button>
                     ))}
                   </div>
@@ -1154,12 +1183,12 @@ export default function MindSection() {
           </div>
         )}
 
-        {/* TAB 4 â€” QUIZ */}
+        {/* TAB 4 — QUIZ */}
         {activeTab === 'quiz' && (
           <div>
             {!quizStarted ? (
               <div style={{ textAlign: 'center', padding: '20px' }}>
-                <h2>ðŸ§  Active Recall Quiz</h2>
+                <h2>Active recall quiz</h2>
                 <p>Test your knowledge of mental models and psychology concepts.</p>
                 <button onClick={startQuiz} style={styles.button}>Start Quiz</button>
                 {quizHistory.length > 0 && (
@@ -1177,7 +1206,7 @@ export default function MindSection() {
               <div style={{ textAlign: 'center', padding: '20px' }}>
                 <h1 style={{ fontSize: '48px' }}>{score} / 20</h1>
                 <p style={{ color: score >= 16 ? '#00FF88' : score >= 10 ? '#FFAA00' : '#FF4444', fontSize: '18px', marginBottom: '12px' }}>
-                  {score >= 16 ? 'âœ“ Excellent' : score >= 10 ? 'Good' : 'Keep studying'}
+                  {score >= 16 ? '✓ Excellent' : score >= 10 ? 'Good' : 'Keep studying'}
                 </p>
                 <button onClick={retakeQuiz} style={styles.button}>Retake Quiz</button>
               </div>
@@ -1224,12 +1253,12 @@ export default function MindSection() {
           </div>
         )}
 
-        {/* TAB 5 â€” REFLECT */}
+        {/* TAB 5 — REFLECT */}
         {activeTab === 'reflect' && (
           <div>
             {/* REFLECTION PROMPTS */}
             <div style={styles.toolSection}>
-              <h3>âœ¨ Guided Reflection</h3>
+              <h3>Guided reflection</h3>
               <div style={styles.reflectionBanner}>
                 <p style={{ margin: '0 0 12px 0', fontStyle: 'italic', fontSize: '16px' }}>
                   {getReflectionPromptForDay()}
@@ -1241,12 +1270,12 @@ export default function MindSection() {
                 onChange={(e) => setReflectionResponse(e.target.value)}
                 style={styles.textarea}
               />
-              <button style={styles.button}>Next prompt â†’</button>
+              <button style={styles.button}>Next prompt →</button>
             </div>
 
             {/* THOUGHT RECORD */}
             <div style={styles.toolSection}>
-              <h3>ðŸ’­ Challenge a Negative Thought</h3>
+              <h3>Challenge a negative thought</h3>
               <p>CBT shows that examining our thoughts reduces their power.</p>
 
               <div style={{ display: 'flex', gap: '4px', marginBottom: '16px' }}>
@@ -1267,7 +1296,7 @@ export default function MindSection() {
                       fontSize: '12px',
                     }}
                   >
-                    {step <= reflectionStep ? 'âœ“' : step}
+                    {step <= reflectionStep ? '✓' : step}
                   </div>
                 ))}
               </div>
@@ -1365,29 +1394,37 @@ export default function MindSection() {
           </div>
         )}
 
-        {/* TAB 6 â€” MOOD */}
+        {/* TAB 6 — MOOD */}
         {activeTab === 'mood' && (
           <div>
             {/* MOOD LOG */}
             <div style={styles.toolSection}>
               <h3>How is your mood today?</h3>
-              <div style={{ display: 'flex', gap: '12px', marginBottom: '12px' }}>
-                {[1, 2, 3, 4, 5].map(mood => (
-                  <button 
-                    key={mood}
-                    onClick={() => logMood(mood)}
-                    style={{
-                      fontSize: '28px',
-                      background: getTodayMood() === mood ? '#333' : 'transparent',
-                      border: getTodayMood() === mood ? '2px solid #00FFFF' : 'none',
-                      cursor: 'pointer',
-                      borderRadius: '6px',
-                      padding: '4px',
-                    }}
-                  >
-                    {['ðŸ˜”', 'ðŸ˜', 'ðŸ™‚', 'ðŸ˜Š', 'ðŸ”¥'][mood - 1]}
-                  </button>
-                ))}
+              <div style={{ display: 'flex', gap: '8px', marginBottom: '12px', flexWrap: 'wrap' }}>
+                {MOOD_MARKS.map((mood) => {
+                  const active = getTodayMood() === mood.value;
+                  return (
+                    <button
+                      key={mood.value}
+                      type="button"
+                      onClick={() => logMood(mood.value)}
+                      style={{
+                        flex: '1 1 72px',
+                        padding: '10px 8px',
+                        borderRadius: 12,
+                        background: active ? '#111' : '#fff',
+                        color: active ? '#fff' : '#000',
+                        border: '2px solid #111',
+                        cursor: 'pointer',
+                        fontWeight: 700,
+                        fontSize: 13,
+                      }}
+                    >
+                      <div style={{ fontSize: 18 }}>{mood.mark}</div>
+                      <div>{mood.label}</div>
+                    </button>
+                  );
+                })}
               </div>
               {getTodayMood() && (
                 <div>
@@ -1414,7 +1451,7 @@ export default function MindSection() {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', margin: '16px 0' }}>
               <div style={styles.statCard}>
                 <div style={{ fontSize: '28px', marginBottom: '4px' }}>
-                  {['ðŸ˜”', 'ðŸ˜', 'ðŸ™‚', 'ðŸ˜Š', 'ðŸ”¥'][Math.round(stats.average) - 1] || 'âŒ'}
+                  {moodMark(Math.round(stats.average))}
                 </div>
                 <div style={{ fontSize: '12px', color: '#888' }}>Avg this week</div>
                 <div style={{ fontSize: '16px', fontWeight: 'bold' }}>{stats.average}</div>
@@ -1435,23 +1472,21 @@ export default function MindSection() {
 
             {/* BADGES */}
             <div style={styles.toolSection}>
-              <h3>ðŸ† Badges</h3>
+              <h3>Marks</h3>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px' }}>
                 {[
-                  { emoji: 'ðŸŒ±', name: 'First Log', unlocked: moodLog.length >= 1 },
-                  { emoji: 'ðŸ”¥', name: '3-Day Streak', unlocked: stats.streak >= 3 },
-                  { emoji: 'ðŸ’Ž', name: '7-Day Streak', unlocked: stats.streak >= 7 },
-                  { emoji: 'âš¡', name: 'Mood Master', unlocked: stats.average >= 4 },
-                  { emoji: 'ðŸ†', name: 'Consistent', unlocked: moodLog.length >= 30 },
-                  { emoji: 'ðŸ“š', name: 'Reader', unlocked: bookStats.finished >= 3 },
-                  { emoji: 'ðŸ§ ', name: 'Scholar', unlocked: score >= 15 },
-                  { emoji: 'ðŸªž', name: 'Reflector', unlocked: savedThoughtRecords.length >= 5 },
-                ].map((badge, idx) => (
-                  <div key={idx} style={{...styles.badgeCard, opacity: badge.unlocked ? 1 : 0.3}}>
-                    <div style={{ fontSize: '24px', marginBottom: '4px' }}>
-                      {badge.emoji}{!badge.unlocked && ' ðŸ”’'}
-                    </div>
-                    <div style={{ fontSize: '10px', textAlign: 'center' }}>{badge.name}</div>
+                  { mark: '●', name: 'First log', unlocked: moodLog.length >= 1 },
+                  { mark: '◕', name: '3-day streak', unlocked: stats.streak >= 3 },
+                  { mark: '✦', name: '7-day streak', unlocked: stats.streak >= 7 },
+                  { mark: '◉', name: 'Mood master', unlocked: stats.average >= 4 },
+                  { mark: '◆', name: 'Consistent', unlocked: moodLog.length >= 30 },
+                  { mark: '☰', name: 'Reader', unlocked: bookStats.finished >= 3 },
+                  { mark: '△', name: 'Scholar', unlocked: score >= 15 },
+                  { mark: '◎', name: 'Reflector', unlocked: savedThoughtRecords.length >= 5 },
+                ].map((badge) => (
+                  <div key={badge.name} style={{ ...styles.badgeCard, opacity: badge.unlocked ? 1 : 0.45, color: '#000' }}>
+                    <div style={{ fontSize: 22 }}>{badge.mark}</div>
+                    <div style={{ fontSize: 11, fontWeight: 700 }}>{badge.name}</div>
                   </div>
                 ))}
               </div>
@@ -1460,7 +1495,7 @@ export default function MindSection() {
             {/* WELLNESS TRIGGER */}
             {showWellnessTrigger && (
               <div style={styles.wellnessTrigger}>
-                <p>We noticed your mood has been lower lately. That's okay â€” it happens to everyone. Here are 3 things that might help:</p>
+                <p>We noticed your mood has been lower lately. That's okay — it happens to everyone. Here are 3 things that might help:</p>
                 <ul style={{ paddingLeft: '16px' }}>
                   <li>Complete one practice from your daily list</li>
                   <li>Write a thought record to challenge a negative belief</li>
@@ -1471,7 +1506,7 @@ export default function MindSection() {
           </div>
         )}
 
-        {/* TAB 7 â€” JOURNAL */}
+        {/* TAB 7 — JOURNAL */}
         {activeTab === 'journal' && <JournalPage />}
 
       </div>

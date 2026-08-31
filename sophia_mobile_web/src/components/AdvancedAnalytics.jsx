@@ -54,7 +54,7 @@ const AdvancedAnalytics = () => {
 
   return (
     <div style={{ padding: '24px', color: '#fff', background: '#0a0a0a', minHeight: '100vh', fontFamily: "var(--font-plain)", paddingBottom: '100px' }}>
-      <h1 style={{ fontSize: '28px', margin: '0 0 24px 0', color: 'var(--color-primary)' }}>ðŸ“Š Admin Analytics</h1>
+      <h1 style={{ fontSize: '28px', margin: '0 0 24px 0', color: 'var(--color-primary)' }}>📊 Admin Analytics</h1>
 
       {/* Time Range Selector */}
       <div style={{ display: 'flex', gap: '8px', marginBottom: '24px', borderBottom: '1px solid #222222', paddingBottom: '12px' }}>
@@ -84,25 +84,25 @@ const AdvancedAnalytics = () => {
         <div style={{ background: '#111111', border: '1px solid #222222', borderRadius: '12px', padding: '20px' }}>
           <p style={{ color: '#888', fontSize: '12px', margin: '0 0 8px 0' }}>Total Users</p>
           <p style={{ fontSize: '32px', color: 'var(--color-primary)', margin: '0', fontWeight: 'bold' }}>{stats.totalUsers.toLocaleString()}</p>
-          <p style={{ color: '#00e676', fontSize: '12px', margin: '8px 0 0 0' }}>â†‘ 12% from last month</p>
+          <p style={{ color: '#00e676', fontSize: '12px', margin: '8px 0 0 0' }}>↑ 12% from last month</p>
         </div>
 
         <div style={{ background: '#111111', border: '1px solid #222222', borderRadius: '12px', padding: '20px' }}>
           <p style={{ color: '#888', fontSize: '12px', margin: '0 0 8px 0' }}>Daily Active</p>
           <p style={{ fontSize: '32px', color: 'var(--color-primary)', margin: '0', fontWeight: 'bold' }}>{stats.dailyActiveUsers}</p>
-          <p style={{ color: '#00e676', fontSize: '12px', margin: '8px 0 0 0' }}>â†‘ 8% today</p>
+          <p style={{ color: '#00e676', fontSize: '12px', margin: '8px 0 0 0' }}>↑ 8% today</p>
         </div>
 
         <div style={{ background: '#111111', border: '1px solid #222222', borderRadius: '12px', padding: '20px' }}>
           <p style={{ color: '#888', fontSize: '12px', margin: '0 0 8px 0' }}>Weekly Active</p>
           <p style={{ fontSize: '32px', color: 'var(--color-primary)', margin: '0', fontWeight: 'bold' }}>{stats.weeklyActiveUsers}</p>
-          <p style={{ color: '#00e676', fontSize: '12px', margin: '8px 0 0 0' }}>â†‘ 5% this week</p>
+          <p style={{ color: '#00e676', fontSize: '12px', margin: '8px 0 0 0' }}>↑ 5% this week</p>
         </div>
 
         <div style={{ background: '#111111', border: '1px solid #222222', borderRadius: '12px', padding: '20px' }}>
           <p style={{ color: '#888', fontSize: '12px', margin: '0 0 8px 0' }}>Retention</p>
           <p style={{ fontSize: '32px', color: '#00e676', margin: '0', fontWeight: 'bold' }}>{stats.retentionRate}%</p>
-          <p style={{ color: '#ffaa00', fontSize: '12px', margin: '8px 0 0 0' }}>â†’ Stable</p>
+          <p style={{ color: '#ffaa00', fontSize: '12px', margin: '8px 0 0 0' }}>→ Stable</p>
         </div>
       </div>
 
@@ -142,7 +142,7 @@ const AdvancedAnalytics = () => {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', marginBottom: '24px' }}>
         {/* Top Features */}
         <div style={{ background: '#111111', border: '1px solid #222222', borderRadius: '12px', padding: '24px' }}>
-          <h3 style={{ marginTop: '0', marginBottom: '16px', color: 'var(--color-primary)' }}>ðŸ† Top Features</h3>
+          <h3 style={{ marginTop: '0', marginBottom: '16px', color: 'var(--color-primary)' }}>✦ Top Features</h3>
           {stats.topFeatures.map(feature => (
             <div key={feature.name} style={{ marginBottom: '16px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
@@ -158,7 +158,7 @@ const AdvancedAnalytics = () => {
 
         {/* System Health */}
         <div style={{ background: '#111111', border: '1px solid #222222', borderRadius: '12px', padding: '24px' }}>
-          <h3 style={{ marginTop: '0', marginBottom: '16px', color: 'var(--color-primary)' }}>âš™ï¸ System Health</h3>
+          <h3 style={{ marginTop: '0', marginBottom: '16px', color: 'var(--color-primary)' }}>⚙️ System Health</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '12px', borderBottom: '1px solid #1a1a1a' }}>
               <span style={{ color: '#ccc' }}>API Status</span>
@@ -182,7 +182,7 @@ const AdvancedAnalytics = () => {
 
       {/* Activity Heatmap */}
       <div style={{ background: '#111111', border: '1px solid #222222', borderRadius: '12px', padding: '24px', marginBottom: '24px' }}>
-        <h3 style={{ marginTop: '0', marginBottom: '16px', color: 'var(--color-primary)' }}>ðŸ”¥ Activity Heatmap (Last 5 Weeks)</h3>
+        <h3 style={{ marginTop: '0', marginBottom: '16px', color: 'var(--color-primary)' }}>● Activity Heatmap (Last 5 Weeks)</h3>
         <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap' }}>
           {heatmapData.map((week, weekIndex) => (
             <div key={weekIndex} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
@@ -208,9 +208,9 @@ const AdvancedAnalytics = () => {
 
       {/* Error Log */}
       <div style={{ background: '#111111', border: '1px solid #222222', borderRadius: '12px', padding: '24px' }}>
-        <h3 style={{ marginTop: '0', marginBottom: '16px', color: 'var(--color-primary)' }}>ðŸ“‹ Recent Errors</h3>
+        <h3 style={{ marginTop: '0', marginBottom: '16px', color: 'var(--color-primary)' }}>📋 Recent Errors</h3>
         <div style={{ background: '#0a0a0a', padding: '12px', borderRadius: '8px' }}>
-          <p style={{ color: '#888', fontSize: '12px', margin: '0' }}>No critical errors in the last 24 hours. System running smoothly! âœ“</p>
+          <p style={{ color: '#888', fontSize: '12px', margin: '0' }}>No critical errors in the last 24 hours. System running smoothly! ✓</p>
         </div>
       </div>
     </div>

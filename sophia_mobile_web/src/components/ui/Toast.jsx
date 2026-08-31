@@ -8,10 +8,10 @@ export function useToast() {
 }
 
 const ICONS = {
-  success: 'âœ“',
-  error: 'âœ•',
-  warning: 'âš ',
-  info: 'â„¹',
+  success: '✓',
+  error: '✕',
+  warning: '⚠',
+  info: 'ℹ',
 };
 
 const COLORS = {

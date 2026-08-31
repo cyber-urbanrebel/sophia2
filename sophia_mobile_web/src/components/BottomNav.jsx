@@ -1,9 +1,9 @@
-﻿import React from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import styles from '../styles/BottomNav.module.css';
 
-/* â”€â”€ Animated SVG icons â”€â”€ */
+/* ── Animated SVG icons ── */
 const PathIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>

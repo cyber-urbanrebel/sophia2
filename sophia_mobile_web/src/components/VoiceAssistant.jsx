@@ -76,19 +76,19 @@ function localBriefing() {
     : 0;
   const total = Array.isArray(habits) ? habits.length : 0;
   if (!total) {
-    return "Systems nominal. No habits tracked yet â€” head to Discipline, Body, or Mind to set your first one, and I'll start giving you real status reports.";
+    return "Systems nominal. No habits tracked yet — head to Discipline, Body, or Mind to set your first one, and I'll start giving you real status reports.";
   }
   const behind = total - doneToday;
   return behind === 0
-    ? `Systems nominal. All ${total} habits are complete today â€” that's a clean sweep.`
-    : `Status: ${doneToday} of ${total} habits done today. ${behind} still open â€” nothing urgent, just naming it.`;
+    ? `Systems nominal. All ${total} habits are complete today — that's a clean sweep.`
+    : `Status: ${doneToday} of ${total} habits done today. ${behind} still open — nothing urgent, just naming it.`;
 }
 
 function localReply(message) {
   const trimmed = message.trim().toLowerCase();
-  if (!trimmed) return "I didn't catch that â€” try again?";
+  if (!trimmed) return "I didn't catch that — try again?";
   if (trimmed.includes("shadow")) {
-    return "Shadow work is under the Shadow tab. It's unguarded space â€” no streaks, no scoring, just honesty.";
+    return "Shadow work is under the Shadow tab. It's unguarded space — no streaks, no scoring, just honesty.";
   }
   if (trimmed.includes("progress") || trimmed.includes("how am i doing")) {
     return `${localBriefing()} Check the Progress tab for the full breakdown.`;
@@ -121,7 +121,7 @@ export default function VoiceAssistant() {
     setTranscript((prev) => [...prev, { id: uid(), role, text }]);
   }, []);
 
-  // Proactive briefing on open â€” the Jarvis-style "systems nominal" moment,
+  // Proactive briefing on open — the Jarvis-style "systems nominal" moment,
   // grounded in real habit data whether the backend is reachable or not.
   useEffect(() => {
     if (briefed) return;
@@ -211,16 +211,16 @@ export default function VoiceAssistant() {
 
       {supported ? (
         <button style={styles.micBtn(listening)} onClick={togglePushToTalk} aria-label={listening ? "Stop listening" : "Push to talk"}>
-          {listening ? "â– " : "ðŸŽ™"}
+          {listening ? "■" : "🎙"}
         </button>
       ) : (
-        <div style={{ fontSize: 12, color: C.muted }}>Voice input isn't supported in this browser â€” use text below.</div>
+        <div style={{ fontSize: 12, color: C.muted }}>Voice input isn't supported in this browser — use text below.</div>
       )}
 
       <div style={styles.hint}>
         {supported
-          ? (listening ? "Listeningâ€¦" : "Tap to speak, or type below")
-          : "Browser speech recognition unavailable â€” Chrome/Edge recommended"}
+          ? (listening ? "Listening…" : "Tap to speak, or type below")
+          : "Browser speech recognition unavailable — Chrome/Edge recommended"}
       </div>
 
       <div style={styles.textRow}>
@@ -229,7 +229,7 @@ export default function VoiceAssistant() {
           value={textInput}
           onChange={(e) => setTextInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && submitText()}
-          placeholder="Or type a messageâ€¦"
+          placeholder="Or type a message…"
         />
         <button style={styles.sendBtn} onClick={submitText}>Send</button>
       </div>

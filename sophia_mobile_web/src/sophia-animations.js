@@ -1,4 +1,4 @@
-﻿function createScrollProgressBar() {
+function createScrollProgressBar() {
   let bar = document.getElementById('sophia-scroll-progress');
   if (!bar) {
     bar = document.createElement('div');

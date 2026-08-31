@@ -76,7 +76,7 @@ const TABS = [
 ];
 
 // ═══════════════════════════════════════════════════════════════════════════
-// TAB 1 — 🔥 HABITS
+// TAB 1 — HABITS
 // ═══════════════════════════════════════════════════════════════════════════
 const DEFAULT_HABITS = [
   { id: "h1", name: "Cold shower", category: "Body",    target: 1, unit: "session", streak: 0 },
@@ -326,7 +326,7 @@ function HabitsTab() {
         <div style={styles.progress}>
           <div style={styles.progressFill(pct, pct === 100 ? C.green : pct > 60 ? C.accent : C.primary)} />
         </div>
-        {pct === 100 && <div style={{ marginTop: 8, fontSize: 12, color: C.green }}>🔥 PERFECT DAY — You showed up fully today.</div>}
+        {pct === 100 && <div style={{ marginTop: 8, fontSize: 12, color: C.green }}>● Perfect day — you showed up fully today.</div>}
       </div>
 
       <div style={{ ...styles.row, justifyContent: "space-between", marginBottom: 10 }}>
@@ -370,7 +370,7 @@ function HabitsTab() {
                   <span style={{ fontSize: 14, fontWeight: 600, color: done ? C.muted : C.text, textDecoration: done ? "line-through" : "none" }}>{h.name}</span>
                   <span style={styles.badge(catColor)}>{h.category}</span>
                 </div>
-                <div style={{ fontSize: 11, color: C.muted, marginTop: 2 }}>{h.target} {h.unit} · 🔥 {streak} day streak</div>
+                <div style={{ fontSize: 11, color: C.muted, marginTop: 2 }}>{h.target} {h.unit} · ● {streak} day streak</div>
               </div>
               <button onClick={() => deleteHabit(h.id)} style={{ background: "transparent", border: "none", color: C.muted, cursor: "pointer", fontSize: 14, padding: "0 4px" }}>🗑️</button>
             </div>
@@ -416,7 +416,7 @@ function MindsetTab() {
   const [tempFocus, setTempFocus] = useState(focusWord);
 
   const todayMood   = mood[today()] || 0;
-  const MOODS = ["💀", "😤", "😐", "😤", "🔥", "⚡"];
+  const MOODS = ["○", "◔", "◑", "◕", "●"];
   const MOOD_LABELS = ["Rock bottom", "Struggling", "Neutral", "Focused", "On fire", "Unstoppable"];
 
   const saveAffirmation = () => {
@@ -751,7 +751,7 @@ function JournalTab() {
   };
 
   const todayEntry = entries.find(e => e.date === today());
-  const MOOD_ICONS = ["💀", "😤", "😐", "🔥", "⚡"];
+  const MOOD_ICONS = ["○", "◔", "◑", "◕", "●"];
 
   return (
     <div>
@@ -875,11 +875,11 @@ function ScoreTab() {
   })();
 
   const levelMap = [
-    { min: 0,  max: 19,  label: "UNDISCIPLINED", color: C.danger,  icon: "💀" },
-    { min: 20, max: 39,  label: "INCONSISTENT",  color: C.muted,   icon: "😤" },
-    { min: 40, max: 59,  label: "BUILDING",      color: C.accent,  icon: "🔨" },
-    { min: 60, max: 79,  label: "DISCIPLINED",   color: C.cyan,    icon: "🎯" },
-    { min: 80, max: 94,  label: "ELITE",         color: C.green,   icon: "🔥" },
+    { min: 0,  max: 19,  label: "UNDISCIPLINED", color: C.danger,  icon: "○" },
+    { min: 20, max: 39,  label: "INCONSISTENT",  color: C.muted,   icon: "◔" },
+    { min: 40, max: 59,  label: "BUILDING",      color: C.accent,  icon: "◑" },
+    { min: 60, max: 79,  label: "DISCIPLINED",   color: C.cyan,    icon: "◕" },
+    { min: 80, max: 94,  label: "ELITE",         color: C.green,   icon: "●" },
     { min: 95, max: 100, label: "MONK MODE",     color: C.primary, icon: "⚡" },
   ];
   const level    = levelMap.find(l => todayScore >= l.min && todayScore <= l.max) || levelMap[0];

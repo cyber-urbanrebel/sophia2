@@ -15,7 +15,7 @@ function storeAvatar(dataUrl) {
   try {
     localStorage.setItem(AVATAR_KEY, dataUrl);
   } catch {
-    // localStorage full â€” silently fail
+    // localStorage full — silently fail
   }
 }
 
@@ -28,12 +28,12 @@ function clearAvatar() {
 }
 
 /**
- * AvatarUpload â€” Cinematic avatar component for Sophia.
+ * AvatarUpload — Cinematic avatar component for Sophia.
  * @param {Object} props
- * @param {number} [props.size=96] â€” diameter in px
- * @param {string} [props.fallbackName] â€” user name for initials fallback
- * @param {boolean} [props.editable=true] â€” show upload overlay
- * @param {function} [props.onAvatarChange] â€” callback(dataUrl | null)
+ * @param {number} [props.size=96] — diameter in px
+ * @param {string} [props.fallbackName] — user name for initials fallback
+ * @param {boolean} [props.editable=true] — show upload overlay
+ * @param {function} [props.onAvatarChange] — callback(dataUrl | null)
  */
 export default function AvatarUpload({ size = 96, fallbackName = 'User', editable = true, onAvatarChange }) {
   const [avatarUrl, setAvatarUrl] = useState(getStoredAvatar);
@@ -241,7 +241,7 @@ export default function AvatarUpload({ size = 96, fallbackName = 'User', editabl
           }}
           title="Remove avatar"
         >
-          Ã—
+          ×
         </button>
       )}
 
@@ -264,7 +264,7 @@ export default function AvatarUpload({ size = 96, fallbackName = 'User', editabl
 }
 
 /**
- * AvatarDisplay â€” Read-only avatar for headers/nav.
+ * AvatarDisplay — Read-only avatar for headers/nav.
  */
 export function AvatarDisplay({ size = 36, fallbackName = 'User' }) {
   const [avatarUrl] = useState(getStoredAvatar);

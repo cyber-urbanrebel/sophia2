@@ -1151,7 +1151,7 @@ export default function BodySection() {
               </div>
 
               <div style={{ display: 'flex', gap: '6px', marginBottom: '12px' }}>
-                {['😫 No', '😐 Somewhat', '😊 Yes'].map((opt, idx) => (
+                {['No', 'Somewhat', 'Yes'].map((opt, idx) => (
                   <button
                     key={idx}
                     onClick={() => setNewSleep(prev => ({ ...prev, rested: opt.split(' ')[1] }))}

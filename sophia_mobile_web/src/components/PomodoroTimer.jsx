@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 const SESSIONS_KEY = 'sophia_pomodoro_sessions';
 const SETTINGS_KEY = 'sophia_pomodoro_settings';
@@ -87,7 +87,7 @@ export default function PomodoroTimer() {
         setTimeLeft(settings.shortBreak * 60);
       }
     } else {
-      // Break complete â†’ back to focus
+      // Break complete → back to focus
       if ('Notification' in window && Notification.permission === 'granted') {
         new Notification('Break over!', { body: 'Time to focus again.', icon: '/icon-192x192.png' });
       }

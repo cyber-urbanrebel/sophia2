@@ -1,4 +1,4 @@
-﻿import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../store/slices/authSlice.js';
 import AvatarUpload from './AvatarUpload.jsx';

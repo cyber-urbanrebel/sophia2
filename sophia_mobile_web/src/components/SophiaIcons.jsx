@@ -1,10 +1,10 @@
-﻿import React from 'react';
+import React from 'react';
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* ─────────────────────────────────────────────
    SOPHIA Infographic Icons
    Premium SVG icons with gradient fills to
    replace plain emojis throughout the app.
-   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+   ───────────────────────────────────────────── */
 
 const W = ({ size, children }) => (
   <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: size, height: size, flexShrink: 0, verticalAlign: 'middle' }}>
@@ -12,7 +12,7 @@ const W = ({ size, children }) => (
   </span>
 );
 
-/* â”€â”€ Water Droplet â”€â”€ */
+/* ── Water Droplet ── */
 export const WaterIcon = ({ size = 24 }) => (
   <W size={size}>
     <svg viewBox="0 0 24 24" fill="none">
@@ -28,7 +28,7 @@ export const WaterIcon = ({ size = 24 }) => (
   </W>
 );
 
-/* â”€â”€ Meditation / Lotus â”€â”€ */
+/* ── Meditation / Lotus ── */
 export const MeditationIcon = ({ size = 24 }) => (
   <W size={size}>
     <svg viewBox="0 0 24 24" fill="none">
@@ -46,7 +46,7 @@ export const MeditationIcon = ({ size = 24 }) => (
   </W>
 );
 
-/* â”€â”€ Task / Checkmark â”€â”€ */
+/* ── Task / Checkmark ── */
 export const TaskCheckIcon = ({ size = 24 }) => (
   <W size={size}>
     <svg viewBox="0 0 24 24" fill="none">
@@ -62,7 +62,7 @@ export const TaskCheckIcon = ({ size = 24 }) => (
   </W>
 );
 
-/* â”€â”€ Analytics / Bar Chart â”€â”€ */
+/* ── Analytics / Bar Chart ── */
 export const ChartBarIcon = ({ size = 24 }) => (
   <W size={size}>
     <img
@@ -87,7 +87,7 @@ export const SettingsGearIcon = ({ size = 24 }) => (
   </W>
 );
 
-/* â”€â”€ Body / Fitness â”€â”€ */
+/* ── Body / Fitness ── */
 export const BodyFitIcon = ({ size = 24 }) => (
   <W size={size}>
     <svg viewBox="0 0 24 24" fill="none">
@@ -106,7 +106,7 @@ export const BodyFitIcon = ({ size = 24 }) => (
   </W>
 );
 
-/* â”€â”€ Brain / Mind â”€â”€ */
+/* ── Brain / Mind ── */
 export const BrainIcon = ({ size = 24 }) => (
   <W size={size}>
     <svg viewBox="0 0 24 24" fill="none">
@@ -123,7 +123,7 @@ export const BrainIcon = ({ size = 24 }) => (
   </W>
 );
 
-/* â”€â”€ Lightning / Discipline â”€â”€ */
+/* ── Lightning / Discipline ── */
 export const LightningIcon = ({ size = 24 }) => (
   <W size={size}>
     <svg viewBox="0 0 24 24" fill="none">
@@ -138,7 +138,7 @@ export const LightningIcon = ({ size = 24 }) => (
   </W>
 );
 
-/* â”€â”€ Flame / Streak â”€â”€ */
+/* ── Flame / Streak ── */
 export const FlameIcon = ({ size = 24 }) => (
   <W size={size}>
     <svg viewBox="0 0 24 24" fill="none">
@@ -155,7 +155,7 @@ export const FlameIcon = ({ size = 24 }) => (
   </W>
 );
 
-/* â”€â”€ Trend Up / Progress â”€â”€ */
+/* ── Trend Up / Progress ── */
 export const TrendUpIcon = ({ size = 24 }) => (
   <W size={size}>
     <svg viewBox="0 0 24 24" fill="none">
@@ -172,7 +172,7 @@ export const TrendUpIcon = ({ size = 24 }) => (
   </W>
 );
 
-/* â”€â”€ Lightbulb / Tip â”€â”€ */
+/* ── Lightbulb / Tip ── */
 export const LightbulbIcon = ({ size = 24 }) => (
   <W size={size}>
     <svg viewBox="0 0 24 24" fill="none">
@@ -190,7 +190,7 @@ export const LightbulbIcon = ({ size = 24 }) => (
   </W>
 );
 
-/* â”€â”€ Sunrise / Morning â”€â”€ */
+/* ── Sunrise / Morning ── */
 export const SunriseIcon = ({ size = 24 }) => (
   <W size={size}>
     <svg viewBox="0 0 24 24" fill="none">
@@ -210,7 +210,7 @@ export const SunriseIcon = ({ size = 24 }) => (
   </W>
 );
 
-/* â”€â”€ Sun / Afternoon â”€â”€ */
+/* ── Sun / Afternoon ── */
 export const SunIcon = ({ size = 24 }) => (
   <W size={size}>
     <svg viewBox="0 0 24 24" fill="none">
@@ -235,7 +235,7 @@ export const SunIcon = ({ size = 24 }) => (
   </W>
 );
 
-/* â”€â”€ Moon / Evening â”€â”€ */
+/* ── Moon / Evening ── */
 export const MoonIcon = ({ size = 24 }) => (
   <W size={size}>
     <svg viewBox="0 0 24 24" fill="none">
@@ -252,7 +252,7 @@ export const MoonIcon = ({ size = 24 }) => (
   </W>
 );
 
-/* â”€â”€ Target / Goal â”€â”€ */
+/* ── Target / Goal ── */
 export const TargetIcon = ({ size = 24 }) => (
   <W size={size}>
     <svg viewBox="0 0 24 24" fill="none">
@@ -269,7 +269,7 @@ export const TargetIcon = ({ size = 24 }) => (
   </W>
 );
 
-/* â”€â”€ Invite / Person+ â”€â”€ */
+/* ── Invite / Person+ ── */
 export const InviteIcon = ({ size = 24 }) => (
   <W size={size}>
     <svg viewBox="0 0 24 24" fill="none">
@@ -287,22 +287,21 @@ export const InviteIcon = ({ size = 24 }) => (
   </W>
 );
 
-/* â”€â”€ Emoji â†’ Icon mapping utility â”€â”€ */
+/* ── Emoji → Icon mapping utility ── */
 const ICON_MAP = {
-  'ðŸ’§': WaterIcon,
-  'ðŸ§˜': MeditationIcon,
-  'âœ…': TaskCheckIcon,
-  'ðŸ“Š': ChartBarIcon,
-  'ðŸ’ª': BodyFitIcon,
-  'ðŸ§ ': BrainIcon,
-  'âš¡': LightningIcon,
-  'ðŸ”¥': FlameIcon,
-  'ðŸ“ˆ': TrendUpIcon,
-  'ðŸ’¡': LightbulbIcon,
-  'ðŸŒ…': SunriseIcon,
-  'â˜€ï¸': SunIcon,
-  'ðŸŒ™': MoonIcon,
-  'ðŸŽ¯': TargetIcon,
+  '💧': WaterIcon,
+  '🧘': MeditationIcon,
+  '✅': TaskCheckIcon,
+  '📊': ChartBarIcon,
+  '💪': BodyFitIcon,
+  '🧠': BrainIcon,
+  '⚡': LightningIcon,
+  '✦': FlameIcon,
+  '📈': TrendUpIcon,
+  '💡': LightbulbIcon,
+  '☀': SunIcon,
+  '🌙': MoonIcon,
+  '🎯': TargetIcon,
 };
 
 /**

@@ -21,11 +21,11 @@ const toDateKey = (d) => d.toISOString().slice(0, 10);
 const today = () => toDateKey(new Date());
 
 const MOODS = [
-  { emoji: '😊', label: 'Great',   value: 5 },
-  { emoji: '🙂', label: 'Good',    value: 4 },
-  { emoji: '😐', label: 'Okay',    value: 3 },
-  { emoji: '😔', label: 'Low',     value: 2 },
-  { emoji: '😢', label: 'Rough',   value: 1 },
+  { mark: '○', label: 'Hard',   value: 1 },
+  { mark: '◔', label: 'Low',    value: 2 },
+  { mark: '◑', label: 'Steady', value: 3 },
+  { mark: '◕', label: 'Good',   value: 4 },
+  { mark: '●', label: 'Bright', value: 5 },
 ];
 
 const PROMPTS = [
@@ -269,9 +269,9 @@ export default function JournalPage() {
       {/* View toggle */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
         <div style={S.viewToggle}>
-          <button style={S.viewBtn(view === 'write')} onClick={() => setView('write')}>✏️ Write</button>
-          <button style={S.viewBtn(view === 'history')} onClick={() => setView('history')}>📖 History</button>
-          <button style={S.viewBtn(view === 'calendar')} onClick={() => setView('calendar')}>📅 Calendar</button>
+          <button style={S.viewBtn(view === 'write')} onClick={() => setView('write')}>Write</button>
+          <button style={S.viewBtn(view === 'history')} onClick={() => setView('history')}>History</button>
+          <button style={S.viewBtn(view === 'calendar')} onClick={() => setView('calendar')}>Calendar</button>
         </div>
         {isTodayFilled && view === 'write' && (
           <span style={{ fontSize: 12, color: C.green, fontWeight: 600 }}>✓ Today's entry saved</span>
@@ -307,7 +307,7 @@ export default function JournalPage() {
                 style={S.moodBtn(selectedMood === m.value)}
                 onClick={() => setSelectedMood(selectedMood === m.value ? null : m.value)}
               >
-                <span style={S.moodEmoji}>{m.emoji}</span>
+                <span style={{ fontSize: 18, display: 'block' }}>{m.mark}</span>
                 <div style={{ fontSize: 10, color: selectedMood === m.value ? C.accent : C.muted, marginTop: 4 }}>{m.label}</div>
               </button>
             ))}

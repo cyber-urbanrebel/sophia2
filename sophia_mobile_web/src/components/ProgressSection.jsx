@@ -442,7 +442,7 @@ function OverviewTab({ data }) {
         </Ring>
         <div>
           <div style={{ fontSize: 22, fontWeight: 800, color: P.text, lineHeight: 1.2 }}>
-            {overallScore >= 80 ? "You're crushing it! 🔥" : overallScore >= 60 ? "Solid progress 💪" : overallScore >= 40 ? "Keep pushing ⚡" : "Start your streak 🎯"}
+            {overallScore >= 80 ? "You're in a strong stretch. ●" : overallScore >= 60 ? "Solid progress ◕" : overallScore >= 40 ? "Keep going ◑" : "Start your streak ○"}
           </div>
           <div style={{ fontSize: 13, color: P.muted, marginTop: 6 }}>
             {habitsDoneToday}/{habits.length} habits · {journalStreak}d journal streak · {goalsCompleted}/{allGoals.length} goals done
@@ -578,7 +578,7 @@ function HabitsTab({ data }) {
     <div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: 10, marginBottom: 22 }}>
         <Tile label="Done today" value={`${weekData.filter(h => (completions[h.id] || {})[todayKey]).length}/${habits.length}`} color={P.cyan} icon="✅" />
-        <Tile label="Best streak" value={`${Math.max(...weekData.map(h => h.streak), 0)}d`} color={P.amber} icon="🔥" />
+        <Tile label="Best streak" value={`${Math.max(...weekData.map(h => h.streak), 0)}d`} color={P.amber} icon="●" />
         <Tile label="Total logged" value={weekData.reduce((a, h) => a + h.completedDays, 0)} color={P.green} icon="📊" />
         <Tile label="Today rate" value={`${totalPct}%`} color={totalPct >= 80 ? P.green : totalPct >= 50 ? P.amber : P.red} icon="🎯" />
       </div>
@@ -691,12 +691,12 @@ function JournalTab({ data }) {
     return { label: d.toLocaleDateString('en', { weekday: 'short' }).slice(0, 1), v: (mood || {})[k] !== undefined ? ((mood || {})[k] + 1) : 0, today: i === 13 };
   }), [mood]);
   const entryHeat = useMemo(() => entries.reduce((acc, e) => { if (e.date) acc[e.date] = (acc[e.date] || 0) + 1; return acc; }, {}), [entries]);
-  const MOOD_LABELS = ['😖','😔','😐','😊','🤩'];
+  const MOOD_LABELS = ['○','◔','◑','◕','●'];
   return (
     <div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: 10, marginBottom: 22 }}>
         <Tile label="Total entries" value={entries.length} color={P.purple} icon="📓" />
-        <Tile label="Streak" value={`${streak}d`} color={P.cyan} icon="🔥" />
+        <Tile label="Streak" value={`${streak}d`} color={P.cyan} icon="●" />
         <Tile label="Avg words" value={avgWords} color={P.green} icon="✍️" />
         <Tile label="This month" value={entries.filter(e => (e.date || '').slice(0, 7) === today().slice(0, 7)).length} color={P.amber} icon="📅" />
       </div>
@@ -803,7 +803,7 @@ function MindTab({ data }) {
   const moodEntries = Object.entries(mood || {}).sort((a, b) => b[0].localeCompare(a[0]));
   const MOOD_LABELS = ['Awful','Bad','Meh','Good','Great'];
   const MOOD_COLORS = [P.red, P.amber, P.muted, P.green, P.cyan];
-  const MOOD_ICONS  = ['😖','😔','😐','😊','🤩'];
+  const MOOD_ICONS  = ['○','◔','◑','◕','●'];
   const medsArr = Array.isArray(meditations) ? meditations : [];
   const totalMedMins = medsArr.reduce((a, m) => a + (m.duration || m.minutes || 0), 0);
   const moodData14 = useMemo(() => Array.from({ length: 14 }, (_, i) => {
@@ -819,7 +819,7 @@ function MindTab({ data }) {
     <div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: 10, marginBottom: 22 }}>
         <Tile label="Mood logged" value={moodEntries.length} color={P.purple} icon="🌡️" />
-        <Tile label="Avg mood" value={avgMood ? `${avgMood}/4` : '—'} color={P.cyan} icon="😊" />
+        <Tile label="Avg mood" value={avgMood ? `${avgMood}/4` : '—'} color={P.cyan} icon="●" />
         <Tile label="Meditations" value={medsArr.length} color={P.green} icon="🧘" />
         <Tile label="Med minutes" value={totalMedMins} color={P.amber} icon="⏱️" />
       </div>
@@ -846,7 +846,7 @@ function MindTab({ data }) {
         <div key={date} style={{ background: P.card, border: `1px solid ${P.border}`, borderRadius: 12, padding: '12px 14px', marginBottom: 8,
           display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-            <span style={{ fontSize: 24 }}>{MOOD_ICONS[v] || '😐'}</span>
+            <span style={{ fontSize: 24 }}>{MOOD_ICONS[v] || '○'}</span>
             <div>
               <div style={{ fontSize: 13, fontWeight: 600, color: MOOD_COLORS[v] || P.muted }}>{MOOD_LABELS[v] || 'Logged'}</div>
               <div style={{ fontSize: 11, color: P.muted }}>{fmtDate(date)}</div>

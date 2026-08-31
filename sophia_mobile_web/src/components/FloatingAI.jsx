@@ -35,7 +35,7 @@ function buildWelcomeSequence(ob) {
 
   const welcomeMsg = `Welcome to SOPHIA, ${name}! 🎉\n\nI've noted your onboarding answers and I'm ready to guide you.\n\n` +
     (goals.length ? `🎯 Your goals: ${goals.join(', ')}\n` : '') +
-    (focusLabels.length ? `🔥 Focus areas: ${focusLabels.join(', ')}\n` : '') +
+    (focusLabels.length ? `● Focus areas: ${focusLabels.join(', ')}\n` : '') +
     `\nLet's turn these into action. Here's what I suggest we start with:`;
 
   // Build personalised tips from goals and focus

@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import notificationService from '../services/notifications.js';
 
 const REMINDERS_KEY = 'sophia_habit_reminders';
@@ -54,7 +54,7 @@ export default function SmartReminders() {
       if (delay > 0 && delay < 86400000) {
         timers.push(setTimeout(() => {
           notificationService.showNotification(`Habit Reminder: ${r.name}`, {
-            body: `Time to ${r.name.toLowerCase()}. Stay consistent! ðŸ’ª`,
+            body: `Time to ${r.name.toLowerCase()}. Stay consistent! 💪`,
             tag: `habit-${r.id}`,
           });
         }, delay));
@@ -81,7 +81,7 @@ export default function SmartReminders() {
       if (delay > 0) {
         timers.push(setTimeout(() => {
           const todayReminders = reminders.filter(r => r.enabled && r.days.includes(new Date().getDay()));
-          notificationService.showNotification('Good Morning! â˜€ï¸', {
+          notificationService.showNotification('Good Morning! â˜€️', {
             body: `You have ${todayReminders.length} habits scheduled today. Let's make it count!`,
             tag: 'morning-brief',
           });
@@ -202,7 +202,7 @@ export default function SmartReminders() {
       <div style={s.permCard}>
         <div>
           <div style={{ fontSize: 14, fontWeight: 500, color: '#e0ddd6' }}>
-            {permission === 'granted' ? 'âœ… Notifications enabled' : 'ðŸ”” Enable notifications'}
+            {permission === 'granted' ? '✅ Notifications enabled' : '🔔 Enable notifications'}
           </div>
           <div style={{ fontSize: 12, color: '#8a8a9a', marginTop: 4 }}>
             {permission === 'granted' ? 'You\'ll receive reminders at scheduled times' : 'Allow SOPHIA to send you habit reminders'}
@@ -214,7 +214,7 @@ export default function SmartReminders() {
           )}
           {permission === 'granted' && (
             <button style={{ ...s.permBtn(true), background: testSent ? '#3fb950' : 'rgba(255,255,255,0.08)', color: testSent ? '#000' : '#8a8a9a' }}
-              onClick={sendTest}>{testSent ? 'âœ“ Sent!' : 'Test'}</button>
+              onClick={sendTest}>{testSent ? '✓ Sent!' : 'Test'}</button>
           )}
         </div>
       </div>
@@ -237,7 +237,7 @@ export default function SmartReminders() {
               <div style={s.toggle(r.enabled)} onClick={() => toggleReminder(r.id)}>
                 <div style={s.toggleDot(r.enabled)} />
               </div>
-              <button style={s.removeBtn} onClick={() => removeReminder(r.id)}>âœ•</button>
+              <button style={s.removeBtn} onClick={() => removeReminder(r.id)}>✕</button>
             </div>
             {r.enabled && (
               <div style={s.dayPills}>

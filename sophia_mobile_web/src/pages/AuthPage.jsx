@@ -244,7 +244,7 @@ export default function AuthPage() {
                 autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
               />
               <button type="button" className={styles.eyeBtn} onClick={() => setShowPassword(!showPassword)} aria-label={showPassword ? 'Hide password' : 'Show password'}>
-                {showPassword ? '🙈' : '👁'}
+                {showPassword ? 'Hide' : 'Show'}
               </button>
             </div>
             {fieldErrors.password && <div className={styles.fieldError}>{fieldErrors.password}</div>}

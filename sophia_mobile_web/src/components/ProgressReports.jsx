@@ -144,7 +144,7 @@ export default function ProgressReports() {
       doc.text('SOPHIA', 20, 22);
       doc.setFontSize(10);
       doc.setTextColor(180, 180, 180);
-      doc.text(`Weekly Progress Report â€” ${dateStr}`, 20, 32);
+      doc.text(`Weekly Progress Report — ${dateStr}`, 20, 32);
 
       let y = 52;
 
@@ -217,7 +217,7 @@ export default function ProgressReports() {
           head: [['Date', 'Mood', 'Preview']],
           body: journal.slice(0, 10).map(j => [
             formatDate(j.date || j.createdAt),
-            j.mood || 'â€”',
+            j.mood || '—',
             (j.content || j.text || '').substring(0, 60) + '...',
           ]),
           theme: 'striped',
@@ -252,7 +252,7 @@ export default function ProgressReports() {
         doc.setPage(i);
         doc.setFontSize(8);
         doc.setTextColor(150, 150, 150);
-        doc.text(`SOPHIA Progress Report â€” Page ${i}/${pageCount}`, 105, 290, { align: 'center' });
+        doc.text(`SOPHIA Progress Report — Page ${i}/${pageCount}`, 105, 290, { align: 'center' });
       }
 
       doc.save(`SOPHIA_Report_${now.toISOString().split('T')[0]}.pdf`);
@@ -309,7 +309,7 @@ export default function ProgressReports() {
       <p style={s.sub}>Track your growth and download weekly reports</p>
 
       <button style={s.downloadBtn} onClick={generatePDF} disabled={generating}>
-        {generating ? 'â³ Generating...' : 'ðŸ“„ Download PDF Report'}
+        {generating ? '⏳ Generating...' : '📄 Download PDF Report'}
       </button>
 
       <div style={s.tabs}>
@@ -366,7 +366,7 @@ export default function ProgressReports() {
           {habits.map((h, i) => (
             <div key={i} style={s.listItem}>
               <span style={{ fontSize: 14, color: '#e0ddd6' }}>{h.name || h.title}</span>
-              <span style={{ fontSize: 12, color: h.completed ? '#3fb950' : '#c9a84c' }}>{h.completed ? 'âœ“ Done' : 'Active'}</span>
+              <span style={{ fontSize: 12, color: h.completed ? '#3fb950' : '#c9a84c' }}>{h.completed ? '✓ Done' : 'Active'}</span>
             </div>
           ))}
         </div>
@@ -425,7 +425,7 @@ export default function ProgressReports() {
             <div key={i} style={s.listItem}>
               <span style={{ fontSize: 14, color: '#e0ddd6', textDecoration: t.completed ? 'line-through' : 'none' }}>{t.title || t.name}</span>
               <span style={{ fontSize: 12, color: t.completed ? '#3fb950' : t.priority === 'high' ? '#ff6b6b' : '#8a8a9a' }}>
-                {t.completed ? 'âœ“' : t.priority || 'todo'}
+                {t.completed ? '✓' : t.priority || 'todo'}
               </span>
             </div>
           ))}
