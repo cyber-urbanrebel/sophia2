@@ -20,43 +20,89 @@ import {
   deleteDoc,
   serverTimestamp,
 } from 'firebase/firestore';
+import { FIREBASE_PUBLIC_CONFIG, FIRESTORE_DATABASE_ID } from '../config/firebasePublic.js';
 
-const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || '',
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || '',
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || '',
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || '',
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || '',
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || '',
-};
+function pickConfig(source = {}) {
+  return {
+    apiKey: source.apiKey || '',
+    authDomain: source.authDomain || '',
+    projectId: source.projectId || '',
+    storageBucket: source.storageBucket || '',
+    messagingSenderId: source.messagingSenderId || '',
+    appId: source.appId || '',
+  };
+}
 
-const wantsFirebase = import.meta.env.VITE_USE_FIREBASE === 'true';
-const hasFirebaseConfig = Boolean(
-  firebaseConfig.apiKey && firebaseConfig.projectId && firebaseConfig.appId
-);
+function configIsReady(config) {
+  return Boolean(config.apiKey && config.projectId && config.appId);
+}
 
 let app = null;
 let auth = null;
 let db = null;
 let useFirebase = false;
+let bootPromise = null;
 
-if (wantsFirebase && hasFirebaseConfig) {
+async function resolveFirebaseConfig() {
+  const fromVite = pickConfig({
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  });
+  if (configIsReady(fromVite)) return fromVite;
+
   try {
-    app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
-    auth = getAuth(app);
-    db = getFirestore(app);
-    useFirebase = true;
-  } catch (error) {
-    console.error('Firebase did not start. Using the Sophia API instead.', error);
+    const base = import.meta.env.VITE_API_URL || '';
+    const response = await fetch(`${base}/api/public/firebase`);
+    if (response.ok) {
+      const fromHost = pickConfig(await response.json());
+      if (configIsReady(fromHost)) return fromHost;
+    }
+  } catch {
+    // Fall through to the bundled public config.
   }
+
+  return pickConfig(FIREBASE_PUBLIC_CONFIG);
+}
+
+async function bootFirebase() {
+  if (useFirebase && auth && db) return true;
+  if (bootPromise) return bootPromise;
+
+  bootPromise = (async () => {
+    const firebaseConfig = await resolveFirebaseConfig();
+    if (!configIsReady(firebaseConfig)) {
+      console.error('Firebase config is missing.');
+      return false;
+    }
+    try {
+      app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+      auth = getAuth(app);
+      try {
+        db = getFirestore(app, FIRESTORE_DATABASE_ID);
+      } catch {
+        db = getFirestore(app);
+      }
+      useFirebase = true;
+      return true;
+    } catch (error) {
+      console.error('Firebase did not start.', error);
+      useFirebase = false;
+      return false;
+    }
+  })();
+
+  const ok = await bootPromise;
+  if (!ok) bootPromise = null;
+  return ok;
 }
 
 const ensureFirebaseEnabled = () => {
-  if (!useFirebase) {
-    throw new Error('Firebase support is not enabled. Set VITE_USE_FIREBASE=true in .env.');
-  }
-  if (!auth || !db) {
-    throw new Error('Firebase is not initialized. Check configuration values.');
+  if (!useFirebase || !auth || !db) {
+    throw new Error('Firebase is not connected. Enable Email/Password and Google in the Sophia Firebase project.');
   }
 };
 
@@ -173,15 +219,15 @@ async function firebaseGetProfile() {
   const uid = getUserUid();
   const userDoc = await getDoc(doc(db, 'users', uid));
   if (!userDoc.exists()) {
-    throw new Error('Profile not found');
+    return profileFromFirebaseUser(auth.currentUser);
   }
-  return { uid, ...userDoc.data() };
+  return { uid, ...userDoc.data(), email: auth.currentUser?.email || userDoc.data().email };
 }
 
 async function firebaseUpdateProfile(data) {
   ensureFirebaseEnabled();
   const uid = getUserUid();
-  await updateDoc(doc(db, 'users', uid), data);
+  await setDoc(doc(db, 'users', uid), { ...data, updatedAt: serverTimestamp() }, { merge: true });
   const userDoc = await getDoc(doc(db, 'users', uid));
   return { uid, ...userDoc.data() };
 }
@@ -210,7 +256,9 @@ async function updateCollectionItem(collectionName, id, data) {
   ensureFirebaseEnabled();
   const uid = getUserUid();
   const docRef = doc(db, 'users', uid, collectionName, id);
-  await updateDoc(docRef, { ...data, updatedAt: serverTimestamp() });
+  await updateDoc(docRef, { ...data, updatedAt: serverTimestamp() }).catch(async () => {
+    await setDoc(docRef, { ...data, updatedAt: serverTimestamp() }, { merge: true });
+  });
   const updatedDoc = await getDoc(docRef);
   return { id: updatedDoc.id, ...updatedDoc.data() };
 }
@@ -254,6 +302,7 @@ async function firebaseGetStudyStats() {
 
 export {
   useFirebase,
+  bootFirebase,
   db,
   getUserUid,
   firebaseRegister,

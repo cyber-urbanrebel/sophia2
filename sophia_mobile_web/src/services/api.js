@@ -4,6 +4,7 @@
  * with optional Firebase Firestore fallback.
  */
 import {
+  bootFirebase,
   useFirebase,
   firebaseRegister,
   firebaseLogin,
@@ -28,6 +29,15 @@ const API_URL = import.meta.env.VITE_API_URL
 const STATE_STORAGE_KEYS = ['sophia_dev_state_v1', 'sophia_state'];
 const AUTH_TOKEN_KEY = 'sophia-auth-token';
 const LOCAL_ACCOUNTS_KEY = 'sophia-local-accounts';
+
+const AUTH_UNAVAILABLE = 'Firebase is not connected. Enable Email/Password and Google sign-in in the Sophia Firebase project.';
+
+async function requireFirebase() {
+  const ready = await bootFirebase();
+  if (!ready || !useFirebase) {
+    throw new Error(AUTH_UNAVAILABLE);
+  }
+}
 
 class API {
   constructor() {
@@ -181,267 +191,165 @@ class API {
 
   // ============ AUTH ENDPOINTS ============
   async register(email, password, firstName, lastName) {
-    if (useFirebase) {
-      const result = this.normalizeAuthResponse(
-        await firebaseRegister(email, password, firstName, lastName)
-      );
-      this.setToken(result.token);
-      return result;
-    }
-    const fullName = [firstName, lastName].filter(Boolean).join(' ').trim();
-    try {
-      const result = await this.request('POST', '/api/auth/register', {
-        email,
-        password,
-        fullName,
-      });
-      return this.normalizeAuthResponse(result);
-    } catch (error) {
-      if (!/failed to fetch|network|load failed/i.test(String(error?.message || ''))) throw error;
-      const normalizedEmail = String(email || '').trim().toLowerCase();
-      if (this.getLocalAccount(normalizedEmail)) {
-        throw new Error('An account with this email already exists on this device.');
-      }
-      const fallback = this.saveLocalAccount(normalizedEmail, password, fullName);
-      this.setToken(fallback.token);
-      return fallback;
-    }
+    await requireFirebase();
+    const result = this.normalizeAuthResponse(
+      await firebaseRegister(email, password, firstName, lastName)
+    );
+    this.setToken(result.token);
+    return result;
   }
 
   async loginWithGoogle() {
-    if (!useFirebase) {
-      throw new Error('Google sign-in is not available. Firebase is not configured for this build.');
-    }
+    await requireFirebase();
     const result = this.normalizeAuthResponse(await firebaseLoginWithGoogle());
     this.setToken(result.token);
     return result;
   }
 
   async login(email, password) {
-    if (useFirebase) {
-      const result = this.normalizeAuthResponse(await firebaseLogin(email, password));
-      this.setToken(result.token);
-      return result;
-    }
-
-    try {
-      return this.normalizeAuthResponse(
-        await this.request('POST', '/api/auth/login', { email, password })
-      );
-    } catch (error) {
-      const normalizedEmail = String(email || '').trim().toLowerCase();
-      const isNetworkFailure = /failed to fetch|network|load failed/i.test(String(error?.message || ''));
-      const isKnownTestUser = normalizedEmail === 'testuser@sophia.dev' && password === 'TestPass123!';
-      const localAccount = this.getLocalAccount(normalizedEmail);
-
-      // Keep development flow usable when backend auth service is offline.
-      if (isNetworkFailure && localAccount && localAccount.password !== password) {
-        throw new Error('Incorrect email or password.');
-      }
-      if ((isNetworkFailure && localAccount) || isKnownTestUser) {
-        const fallback = this.createLocalAuthFallback(normalizedEmail, localAccount?.fullName || '');
-        this.setToken(fallback.token);
-        return fallback;
-      }
-
-      throw error;
-    }
+    await requireFirebase();
+    const result = this.normalizeAuthResponse(await firebaseLogin(email, password));
+    this.setToken(result.token);
+    return result;
   }
 
   async logout() {
-    if (useFirebase) {
-      await firebaseLogout();
-      this.setToken(null);
-      return { message: 'Logged out' };
-    }
-    return this.request('POST', '/api/auth/logout', {});
+    await requireFirebase();
+    await firebaseLogout();
+    this.setToken(null);
+    return { message: 'Logged out' };
   }
 
   async refreshToken() {
-    if (useFirebase) {
-      const result = await firebaseRefreshToken();
-      this.setToken(result.token);
-      return result;
-    }
-    return this.request('POST', '/api/auth/refresh', {});
+    await requireFirebase();
+    const result = await firebaseRefreshToken();
+    this.setToken(result.token);
+    return result;
   }
 
   async forgotPassword(email) {
-    if (useFirebase) {
-      return firebaseForgotPassword(email);
-    }
-    return this.request('POST', '/api/auth/forgot-password', { email });
+    await requireFirebase();
+    return firebaseForgotPassword(email);
   }
 
   // ============ USER ENDPOINTS ============
   async getProfile() {
-    if (useFirebase) {
-      return this.normalizeProfileResponse(await firebaseGetProfile());
-    }
-
-    return this.normalizeProfileResponse(await this.request('GET', '/api/users/me'));
+    await requireFirebase();
+    return this.normalizeProfileResponse(await firebaseGetProfile());
   }
 
   async updateProfile(data) {
-    if (useFirebase) {
-      return this.normalizeProfileResponse(await firebaseUpdateProfile(data));
-    }
-
-    return this.normalizeProfileResponse(await this.request('PUT', '/api/users/me', data));
+    await requireFirebase();
+    return this.normalizeProfileResponse(await firebaseUpdateProfile(data));
   }
 
   // ============ HABITS ENDPOINTS ============
   async getHabits() {
-    if (useFirebase) {
-      return getCollectionData('habits');
-    }
-    return this.request('GET', '/api/habits');
+    await requireFirebase();
+    return getCollectionData('habits');
   }
 
   async createHabit(habitData) {
-    if (useFirebase) {
-      return addCollectionItem('habits', habitData);
-    }
-    return this.request('POST', '/api/habits', habitData);
+    await requireFirebase();
+    return addCollectionItem('habits', habitData);
   }
 
   async updateHabit(id, habitData) {
-    if (useFirebase) {
-      return updateCollectionItem('habits', id, habitData);
-    }
-    return this.request('PUT', `/api/habits/${id}`, habitData);
+    await requireFirebase();
+    return updateCollectionItem('habits', id, habitData);
   }
 
   async deleteHabit(id) {
-    if (useFirebase) {
-      return deleteCollectionItem('habits', id);
-    }
-    return this.request('DELETE', `/api/habits/${id}`);
+    await requireFirebase();
+    return deleteCollectionItem('habits', id);
   }
 
   async completeHabit(id) {
-    if (useFirebase) {
-      return completeCollectionItem('habits', id);
-    }
-    return this.request('POST', `/api/habits/${id}/complete`, {});
+    await requireFirebase();
+    return completeCollectionItem('habits', id);
   }
 
   async uncompleteHabit(id) {
-    if (useFirebase) {
-      return updateCollectionItem('habits', id, { completed: false });
-    }
-    return this.request('POST', `/api/habits/${id}/uncomplete`, {});
+    await requireFirebase();
+    return updateCollectionItem('habits', id, { completed: false });
   }
 
   async getHabitStats() {
-    if (useFirebase) {
-      return firebaseGetHabitStats();
-    }
-    return this.request('GET', '/api/habits/stats');
+    await requireFirebase();
+    return firebaseGetHabitStats();
   }
 
-  // ============ JOURNAL ENDPOINTS ============
   async getJournalEntries() {
-    if (useFirebase) {
-      return getCollectionData('journal');
-    }
-    return this.request('GET', '/api/journal');
+    await requireFirebase();
+    return getCollectionData('journal');
   }
 
   async createJournalEntry(entryData) {
-    if (useFirebase) {
-      return addCollectionItem('journal', entryData);
-    }
-    return this.request('POST', '/api/journal', entryData);
+    await requireFirebase();
+    return addCollectionItem('journal', entryData);
   }
 
   async updateJournalEntry(id, entryData) {
-    if (useFirebase) {
-      return updateCollectionItem('journal', id, entryData);
-    }
-    return this.request('PUT', `/api/journal/${id}`, entryData);
+    await requireFirebase();
+    return updateCollectionItem('journal', id, entryData);
   }
 
   async deleteJournalEntry(id) {
-    if (useFirebase) {
-      return deleteCollectionItem('journal', id);
-    }
-    return this.request('DELETE', `/api/journal/${id}`);
+    await requireFirebase();
+    return deleteCollectionItem('journal', id);
   }
 
   async getJournalStats() {
-    if (useFirebase) {
-      return firebaseGetJournalStats();
-    }
-    return this.request('GET', '/api/journal/stats');
+    await requireFirebase();
+    return firebaseGetJournalStats();
   }
 
-  // ============ STUDY ENDPOINTS ============
   async getStudySessions() {
-    if (useFirebase) {
-      return getCollectionData('study');
-    }
-    return this.request('GET', '/api/study');
+    await requireFirebase();
+    return getCollectionData('study');
   }
 
   async createStudySession(sessionData) {
-    if (useFirebase) {
-      return addCollectionItem('study', sessionData);
-    }
-    return this.request('POST', '/api/study', sessionData);
+    await requireFirebase();
+    return addCollectionItem('study', sessionData);
   }
 
   async endStudySession(id, sessionData) {
-    if (useFirebase) {
-      return updateCollectionItem('study', id, sessionData);
-    }
-    return this.request('PUT', `/api/study/${id}`, sessionData);
+    await requireFirebase();
+    return updateCollectionItem('study', id, sessionData);
   }
 
   async getStudyStats() {
-    if (useFirebase) {
-      return firebaseGetStudyStats();
-    }
-    return this.request('GET', '/api/study/stats');
+    await requireFirebase();
+    return firebaseGetStudyStats();
   }
 
-  // ============ TASKS ENDPOINTS ============
   async getTasks(filter = 'all') {
-    if (useFirebase) {
-      const tasks = await getCollectionData('tasks');
-      if (filter === 'completed') return tasks.filter((t) => t.completed);
-      if (filter === 'active') return tasks.filter((t) => !t.completed);
-      return tasks;
-    }
-    return this.request('GET', `/api/tasks?filter=${filter}`);
+    await requireFirebase();
+    const tasks = await getCollectionData('tasks');
+    if (filter === 'completed') return tasks.filter((t) => t.completed);
+    if (filter === 'active') return tasks.filter((t) => !t.completed);
+    return tasks;
   }
 
   async createTask(taskData) {
-    if (useFirebase) {
-      return addCollectionItem('tasks', taskData);
-    }
-    return this.request('POST', '/api/tasks', taskData);
+    await requireFirebase();
+    return addCollectionItem('tasks', taskData);
   }
 
   async updateTask(id, taskData) {
-    if (useFirebase) {
-      return updateCollectionItem('tasks', id, taskData);
-    }
-    return this.request('PUT', `/api/tasks/${id}`, taskData);
+    await requireFirebase();
+    return updateCollectionItem('tasks', id, taskData);
   }
 
   async deleteTask(id) {
-    if (useFirebase) {
-      return deleteCollectionItem('tasks', id);
-    }
-    return this.request('DELETE', `/api/tasks/${id}`);
+    await requireFirebase();
+    return deleteCollectionItem('tasks', id);
   }
 
   async completeTask(id) {
-    if (useFirebase) {
-      return completeCollectionItem('tasks', id);
-    }
-    return this.request('POST', `/api/tasks/${id}/complete`, {});
+    await requireFirebase();
+    return completeCollectionItem('tasks', id);
   }
 
   // ============ ANALYTICS ENDPOINTS ============
@@ -544,19 +452,23 @@ class API {
 
   // ============ SHADOW WORK ENDPOINTS ============
   async getShadowEntries() {
-    return this.request('GET', '/api/shadow');
+    await requireFirebase();
+    return getCollectionData('shadow');
   }
 
   async createShadowEntry(entryData) {
-    return this.request('POST', '/api/shadow', entryData);
+    await requireFirebase();
+    return addCollectionItem('shadow', entryData);
   }
 
   async updateShadowEntry(id, entryData) {
-    return this.request('PUT', `/api/shadow/${id}`, entryData);
+    await requireFirebase();
+    return updateCollectionItem('shadow', id, entryData);
   }
 
   async deleteShadowEntry(id) {
-    return this.request('DELETE', `/api/shadow/${id}`);
+    await requireFirebase();
+    return deleteCollectionItem('shadow', id);
   }
 
   // ============ ADMIN ENDPOINTS ============

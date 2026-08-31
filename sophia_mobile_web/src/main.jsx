@@ -6,22 +6,25 @@ import App from './App.jsx';
 import ErrorBoundary from './components/ErrorBoundary.jsx';
 import { ToastProvider } from './components/ui/Toast.jsx';
 import store from './store/store.js';
+import { bootFirebase } from './services/firebase.js';
 import './styles/fonts.css';
 import './styles/tokens.css';
 import './styles/global.css';
 import './styles/sophia-theme.css';
 import './styles/architecture.css';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <ErrorBoundary>
-      <Provider store={store}>
-        <BrowserRouter>
-          <ToastProvider>
-            <App />
-          </ToastProvider>
-        </BrowserRouter>
-      </Provider>
-    </ErrorBoundary>
-  </React.StrictMode>
-);
+bootFirebase().finally(() => {
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    <React.StrictMode>
+      <ErrorBoundary>
+        <Provider store={store}>
+          <BrowserRouter>
+            <ToastProvider>
+              <App />
+            </ToastProvider>
+          </BrowserRouter>
+        </Provider>
+      </ErrorBoundary>
+    </React.StrictMode>
+  );
+});

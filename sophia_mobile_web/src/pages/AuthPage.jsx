@@ -102,7 +102,9 @@ export default function AuthPage() {
     if (code === 'auth/operation-not-allowed' || /operation-not-allowed/i.test(raw)) {
       return 'Google sign-in is not enabled yet. Turn on Google in Firebase Authentication → Sign-in method.';
     }
-    if (/failed to fetch|network|load failed/i.test(raw)) {
+    if (/HTTP 401|invalid_credentials|invalid credentials/i.test(raw)) {
+      return 'Email or password did not match a Firebase account. Use Create Account, or Continue with Google.';
+    }
       return 'We could not reach the server. Try again in a moment — your space is still here.';
     }
     return raw.replace(/^Firebase:\s*/i, '').replace(/auth\//, '').replaceAll('-', ' ');
@@ -191,7 +193,7 @@ export default function AuthPage() {
         <h1 className={styles.title}>
           <span className={styles.logoAccent}>S</span>ophia
         </h1>
-        <p className={styles.subtitle}>A calm place to notice how you feel, keep small promises, and grow without the noise.</p>
+        <p className={styles.subtitle}>A digital wellness platform designed to support self-awareness, steady habits, and personal growth at EVERY stage of life.</p>
 
         <div className={styles.metaRow}>
           <span className={`${styles.statusPill} ${isOffline ? styles.statusOffline : styles.statusOnline}`}>

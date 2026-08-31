@@ -67,6 +67,26 @@ def health(request: Request):
         "ok": True,
         "coach": "claude" if HAS_ANTHROPIC else "templated",
         "voice_pipeline": "elevenlabs+whisper" if HAS_VOICE_PIPELINE else "browser (Web Speech API)",
+        "auth": "firebase",
+    }
+
+
+@app.get("/api/public/firebase")
+def public_firebase():
+    def env(*names: str) -> str:
+        for name in names:
+            value = os.getenv(name, "").strip()
+            if value:
+                return value
+        return ""
+
+    return {
+        "apiKey": env("VITE_FIREBASE_API_KEY", "FIREBASE_API_KEY"),
+        "authDomain": env("VITE_FIREBASE_AUTH_DOMAIN", "FIREBASE_AUTH_DOMAIN"),
+        "projectId": env("VITE_FIREBASE_PROJECT_ID", "FIREBASE_PROJECT_ID"),
+        "storageBucket": env("VITE_FIREBASE_STORAGE_BUCKET", "FIREBASE_STORAGE_BUCKET"),
+        "messagingSenderId": env("VITE_FIREBASE_MESSAGING_SENDER_ID", "FIREBASE_MESSAGING_SENDER_ID"),
+        "appId": env("VITE_FIREBASE_APP_ID", "FIREBASE_APP_ID"),
     }
 
 
