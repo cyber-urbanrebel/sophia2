@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+﻿import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import api from '../services/api.js';
 
 const C = {
@@ -7,15 +7,15 @@ const C = {
   border: "#2a1f3d",
   gold: "#c9a44c",
   goldSoft: "#e8cf8a",
-  violet: "#7b2fff",
+  violet: "var(--color-violet)",
   violetSoft: "#a855f7",
-  cyan: "#00d4ff",
+  cyan: "var(--color-primary)",
   text: "#e9e2f5",
   muted: "#8f80a8",
 };
 
 const styles = {
-  wrap: { color: C.text, fontFamily: "'DM Mono', 'Fira Code', monospace", paddingBottom: 40 },
+  wrap: { color: C.text, fontFamily: "'Dark Castle'", paddingBottom: 40 },
   header: { display: "flex", alignItems: "center", gap: 14, marginBottom: 22, paddingBottom: 18, borderBottom: `1px solid ${C.border}` },
   icon: { width: 42, height: 42, borderRadius: 10, background: `linear-gradient(135deg, ${C.gold}, ${C.violet})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 },
   title: { fontSize: 20, fontWeight: 700, letterSpacing: "-0.02em", color: C.goldSoft },
@@ -100,7 +100,7 @@ export default function WisdomLibrary({ favourites, setFavourites }) {
         const data = await fetch(`${api.baseURL}/api/wisdom`).then((r) => (r.ok ? r.json() : null));
         if (!cancelled && data) setRemote(data);
       } catch {
-        // Backend unavailable — the legacy quote set below still renders fine.
+        // Backend unavailable â€” the legacy quote set below still renders fine.
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -158,19 +158,19 @@ export default function WisdomLibrary({ favourites, setFavourites }) {
   return (
     <div style={styles.wrap}>
       <div style={styles.header}>
-        <div style={styles.icon}>📜</div>
+        <div style={styles.icon}>ðŸ“œ</div>
         <div>
           <div style={styles.title}>Wisdom Library</div>
-          <div style={styles.subtitle}>{loading ? 'Loading interfaith teachings…' : 'Every path, one library — Christianity, Islam, Judaism, Buddhism, Hinduism, Taoism, Stoicism & modern thought'}</div>
+          <div style={styles.subtitle}>{loading ? 'Loading interfaith teachingsâ€¦' : 'Every path, one library â€” Christianity, Islam, Judaism, Buddhism, Hinduism, Taoism, Stoicism & modern thought'}</div>
         </div>
       </div>
 
       <div style={styles.dailyCard}>
         <span style={styles.pill(themeColor(dailyWisdom))}>
-          {traditions[dailyWisdom.tradition] || dailyWisdom.tradition} · {dailyWisdom.theme}
+          {traditions[dailyWisdom.tradition] || dailyWisdom.tradition} Â· {dailyWisdom.theme}
         </span>
         <div style={styles.quote}>"{dailyWisdom.teaching}"</div>
-        <div style={styles.cite}>— {dailyWisdom.source}</div>
+        <div style={styles.cite}>â€” {dailyWisdom.source}</div>
         {dailyWisdom.reflectionPrompt && (
           <div style={{ ...styles.reflectionText, borderTop: 'none', paddingTop: 10, color: C.violetSoft }}>
             Reflect: {dailyWisdom.reflectionPrompt}
@@ -182,7 +182,7 @@ export default function WisdomLibrary({ favourites, setFavourites }) {
         <input
           style={styles.input}
           type="text"
-          placeholder="Search teachings or sources…"
+          placeholder="Search teachings or sourcesâ€¦"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -211,21 +211,21 @@ export default function WisdomLibrary({ favourites, setFavourites }) {
             <div key={entry.id} style={styles.card}>
               <div style={styles.cardHead}>
                 <span style={styles.pill(themeColor(entry))}>
-                  {(traditions[entry.tradition] || entry.tradition)} · {entry.theme}
+                  {(traditions[entry.tradition] || entry.tradition)} Â· {entry.theme}
                 </span>
                 <button style={styles.star} onClick={() => toggleFavourite(entry.id)} aria-label="Toggle favourite">
-                  {favourites.includes(entry.id) ? '★' : '☆'}
+                  {favourites.includes(entry.id) ? 'â˜…' : 'â˜†'}
                 </button>
               </div>
               <div style={{ fontSize: 14, fontStyle: 'italic', color: C.text, lineHeight: 1.6, flex: 1 }}>
                 "{entry.teaching}"
               </div>
-              <div style={{ fontSize: 11, color: C.muted, marginTop: 10 }}>— {entry.source}</div>
+              <div style={{ fontSize: 11, color: C.muted, marginTop: 10 }}>â€” {entry.source}</div>
               {reflections[entry.id] && (
                 <div style={styles.reflectionText}>My reflection: {reflections[entry.id]}</div>
               )}
               <button style={styles.reflectBtn} onClick={() => openReflection(entry)}>
-                {reflections[entry.id] ? '✏️ Edit reflection' : '💭 Add reflection'}
+                {reflections[entry.id] ? 'âœï¸ Edit reflection' : 'ðŸ’­ Add reflection'}
               </button>
             </div>
           ))}
@@ -237,7 +237,7 @@ export default function WisdomLibrary({ favourites, setFavourites }) {
           <div style={styles.modal} onClick={(e) => e.stopPropagation()}>
             <div style={{ fontSize: 16, fontWeight: 700, color: C.goldSoft, marginBottom: 12 }}>Reflect on this teaching</div>
             <div style={{ fontSize: 13, fontStyle: 'italic', color: C.text, marginBottom: 6, lineHeight: 1.6 }}>"{reflectionModal.teaching}"</div>
-            <div style={{ fontSize: 11, color: C.muted, marginBottom: 16 }}>— {reflectionModal.source}</div>
+            <div style={{ fontSize: 11, color: C.muted, marginBottom: 16 }}>â€” {reflectionModal.source}</div>
             <textarea
               style={styles.textarea}
               placeholder="What does this mean to you? How can you apply it today?"

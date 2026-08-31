@@ -92,8 +92,8 @@ const OnboardingFlow = ({ onComplete }) => {
   const s = {
     container: {
       minHeight: '100vh', width: '100%',
-      background: 'linear-gradient(180deg, #030610 0%, #050d1e 100%)', color: '#f5fbff',
-      fontFamily: '"Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+      backgroundImage: 'linear-gradient(to top, #30cfd0 0%, #330867 100%)', color: '#F4FBFF',
+      fontFamily: "'Dark Castle'",
       display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
       padding: '24px', position: 'relative', overflow: 'hidden',
       boxSizing: 'border-box',
@@ -113,16 +113,16 @@ const OnboardingFlow = ({ onComplete }) => {
     },
     progBar: { width: '100%', height: '6px', background: 'rgba(255,255,255,0.08)', borderRadius: '999px', marginBottom: '30px', overflow: 'hidden' },
     progFill: {
-      height: '100%', background: 'linear-gradient(90deg, #00d4ff, #7b2fff, #00d4ff)',
+      height: '100%', background: 'linear-gradient(90deg, var(--color-primary), var(--color-violet), var(--color-primary))',
       width: `${progress}%`, transition: 'width 0.6s cubic-bezier(0.22,1,0.36,1)',
       borderRadius: '999px', boxShadow: '0 0 18px rgba(0,212,255,0.26)',
     },
     icon: { fontSize: '64px', marginBottom: '18px', animation: 'onb-bounceIn 0.6s ease-out', filter: 'drop-shadow(0 10px 18px rgba(0,212,255,0.22))' },
     title: {
       fontSize: '40px', marginBottom: '10px', fontWeight: '800', letterSpacing: '-0.05em',
-      background: 'linear-gradient(135deg, #f5fbff, #00d4ff 55%, #7b2fff)',
+      background: 'linear-gradient(135deg, #f5fbff, var(--color-primary) 55%, var(--color-violet))',
       WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
-      fontFamily: '"Orbitron", "Space Grotesk", sans-serif', lineHeight: 0.98,
+      fontFamily: "'Dark Castle'", lineHeight: 0.98,
     },
     subtitle: { fontSize: '17px', marginBottom: '24px', color: '#8ea7c2', fontWeight: '500' },
     input: {
@@ -152,7 +152,7 @@ const OnboardingFlow = ({ onComplete }) => {
     }),
     toggle: (on) => ({
       width: '44px', height: '24px', borderRadius: '12px', position: 'relative', flexShrink: 0,
-      background: on ? 'linear-gradient(135deg, #00d4ff, #7b2fff)' : 'rgba(255,255,255,0.12)',
+      background: on ? 'linear-gradient(135deg, var(--color-primary), var(--color-violet))' : 'rgba(255,255,255,0.12)',
       transition: 'background 0.3s',
     }),
     toggleDot: (on) => ({
@@ -170,8 +170,8 @@ const OnboardingFlow = ({ onComplete }) => {
     nextBtn: {
       padding: '15px 28px', borderRadius: '18px', border: 'none', fontSize: '16px', fontWeight: '700',
       cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.3s', flex: 1,
-      background: canProceed() ? 'linear-gradient(135deg, #00d4ff, #7b2fff 65%, #00d4ff)' : 'rgba(255,255,255,0.08)',
-      color: canProceed() ? '#03111f' : 'rgba(142,167,194,0.54)',
+      background: canProceed() ? 'linear-gradient(135deg, #30cfd0, #5b2aa8)' : 'rgba(255,255,255,0.08)',
+      color: canProceed() ? '#F4FBFF' : 'rgba(244,251,255,0.45)',
       boxShadow: canProceed() ? '0 18px 36px rgba(0,212,255,0.22)' : 'none',
     },
     stepText: { textAlign: 'center', color: '#8ea7c2', marginTop: '24px', fontSize: '14px', fontWeight: '600', letterSpacing: '0.06em', textTransform: 'uppercase' },
@@ -218,7 +218,7 @@ const OnboardingFlow = ({ onComplete }) => {
               <button key={f.value} type="button" style={s.focusCard(formData.focusAreas.includes(f.value))}
                 onClick={() => toggleArrayItem('focusAreas', f.value)}>
                 <span style={{ fontSize: '28px' }}>{f.icon}</span>
-                <span style={{ color: formData.focusAreas.includes(f.value) ? '#00d4ff' : '#f5fbff', fontSize: '15px', fontWeight: '500' }}>{f.label}</span>
+                <span style={{ color: formData.focusAreas.includes(f.value) ? 'var(--color-primary)' : '#f5fbff', fontSize: '15px', fontWeight: '500' }}>{f.label}</span>
               </button>
             ))}
           </div>

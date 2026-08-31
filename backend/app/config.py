@@ -21,6 +21,7 @@ class Settings(BaseSettings):
     port: int = 3001
     web_origin: str = "http://localhost:5173"
     database_path: str = "./sophia.db"
+    database_url: str = ""
     jwt_secret: str = "sophia-dev-secret-change-me"
     jwt_expire_minutes: int = 60 * 24 * 30  # 30 days
 

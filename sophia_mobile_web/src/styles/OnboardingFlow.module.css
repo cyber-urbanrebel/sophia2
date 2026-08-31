@@ -1,4 +1,4 @@
-/* Onboarding Flow Styles */
+﻿/* Onboarding Flow Styles */
 .onboardingContainer {
   min-height: 100vh;
   background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
@@ -18,7 +18,7 @@
 
 .progressFill {
   height: 100%;
-  background: linear-gradient(90deg, #00d4ff, #0099cc);
+  background: linear-gradient(90deg, var(--color-primary), #0099cc);
   border-radius: 2px;
   transition: width 0.3s ease;
 }
@@ -42,7 +42,7 @@
   font-size: 28px;
   font-weight: 700;
   margin-bottom: 8px;
-  color: #00d4ff;
+  color: var(--color-primary);
 }
 
 .subtitle {
@@ -66,7 +66,7 @@
 .logo {
   font-size: 48px;
   font-weight: 900;
-  background: linear-gradient(135deg, #00d4ff, #0099cc);
+  background: linear-gradient(135deg, var(--color-primary), #0099cc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -101,14 +101,14 @@
 }
 
 .nameInput:focus {
-  border-color: #00d4ff;
+  border-color: var(--color-primary);
   box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.2);
 }
 
 .question h3 {
   text-align: center;
   margin-bottom: 20px;
-  color: #00d4ff;
+  color: var(--color-primary);
 }
 
 .pillGrid {
@@ -149,7 +149,7 @@
 }
 
 .inputGroup input:focus {
-  border-color: #00d4ff;
+  border-color: var(--color-primary);
   box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.2);
 }
 
@@ -179,9 +179,9 @@
 }
 
 .radioLabel input[type="radio"]:checked + .radioText {
-  background: #00d4ff;
+  background: var(--color-primary);
   color: white;
-  border-color: #00d4ff;
+  border-color: var(--color-primary);
 }
 
 /* Goals Step */
@@ -218,7 +218,7 @@
 
 .goalCard.selected {
   background: rgba(0, 212, 255, 0.2);
-  border-color: #00d4ff;
+  border-color: var(--color-primary);
   box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
 }
 
@@ -269,7 +269,7 @@
   -webkit-appearance: none;
   width: 20px;
   height: 20px;
-  background: #00d4ff;
+  background: var(--color-primary);
   border-radius: 50%;
   cursor: pointer;
   box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
@@ -278,7 +278,7 @@
 .sliderValue {
   font-size: 16px;
   font-weight: 600;
-  color: #00d4ff;
+  color: var(--color-primary);
   min-width: 60px;
 }
 
@@ -318,7 +318,7 @@
 .readyStep h2 {
   font-size: 24px;
   margin-bottom: 30px;
-  color: #00d4ff;
+  color: var(--color-primary);
 }
 
 .readyCards {
@@ -349,7 +349,7 @@
 
 /* Buttons */
 .primaryButton {
-  background: linear-gradient(135deg, #00d4ff, #0099cc);
+  background: linear-gradient(135deg, var(--color-primary), #0099cc);
   border: none;
   border-radius: 12px;
   color: white;
@@ -411,7 +411,7 @@
 }
 
 .nextButton {
-  background: linear-gradient(135deg, #00d4ff, #0099cc);
+  background: linear-gradient(135deg, var(--color-primary), #0099cc);
   border: none;
   color: white;
   box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4);
@@ -448,8 +448,8 @@
 }
 
 .pill.selected {
-  background: #00d4ff;
-  border-color: #00d4ff;
+  background: var(--color-primary);
+  border-color: var(--color-primary);
   box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
 }
 

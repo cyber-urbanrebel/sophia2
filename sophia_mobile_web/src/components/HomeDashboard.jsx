@@ -107,32 +107,32 @@ const HomeDashboard = ({ onNavigate }) => {
   const greeting = getGreeting();
   const fullName = String(profile?.name || 'User') || 'User';
   const firstName = fullName.split(/\s+/)[0] || 'User';
-  const performanceLabel = masterScore >= 80 ? 'Peak state' : masterScore >= 60 ? 'Locked in' : 'Warming up';
+  const performanceLabel = masterScore >= 80 ? 'You are in a strong rhythm' : masterScore >= 60 ? 'Steady and present' : 'Warming up — that is enough';
   const todaysFocus = useMemo(() => {
     const ranked = [
-      { id: 'body', score: todayStats.waterIntake + Math.floor(todayStats.habitsTracked / 2), label: 'Body cadence' },
-      { id: 'mind', score: todayStats.meditationMinutes, label: 'Mind stillness' },
-      { id: 'discipline', score: todayStats.tasksCompleted * 2, label: 'Execution rhythm' },
-      { id: 'progress', score: masterScore, label: 'Progress review' },
+      { id: 'body', score: todayStats.waterIntake + Math.floor(todayStats.habitsTracked / 2), label: 'care for your body' },
+      { id: 'mind', score: todayStats.meditationMinutes, label: 'a quieter mind' },
+      { id: 'discipline', score: todayStats.tasksCompleted * 2, label: 'one small follow-through' },
+      { id: 'progress', score: masterScore, label: 'looking back kindly' },
     ].sort((a, b) => b.score - a.score);
     return ranked[0]?.label || 'Execution rhythm';
   }, [masterScore, todayStats]);
   const getHumanizedTip = () => {
     const tips = [
-      `${firstName}, Sophia recommends one visible win before noon. Start with the smallest task that creates momentum.`,
-      `${firstName}'s moment: Complete one habit before checking anything else. That builds unstoppable momentum.`,
-      `Hey ${firstName} — consistency beats intensity. One small action today is worth a week of planning.`,
-      `${firstName}, your body and mind perform best when aligned. Check both before proceeding.`,
-      `Remember ${firstName}: the best time to act was yesterday. The next best time is now.`,
+      `${firstName}, start with one thing you can finish before lunch. Small is still real.`,
+      `If everything feels loud, ${firstName}, pick the kindest next step — not the biggest one.`,
+      `You do not have to earn rest. One honest action today is plenty.`,
+      `${firstName}, check in with your body before you push. Alignment beats force.`,
+      `Yesterday already happened. Today only asks for the next kind choice.`,
     ];
     return tips[Math.floor(Math.random() * tips.length)];
   };
   const dailyTip = getHumanizedTip();
   const quickLinks = [
-    { key: 'body', icon: <BodyFitIcon size={34} />, label: 'Body', copy: 'Training, hydration, sleep, and physical systems.' },
-    { key: 'mind', icon: <BrainIcon size={34} />, label: 'Mind', copy: 'Mood tracking, reflection, and inner clarity.' },
-    { key: 'discipline', icon: <LightningIcon size={34} />, label: 'Discipline', copy: 'Habits, goals, routines, and execution.' },
-    { key: 'progress', icon: <TrendUpIcon size={34} />, label: 'Progress', copy: 'Metrics, patterns, and weekly visibility.' },
+    { key: 'body', icon: <BodyFitIcon size={34} />, label: 'Body', copy: 'Water, rest, movement — the quiet basics that hold you up.' },
+    { key: 'mind', icon: <BrainIcon size={34} />, label: 'Mind', copy: 'A place to notice mood, write things down, and breathe.' },
+    { key: 'discipline', icon: <LightningIcon size={34} />, label: 'Discipline', copy: 'Habits and tasks, treated as promises to yourself — not punishment.' },
+    { key: 'progress', icon: <TrendUpIcon size={34} />, label: 'Progress', copy: 'See the pattern of your weeks without turning it into a scoreboard.' },
   ];
   const stats = [
     { label: 'Meditation', value: todayStats.meditationMinutes, suffix: 'm', icon: <MeditationIcon size={20} /> },
@@ -142,18 +142,37 @@ const HomeDashboard = ({ onNavigate }) => {
   ];
   const activeGoals = goals.slice(0, 3);
   const timeline = [
-    { title: 'Neural check-in', copy: 'Sophia syncs your priorities, streaks, and current focus windows.' },
-    { title: 'Execution window', copy: 'Move through Body, Mind, and Discipline with visible progress feedback.' },
-    { title: 'Reflection loop', copy: 'Close the day with updated insights, wins, and trend visibility.' },
+    { title: 'Arrive', copy: 'A short check-in: how you slept, how you feel, what actually matters today.' },
+    { title: 'Do one kind thing', copy: 'Move through Body, Mind, or Discipline — whichever feels honest, not heroic.' },
+    { title: 'Close the loop', copy: 'Note a win, however small, so tomorrow does not start from zero.' },
   ];
   const systemChips = [
-    { label: isOffline ? 'Offline mode' : 'Realtime sync', tone: isOffline ? '#ff845f' : '#01d5c1' },
-    { label: `Focus: ${todaysFocus}`, tone: '#35a8ff' },
-    { label: `Auth: ${localStorage.getItem('use_firebase_auth') === 'true' ? 'Firebase' : 'API'}`, tone: '#7a6cff' },
+    { label: isOffline ? 'Working offline' : 'Link live', tone: isOffline ? '#E8C36A' : '#30cfd0' },
+    { label: `Next: ${todaysFocus}`, tone: '#9BE9EA' },
   ];
 
   return (
     <div className="sophia-home sophia-reveal" data-sophia-reveal style={{ paddingBottom: 48 }}>
+      <div className="loop-grid">
+        <div className="loop-cell">
+          <div className="idx">01 / arrive</div>
+          <h3>How am I?</h3>
+          <p>{greeting.text}, {firstName}. {performanceLabel}.</p>
+        </div>
+        <div className="loop-cell">
+          <div className="idx">02 / one step</div>
+          <h3>What is kind next?</h3>
+          <p>Today leans toward {todaysFocus}.</p>
+          <button type="button" onClick={() => onNavigate && onNavigate('discipline')}>Open that room →</button>
+        </div>
+        <div className="loop-cell">
+          <div className="idx">03 / close</div>
+          <h3>Did I close yesterday?</h3>
+          <p>{recentActivity.length ? `${recentActivity.length} marks on the log.` : 'Nothing logged yet. A sip of water or a sentence counts.'}</p>
+          <button type="button" onClick={() => onNavigate && onNavigate('progress')}>Review the loop →</button>
+        </div>
+      </div>
+
       <section className="dashboard-card sophia-reveal" data-sophia-reveal style={{ padding: 18, marginBottom: 22 }}>
         <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 10 }}>
           {systemChips.map((chip) => (
@@ -165,9 +184,9 @@ const HomeDashboard = ({ onNavigate }) => {
                 gap: 8,
                 borderRadius: 999,
                 padding: '8px 14px',
-                background: 'rgba(255,255,255,0.55)',
-                border: `1px solid ${chip.tone}55`,
-                color: '#11253d',
+                background: 'rgba(255, 255, 255, 0.88)',
+                border: `1px solid ${chip.tone}66`,
+                color: '#000',
                 fontSize: 12,
                 fontWeight: 700,
                 letterSpacing: '0.03em',
@@ -183,7 +202,7 @@ const HomeDashboard = ({ onNavigate }) => {
             onClick={() => onNavigate && onNavigate('progress')}
             style={{ marginLeft: 'auto', borderRadius: 14, padding: '10px 14px', fontWeight: 700 }}
           >
-            Open command center
+            Open today's notes
           </button>
         </div>
       </section>
@@ -200,22 +219,25 @@ const HomeDashboard = ({ onNavigate }) => {
             </div>
           </div>
 
-          <h1 className="hero-title sophia-gradient-text" style={{ margin: 0, fontSize: 'clamp(54px, 7vw, 94px)', lineHeight: 0.9, letterSpacing: '-0.08em' }}>
-            SOPHIA guides
+          <h1 className="hero-title sophia-gradient-text" style={{ margin: 0, fontSize: 'clamp(44px, 7vw, 88px)', lineHeight: 0.94, letterSpacing: '-0.04em' }}>
+            You are here,
             <br />
-            <span style={{ color: '#f5fbff', WebkitTextFillColor: 'inherit' }}>{firstName}'s next move.</span>
+            <span style={{ color: 'var(--color-text)', WebkitTextFillColor: 'var(--color-text)' }}>{firstName}.</span>
           </h1>
 
-          <p className="hero-sub sophia-shell-copy" style={{ margin: '20px 0 24px', maxWidth: 620, fontSize: 17, lineHeight: 1.75 }}>
-            Meet your personal AI operating system. SOPHIA learns your rhythms, celebrates your wins, and guides your execution across Body, Mind, Discipline, and Progress. Built for {firstName}.
+          <p className="hero-sub sophia-shell-copy" style={{ margin: '20px 0 8px', maxWidth: 620, fontSize: 17, lineHeight: 1.75 }}>
+            SOPHIA is a wellness companion — not a drill sergeant. We will keep your habits, journal, and progress in one calm place.
+          </p>
+          <p className="sophia-mono" style={{ margin: '0 0 24px', fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--color-text-muted)' }}>
+            01 / path · last synced {new Date().toLocaleDateString()}
           </p>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginBottom: 20 }}>
             <button type="button" className="sophia-primary-btn" onClick={() => onNavigate && onNavigate('discipline')} style={{ padding: '14px 20px', borderRadius: 16, cursor: 'pointer', fontWeight: 800 }}>
-              Open SOPHIA Core
+              Begin gently
             </button>
             <button type="button" className="sophia-secondary-btn" onClick={() => onNavigate && onNavigate('progress')} style={{ padding: '14px 20px', borderRadius: 16, cursor: 'pointer', fontWeight: 700 }}>
-              Review progress
+              See how you are doing
             </button>
           </div>
 
@@ -234,8 +256,8 @@ const HomeDashboard = ({ onNavigate }) => {
       <section className="dashboard-card sophia-reveal" data-sophia-reveal style={{ padding: 28, marginTop: 22 }}>
         <div className="section-heading" style={{ marginBottom: 18 }}>
           <div>
-            <p className="eyebrow sophia-mono">Live metrics</p>
-            <h3 style={{ margin: '8px 0 0', fontSize: 32 }}>Cognitive + physical signal board</h3>
+            <p className="eyebrow sophia-mono">02 / today</p>
+            <h3 style={{ margin: '8px 0 0', fontSize: 32 }}>How today is unfolding</h3>
           </div>
         </div>
         {loading ? (
@@ -243,13 +265,13 @@ const HomeDashboard = ({ onNavigate }) => {
         ) : (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 16 }}>
             {stats.map((stat) => (
-              <TiltCard key={stat.label} className="stat-card sophia-card-hover" maxTilt={10} scale={1.02} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', minHeight: 160, padding: '24px 20px' }}>
+            <TiltCard key={stat.label} className="stat-card sophia-card-hover" maxTilt={5} scale={1.02} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', minHeight: 160, padding: '24px 20px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 16 }}>
-                  <span style={{ color: '#00d4ff', fontSize: 18 }}>{stat.icon}</span>
+                  <span style={{ color: 'var(--color-primary)', fontSize: 18 }}>{stat.icon}</span>
                 </div>
-                <div style={{ color: '#9ab2ca', fontSize: 12, fontFamily: 'JetBrains Mono, monospace', marginBottom: 8, letterSpacing: '0.05em', textTransform: 'uppercase' }}>{stat.label}</div>
-                <div className="sophia-stat-number" data-sophia-count={stat.value} data-sophia-suffix={stat.suffix} style={{ fontSize: 32, fontWeight: 800, color: '#00d4ff', fontFamily: 'JetBrains Mono, monospace' }}>
-                  {stat.value}<span style={{ fontSize: 20, color: '#f5fbff', marginLeft: 4 }}>{stat.suffix}</span>
+                <div style={{ color: 'var(--color-text-muted)', fontSize: 12, fontFamily: "'Dark Castle'", marginBottom: 8, letterSpacing: '0.05em', textTransform: 'uppercase' }}>{stat.label}</div>
+                <div className="sophia-stat-number" data-sophia-count={stat.value} data-sophia-suffix={stat.suffix} style={{ fontSize: 32, fontWeight: 400, color: 'var(--color-primary)', fontFamily: "'Dark Castle'" }}>
+                  {stat.value}<span style={{ fontSize: 20, color: 'var(--color-text)', marginLeft: 4 }}>{stat.suffix}</span>
                 </div>
               </TiltCard>
             ))}
@@ -260,16 +282,16 @@ const HomeDashboard = ({ onNavigate }) => {
       <section className="dashboard-card sophia-reveal" data-sophia-reveal style={{ padding: 28, marginTop: 22 }}>
         <div className="section-heading" style={{ marginBottom: 18 }}>
           <div>
-            <p className="eyebrow sophia-mono">Core systems</p>
-            <h3 style={{ margin: '8px 0 0', fontSize: 32 }}>Navigate the self-improvement stack</h3>
+            <p className="eyebrow sophia-mono">03 / rooms</p>
+            <h3 style={{ margin: '8px 0 0', fontSize: 32 }}>Choose a room, not a grind</h3>
           </div>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16 }}>
           {quickLinks.map((item) => (
-            <TiltCard key={item.key} className="section-card sophia-card-hover" maxTilt={14} scale={1.03} onClick={() => onNavigate && onNavigate(item.key)} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', minHeight: 240, padding: '28px 24px' }}>
-              <div style={{ marginBottom: 18, color: '#00d4ff', display: 'flex', justifyContent: 'center' }}>{item.icon}</div>
-              <div style={{ fontSize: 24, fontWeight: 800, marginBottom: 14, color: '#f5fbff', fontFamily: 'Orbitron, Space Grotesk, sans-serif', letterSpacing: '0.02em' }}>{item.label}</div>
-              <div style={{ color: '#9ab2ca', lineHeight: 1.65, fontSize: 14, maxWidth: '100%', wordWrap: 'break-word', hyphens: 'auto' }}>{item.copy}</div>
+            <TiltCard key={item.key} className="section-card sophia-card-hover" maxTilt={6} scale={1.02} onClick={() => onNavigate && onNavigate(item.key)} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', minHeight: 240, padding: '28px 24px' }}>
+              <div style={{ marginBottom: 18, color: 'var(--color-primary)', display: 'flex', justifyContent: 'center' }}>{item.icon}</div>
+              <div style={{ fontSize: 24, fontWeight: 400, marginBottom: 14, color: 'var(--color-text)', fontFamily: "'Dark Castle'", letterSpacing: '-0.02em' }}>{item.label}</div>
+              <div style={{ color: 'var(--color-text-muted)', lineHeight: 1.65, fontSize: 14, maxWidth: '100%', wordWrap: 'break-word', hyphens: 'auto' }}>{item.copy}</div>
             </TiltCard>
           ))}
         </div>
@@ -279,8 +301,8 @@ const HomeDashboard = ({ onNavigate }) => {
         <section className="dashboard-card sophia-reveal" data-sophia-reveal style={{ padding: 28 }}>
           <div className="section-heading" style={{ marginBottom: 18 }}>
             <div>
-              <p className="eyebrow sophia-mono">Goal sync</p>
-              <h3 style={{ margin: '8px 0 0', fontSize: 32 }}>Progress and momentum</h3>
+            <p className="eyebrow sophia-mono">04 / aims</p>
+            <h3 style={{ margin: '8px 0 0', fontSize: 32 }}>What you are tending</h3>
             </div>
           </div>
           {activeGoals.length ? (
@@ -290,8 +312,8 @@ const HomeDashboard = ({ onNavigate }) => {
                 return (
                   <div key={`${goal.title || goal.name || 'goal'}-${index}`} className="sophia-panel" style={{ padding: 18 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, marginBottom: 12 }}>
-                      <div style={{ color: '#f5fbff', fontWeight: 700 }}>{goal.title || goal.name || `Goal ${index + 1}`}</div>
-                      <div className="sophia-mono" style={{ color: '#00d4ff', fontSize: 13 }}>{progress}%</div>
+                      <div style={{ color: 'var(--color-text)', fontWeight: 700 }}>{goal.title || goal.name || `Goal ${index + 1}`}</div>
+                      <div className="sophia-mono" style={{ color: 'var(--color-accent)', fontSize: 13 }}>{progress}%</div>
                     </div>
                     <div className="sophia-progress-meter">
                       <span data-sophia-progress={progress} />
@@ -301,18 +323,18 @@ const HomeDashboard = ({ onNavigate }) => {
               })}
             </div>
           ) : (
-            <div style={{ color: '#9ab2ca', lineHeight: 1.7 }}>No tracked goals are active yet. Sophia will light this board up as soon as you begin creating measurable targets.</div>
+            <div style={{ color: 'var(--color-text-muted)', lineHeight: 1.7 }}>Nothing here yet. When you name a goal, it will sit quietly until you are ready to move it.</div>
           )}
         </section>
 
         <section className="sophia-quote sophia-reveal" data-sophia-reveal>
           <div className="quote-line" />
-          <p className="eyebrow sophia-mono" style={{ marginBottom: 12 }}>💡 Personal message for {firstName}</p>
-          <p style={{ margin: 0, fontSize: 18, lineHeight: 1.8, color: '#f5fbff', fontStyle: 'italic' }}>
+          <p className="eyebrow sophia-mono" style={{ marginBottom: 12 }}>A note for {firstName}</p>
+          <p style={{ margin: 0, fontSize: 18, lineHeight: 1.8, color: 'var(--color-text)', fontStyle: 'italic' }}>
             "{dailyTip}"
           </p>
-          <p style={{ margin: '14px 0 0', color: '#9ab2ca', fontSize: 14 }}>
-            Sophia grows with you. Every action you log strengthens her understanding of your rhythms and patterns.
+          <p style={{ margin: '14px 0 0', color: 'var(--color-text-muted)', fontSize: 14 }}>
+            SOPHIA learns your rhythm over time. There is no late, and there is no failing the day.
           </p>
         </section>
       </div>
@@ -321,32 +343,32 @@ const HomeDashboard = ({ onNavigate }) => {
         <section className="dashboard-card sophia-reveal" data-sophia-reveal style={{ padding: 28 }}>
           <div className="section-heading" style={{ marginBottom: 18 }}>
             <div>
-              <p className="eyebrow sophia-mono">🔥 {firstName}'s momentum</p>
-              <h3 style={{ margin: '8px 0 0', fontSize: 32 }}>Your recent victories</h3>
+            <p className="eyebrow sophia-mono">05 / lately</p>
+            <h3 style={{ margin: '8px 0 0', fontSize: 32 }}>Recent kindnesses to yourself</h3>
             </div>
           </div>
           {recentActivity.length === 0 ? (
-            <div style={{ color: '#9ab2ca', lineHeight: 1.7, padding: '20px', textAlign: 'center', background: 'rgba(0, 212, 255, 0.05)', borderRadius: 12 }}>🌱 Your momentum starts with the first action, {firstName}. Complete a habit, task, or session to light this up.</div>
+            <div style={{ color: 'var(--color-text-muted)', lineHeight: 1.7, padding: '20px', textAlign: 'center', background: 'rgba(42, 157, 143, 0.06)', borderRadius: 12 }}>This page fills as you go. A habit, a sip of water, a sentence in the journal — any of those counts.</div>
           ) : (
-            <div style={{ color: '#9ab2ca', lineHeight: 1.7, padding: '20px', textAlign: 'center', background: 'rgba(0, 212, 255, 0.05)', borderRadius: 12 }}>🌱 Your momentum starts with the first action, {firstName}. Complete a habit, task, or session to light this up.</div>
+            <div style={{ color: 'var(--color-text-muted)', lineHeight: 1.7, padding: '20px', textAlign: 'center', background: 'rgba(42, 157, 143, 0.06)', borderRadius: 12 }}>This page fills as you go. A habit, a sip of water, a sentence in the journal — any of those counts.</div>
           )
           }
         </section>
 
         <section className="sophia-timeline sophia-reveal" data-sophia-reveal>
-          <p className="eyebrow sophia-mono" style={{ marginBottom: 18 }}>Sophia flow</p>
+          <p className="eyebrow sophia-mono" style={{ marginBottom: 18 }}>06 / a simple day</p>
           <div className="sophia-timeline-list">
             {timeline.map((step) => (
               <div key={step.title} className="sophia-timeline-item">
-                <div style={{ color: '#f5fbff', fontWeight: 700, marginBottom: 6 }}>{step.title}</div>
-                <div style={{ color: '#9ab2ca', lineHeight: 1.65 }}>{step.copy}</div>
+                <div style={{ color: 'var(--color-text)', fontWeight: 700, marginBottom: 6 }}>{step.title}</div>
+                <div style={{ color: 'var(--color-text-muted)', lineHeight: 1.65 }}>{step.copy}</div>
               </div>
             ))}
           </div>
           <div style={{ display: 'grid', gap: 10, marginTop: 18 }}>
-            <span className="hero-pill"><FlameIcon size={16} /> Build visible streaks</span>
-            <span className="hero-pill"><TrendUpIcon size={16} /> Review progress weekly</span>
-            <span className="hero-pill"><LightbulbIcon size={16} /> Let SOPHIA coach the next step</span>
+            <span className="hero-pill"><FlameIcon size={16} /> Keep a streak if it feels kind</span>
+            <span className="hero-pill"><TrendUpIcon size={16} /> Look back once a week</span>
+            <span className="hero-pill"><LightbulbIcon size={16} /> Ask SOPHIA when you feel stuck</span>
           </div>
         </section>
       </div>

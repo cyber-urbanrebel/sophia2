@@ -1,42 +1,46 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { lazy, Suspense, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import AuthPage from './pages/AuthPage.jsx';
 import OnboardingFlow from './components/OnboardingFlow.jsx';
 import AuthGuard from './components/AuthGuard.jsx';
 import Sidebar from './components/Sidebar.jsx';
+import BottomNav from './components/BottomNav.jsx';
 import MindSection from './components/MindSection.jsx';
 import BodySection from './components/BodySection.jsx';
 import DisciplineSection from './components/DisciplineSection.jsx';
 import ShadowSection from './components/ShadowSection.jsx';
 import ProgressSection from './components/ProgressSection.jsx';
 import FloatingAI from './components/FloatingAI.jsx';
-import VoiceAssistant from './components/VoiceAssistant.jsx';
-import NotificationSystem from './components/NotificationSystem.jsx';
-import GrowthSystem from './components/GrowthSystem.jsx';
 import HomeDashboard from './components/HomeDashboard.jsx';
 import ProfilePage from './components/ProfilePage.jsx';
 import LoadingScreen from './components/LoadingScreen.jsx';
-import AdminPage from './components/AdminPage.jsx';
-import PomodoroTimer from './components/PomodoroTimer.jsx';
-import GamificationPage from './components/GamificationPage.jsx';
-import SmartReminders from './components/SmartReminders.jsx';
-import ProgressReports from './components/ProgressReports.jsx';
-import PremiumPage from './components/PremiumPage.jsx';
-import WisdomLibrary from './components/WisdomLibrary.jsx';
-import PhilosophyExplorer from './components/PhilosophyExplorer.jsx';
-import CommunityPage from './components/CommunityPage.jsx';
-import GoalsPage from './components/GoalsPage.jsx';
-import AdvancedAnalytics from './components/AdvancedAnalytics.jsx';
 import SophiaCursor from './components/SophiaCursor.jsx';
+import ParticleCanvas from './components/ParticleCanvas.jsx';
 import PageTransition from './components/PageTransition.jsx';
 import CommandPalette from './components/CommandPalette.jsx';
 import SophiaFooter from './components/SophiaFooter.jsx';
+import HudBar from './components/HudBar.jsx';
 import { initSophiaAnimations } from './sophia-animations.js';
 import { completeOnboarding as completeOnboardingSlice } from './store/slices/onboardingSlice.js';
 import { logout } from './store/slices/authSlice.js';
 import { resetOnboarding } from './store/slices/onboardingSlice.js';
 import styles from './styles/App.module.css';
+
+const VoiceAssistant = lazy(() => import('./components/VoiceAssistant.jsx'));
+const NotificationSystem = lazy(() => import('./components/NotificationSystem.jsx'));
+const GrowthSystem = lazy(() => import('./components/GrowthSystem.jsx'));
+const AdminPage = lazy(() => import('./components/AdminPage.jsx'));
+const PomodoroTimer = lazy(() => import('./components/PomodoroTimer.jsx'));
+const GamificationPage = lazy(() => import('./components/GamificationPage.jsx'));
+const SmartReminders = lazy(() => import('./components/SmartReminders.jsx'));
+const ProgressReports = lazy(() => import('./components/ProgressReports.jsx'));
+const PremiumPage = lazy(() => import('./components/PremiumPage.jsx'));
+const WisdomLibrary = lazy(() => import('./components/WisdomLibrary.jsx'));
+const PhilosophyExplorer = lazy(() => import('./components/PhilosophyExplorer.jsx'));
+const CommunityPage = lazy(() => import('./components/CommunityPage.jsx'));
+const GoalsPage = lazy(() => import('./components/GoalsPage.jsx'));
+const AdvancedAnalytics = lazy(() => import('./components/AdvancedAnalytics.jsx'));
 
 const AUTH_TOKEN_KEY = 'sophia-auth-token';
 const ONBOARDING_KEY = 'sophia-onboarding-complete';
@@ -51,6 +55,8 @@ function getAmbientMode(pathname) {
 
 function AppShell({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen, children }) {
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const location = useLocation();
+  const room = String(location.pathname || '/path').replace(/^\//, '').toUpperCase() || 'PATH';
   const pageContainerClassName = [
     styles.pageContainer,
     !isMobile && sidebarOpen ? styles.pageContainerWithSidebar : '',
@@ -66,9 +72,13 @@ function AppShell({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen, childr
         setSidebarOpen={setSidebarOpen}
       />
       <div className={pageContainerClassName} style={isMobile ? { paddingTop: 56 } : undefined}>
-        {children}
+        <HudBar room={room} />
+        <Suspense fallback={<LoadingScreen />}>
+          {children}
+        </Suspense>
         <SophiaFooter />
       </div>
+      {isMobile && <BottomNav activeTab={activeTab} setActiveTab={setActiveTab} />}
       <FloatingAI />
     </div>
   );
@@ -122,8 +132,14 @@ export default function App() {
     return stored === null ? true : stored === 'true';
   });
 
-  const themeClass = useSelector((state) => (state.settings.darkMode ? styles.dark : styles.light));
+  const darkMode = useSelector((state) => state.settings.darkMode);
+  const themeClass = darkMode ? styles.dark : styles.light;
   const location = useLocation();
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', Boolean(darkMode));
+    document.body.classList.toggle('dark', Boolean(darkMode));
+  }, [darkMode]);
 
   useEffect(() => {
     document.body.dataset.sophiaAmbient = getAmbientMode(location.pathname);
@@ -139,7 +155,7 @@ export default function App() {
   useEffect(() => {
     const cleanup = initSophiaAnimations();
     return cleanup;
-  }, [location.pathname]);
+  }, [location.pathname, loading]);
 
   const entryPath = useMemo(() => {
     const token = localStorage.getItem(AUTH_TOKEN_KEY);
@@ -209,7 +225,7 @@ export default function App() {
     dispatch(completeOnboardingSlice(profile));
 
     // Smooth transition to the Path dashboard
-    setTransitionMessage(`Welcome, ${profile.name || 'Friend'}! Preparing your path...`);
+    setTransitionMessage(`Welcome, ${profile.name || 'friend'}. Your space is ready.`);
     setTransitioning(true);
     setTimeout(() => {
       navigate('/path', { replace: true });
@@ -257,6 +273,7 @@ export default function App() {
 
   return (
     <div className={themeClass}>
+      <ParticleCanvas />
       <SophiaCursor />
       <CommandPalette />
       <div className={styles.appContainer}>

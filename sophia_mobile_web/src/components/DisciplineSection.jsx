@@ -29,24 +29,24 @@ const uid     = () => Math.random().toString(36).slice(2, 9);
 
 // ─── Design tokens ──────────────────────────────────────────────────────────
 const C = {
-  bg:      "#0d1117",
-  surface: "#161b22",
-  card:    "#1c2129",
-  border:  "#30363d",
-  primary: "#7b68ee",
-  accent:  "#9580ff",
-  green:   "#3fb950",
-  cyan:    "#58a6ff",
-  purple:  "#d2a8ff",
-  text:    "#c9d1d9",
-  muted:   "#8b949e",
-  danger:  "#f85149",
+  bg:      "transparent",
+  surface: "rgba(255,255,255,0.88)",
+  card:    "rgba(255,255,255,0.88)",
+  border:  "rgba(0,0,0,0.16)",
+  primary: "#000000",
+  accent:  "#000000",
+  green:   "#000000",
+  cyan:    "#000000",
+  purple:  "#000000",
+  text:    "#000000",
+  muted:   "#000000",
+  danger:  "#000000",
 };
 
 const styles = {
-  wrap: { background: "transparent", color: C.text, fontFamily: "'DM Mono', 'Fira Code', monospace", padding: "0", paddingBottom: 40 },
+  wrap: { background: "transparent", color: C.text, padding: "0", paddingBottom: 40 },
   tabs: { display: "flex", gap: 4, marginBottom: 28, flexWrap: "wrap", borderBottom: `1px solid ${C.border}`, paddingBottom: 12 },
-  tabActive: { background: C.primary, color: "#fff", borderRadius: 6, padding: "7px 14px", fontSize: 13, fontWeight: 700, cursor: "pointer", border: "none", fontFamily: "inherit", letterSpacing: "0.03em" },
+  tabActive: { background: "rgba(0,0,0,0.1)", color: "#000", borderRadius: 6, padding: "7px 14px", fontSize: 13, fontWeight: 700, cursor: "pointer", border: "1px solid rgba(0,0,0,0.2)", fontFamily: "inherit", letterSpacing: "0.03em" },
   tabInactive: { background: "transparent", color: C.muted, borderRadius: 6, padding: "7px 14px", fontSize: 13, cursor: "pointer", border: "none", fontFamily: "inherit", transition: "color .2s" },
   card: { background: C.card, border: `1px solid ${C.border}`, borderRadius: 10, padding: 16, marginBottom: 14 },
   statRow: { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 18 },
@@ -67,12 +67,12 @@ const styles = {
 
 // ─── TABS definition ──────────────────────────────────────────────────────
 const TABS = [
-  { id: "habits",    label: "🔥 Habits"    },
-  { id: "mindset",   label: "🧠 Mindset"   },
-  { id: "schedule",  label: "⏰ Schedule"  },
-  { id: "goals",     label: "🎯 Goals"     },
-  { id: "journal",   label: "📓 Journal"   },
-  { id: "score",     label: "⚡ Score"     },
+  { id: "habits",    label: "Habits"    },
+  { id: "mindset",   label: "Mindset"   },
+  { id: "schedule",  label: "Schedule"  },
+  { id: "goals",     label: "Goals"     },
+  { id: "journal",   label: "Journal"   },
+  { id: "score",     label: "Score"     },
 ];
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -227,7 +227,7 @@ function HabitsTab() {
   };
 
   const todayDone = habits.filter(h => h.completedDates?.includes(todayKey)).length;
-  const pct = Math.round((todayDone / habits.length) * 100);
+  const pct = habits.length ? Math.round((todayDone / habits.length) * 100) : 0;
 
   const last7 = Array.from({ length: 7 }, (_, i) => {
     const d = new Date(); d.setDate(d.getDate() - (6 - i));
@@ -897,9 +897,9 @@ function ScoreTab() {
           <circle cx={cx} cy={cy} r={R} fill="none" stroke={level.color} strokeWidth={strokeW}
             strokeDasharray={`${dash} ${circumference}`} strokeLinecap="round"
             transform={`rotate(-90 ${cx} ${cy})`} style={{ transition: "stroke-dasharray 1s ease" }} />
-          <text x={cx} y={cy - 8} textAnchor="middle" fill={level.color} fontSize={36} fontWeight={700} fontFamily="DM Mono, monospace">{todayScore}</text>
-          <text x={cx} y={cy + 16} textAnchor="middle" fill={C.muted} fontSize={11} fontFamily="DM Mono, monospace">TODAY</text>
-          <text x={cx} y={cy + 34} textAnchor="middle" fill={level.color} fontSize={13} fontWeight={700} fontFamily="DM Mono, monospace">{level.icon} {level.label}</text>
+          <text x={cx} y={cy - 8} textAnchor="middle" fill={level.color} fontSize={36} fontWeight={400} fontFamily="Dark Castle">{todayScore}</text>
+          <text x={cx} y={cy + 16} textAnchor="middle" fill={C.muted} fontSize={11} fontFamily="Dark Castle">TODAY</text>
+          <text x={cx} y={cy + 34} textAnchor="middle" fill={level.color} fontSize={13} fontWeight={400} fontFamily="Dark Castle">{level.icon} {level.label}</text>
         </svg>
         <div style={{ fontSize: 11, color: C.muted, marginTop: 8 }}>Score = Habits (40pts) + Schedule (30pts) + Journal (20pts)</div>
       </div>

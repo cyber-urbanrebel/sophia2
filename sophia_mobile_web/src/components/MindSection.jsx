@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+﻿import React, { useState, useEffect, useCallback } from 'react';
 import JournalPage from './JournalPage';
 import { renderIcon } from './SophiaIcons.jsx';
 
@@ -26,9 +26,9 @@ const useLocalStorage = (key, initialValue) => {
   return [storedValue, setValue];
 };
 
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // STYLES OBJECT
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 const styles = {
   container: {
     padding: '0',
@@ -46,14 +46,16 @@ const styles = {
     minHeight: '400px',
   },
   card: {
-    backgroundColor: 'rgba(255,255,255,0.05)',
-    backdropFilter: 'blur(10px)',
-    border: '1px solid rgba(255,255,255,0.1)',
-    borderRadius: '8px',
-    padding: '12px',
+    backgroundColor: 'rgba(255,255,255,0.88)',
+    backdropFilter: 'blur(12px)',
+    border: '1px solid rgba(0,0,0,0.14)',
+    borderRadius: '16px',
+    padding: '16px',
     cursor: 'pointer',
     transition: 'all 0.3s ease',
     marginBottom: '8px',
+    boxShadow: '0 12px 28px rgba(26,16,51,0.18), 0 2px 8px rgba(0,0,0,0.08)',
+    color: '#000',
   },
   modelsGrid: {
     display: 'grid',
@@ -69,8 +71,8 @@ const styles = {
   },
   modelDescription: {
     margin: '0 0 8px 0',
-    fontSize: '13px',
-    color: '#aaa',
+    fontSize: '15px',
+    color: '#000000',
   },
   expandedContent: {
     marginTop: '12px',
@@ -86,20 +88,21 @@ const styles = {
     gap: '6px',
   },
   contextBanner: {
-    backgroundColor: 'rgba(0,255,255,0.1)',
-    border: '1px solid #00FFFF',
-    borderRadius: '6px',
+    backgroundColor: 'rgba(255,255,255,0.88)',
+    border: '1px solid rgba(0,0,0,0.16)',
+    borderRadius: '16px',
     padding: '12px',
     marginBottom: '16px',
+    color: '#000',
+    boxShadow: '0 10px 24px rgba(26,16,51,0.16)',
   },
   textarea: {
-    backgroundColor: '#1a1a1a',
-    border: '1px solid rgba(255,255,255,0.1)',
-    borderRadius: '4px',
-    color: '#fff',
+    backgroundColor: '#fff',
+    border: '1px solid rgba(0,0,0,0.2)',
+    borderRadius: '8px',
+    color: '#000',
     padding: '8px',
-    fontFamily: 'monospace',
-    fontSize: '13px',
+    fontSize: '15px',
     resize: 'vertical',
     minHeight: '60px',
   },
@@ -259,13 +262,13 @@ const styles = {
   },
 };
 
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // MENTAL MODELS DATA
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 const MENTAL_MODELS = [
   {
     id: 1,
-    emoji: '🔍',
+    icon: 'search',
     name: 'First Principles',
     description: 'Break any problem to its fundamental truths.',
     fullDescription: 'First Principles thinking means breaking down a complex problem into its core facts and building solutions from scratch.',
@@ -274,7 +277,7 @@ const MENTAL_MODELS = [
   },
   {
     id: 2,
-    emoji: '🔄',
+    icon: 'invert',
     name: 'Inversion',
     description: 'Think backwards. Ask what would guarantee failure.',
     fullDescription: 'Inversion asks you to reverse a problem to see it from a different angle.',
@@ -283,7 +286,7 @@ const MENTAL_MODELS = [
   },
   {
     id: 3,
-    emoji: '🌊',
+    icon: 'waves',
     name: 'Second Order Thinking',
     description: 'Every action has consequences of consequences.',
     fullDescription: 'Second Order Thinking examines the consequences of consequences of your actions.',
@@ -292,7 +295,7 @@ const MENTAL_MODELS = [
   },
   {
     id: 4,
-    emoji: '🪒',
+    icon: 'razor',
     name: "Occam's Razor",
     description: 'The simplest explanation is usually correct.',
     fullDescription: "Occam's Razor states that the simplest explanation requiring the fewest assumptions is typically correct.",
@@ -301,7 +304,7 @@ const MENTAL_MODELS = [
   },
   {
     id: 5,
-    emoji: '🎯',
+    icon: 'target',
     name: 'Circle of Competence',
     description: 'Know clearly what you know and what you do not.',
     fullDescription: 'Circle of Competence means understanding your areas of expertise vs. speculation.',
@@ -310,7 +313,7 @@ const MENTAL_MODELS = [
   },
   {
     id: 6,
-    emoji: '🧩',
+    icon: 'puzzle',
     name: 'Mental Subtraction',
     description: 'Imagine if something good had never happened.',
     fullDescription: 'Mental Subtraction improves gratitude and perspective by imagining the absence of good things.',
@@ -319,7 +322,7 @@ const MENTAL_MODELS = [
   },
   {
     id: 7,
-    emoji: '📊',
+    icon: 'chart',
     name: 'Pareto Principle',
     description: '80% of results come from 20% of effort.',
     fullDescription: 'The Pareto Principle states that a small portion of inputs drive the majority of outputs.',
@@ -328,7 +331,7 @@ const MENTAL_MODELS = [
   },
   {
     id: 8,
-    emoji: '🎭',
+    icon: 'mask',
     name: "Hanlon's Razor",
     description: 'Never attribute to malice what can be explained by misunderstanding.',
     fullDescription: "Hanlon's Razor teaches us to assume good intent and look for simpler explanations first.",
@@ -337,9 +340,9 @@ const MENTAL_MODELS = [
   },
 ];
 
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // BOOKS DATA
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 const DEFAULT_BOOKS = [
   { id: 1, title: 'Meditations', author: 'Marcus Aurelius', category: 'Stoicism', status: 'to-read' },
   { id: 2, title: 'Atomic Habits', author: 'James Clear', category: 'Habits', status: 'to-read' },
@@ -351,9 +354,9 @@ const DEFAULT_BOOKS = [
   { id: 8, title: 'Deep Work', author: 'Cal Newport', category: 'Psychology', status: 'to-read' },
 ];
 
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // QUIZ DATA
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 const QUIZ_QUESTIONS = [
   { q: 'What does First Principles thinking mean?', options: ['Break problems to fundamental truths', 'Copy what works', 'Trust your gut', 'Follow expert advice'], answer: 0, model: 'First Principles' },
   { q: 'Inversion asks you to think about...', options: ['How to succeed', 'What guarantees failure', "Other people's opinions", 'Past mistakes'], answer: 1, model: 'Inversion' },
@@ -377,9 +380,9 @@ const QUIZ_QUESTIONS = [
   { q: 'The Obstacle Is the Way teaches that obstacles are...', options: ['To be avoided', 'The path forward itself', 'Signs to quit', "Other people's problems"], answer: 1, model: 'Stoicism' },
 ];
 
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // REFLECTION PROMPTS
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 const REFLECTION_PROMPTS = [
   'What if your biggest current fear never actually happens?',
   'What if the obstacle you are facing is preparing you for something greater?',
@@ -397,27 +400,27 @@ const REFLECTION_PROMPTS = [
   'What if your only competition is who you were yesterday?',
 ];
 
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // DAILY PRACTICES
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 const DEFAULT_PRACTICES = [
-  { id: 1, emoji: '🧘', name: 'Meditation', description: 'Sit quietly for 10 minutes, observe your thoughts without judgment.' },
-  { id: 2, emoji: '📖', name: 'Read', description: 'Read 20 minutes from a book that challenges your thinking.' },
-  { id: 3, emoji: '🤔', name: 'Reflect', description: 'Write one insight about yourself or the world.' },
-  { id: 4, emoji: '💪', name: 'Move', description: 'Exercise for 20 minutes. Walk, run, or strength train.' },
-  { id: 5, emoji: '🙏', name: 'Gratitude', description: 'Write down 3 things you\'re grateful for today.' },
-  { id: 6, emoji: '💤', name: 'Rest', description: 'Get 7-8 hours of quality sleep.' },
+  { id: 1, emoji: 'ðŸ§˜', name: 'Meditation', description: 'Sit quietly for 10 minutes, observe your thoughts without judgment.' },
+  { id: 2, emoji: 'ðŸ“–', name: 'Read', description: 'Read 20 minutes from a book that challenges your thinking.' },
+  { id: 3, emoji: 'ðŸ¤”', name: 'Reflect', description: 'Write one insight about yourself or the world.' },
+  { id: 4, emoji: 'ðŸ’ª', name: 'Move', description: 'Exercise for 20 minutes. Walk, run, or strength train.' },
+  { id: 5, emoji: 'ðŸ™', name: 'Gratitude', description: 'Write down 3 things you\'re grateful for today.' },
+  { id: 6, emoji: 'ðŸ’¤', name: 'Rest', description: 'Get 7-8 hours of quality sleep.' },
 ];
 
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // MAIN COMPONENT
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 export default function MindSection() {
   const [activeTab, setActiveTab] = useState('models');
   
-  // ═══════════════════════════════════════════════════════════════
-  // TAB 1 — MENTAL MODELS
-  // ═══════════════════════════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  // TAB 1 â€” MENTAL MODELS
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   const [expandedModels, setExpandedModels] = useState({});
   const [masteredModels, setMasteredModels] = useLocalStorage('sophia_mastered_models', {});
   const [modelResponses, setModelResponses] = useLocalStorage('sophia_model_responses', {});
@@ -456,9 +459,9 @@ export default function MindSection() {
     return banners[bannerIndex];
   };
 
-  // ═══════════════════════════════════════════════════════════════
-  // TAB 2 — READING LIST
-  // ═══════════════════════════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  // TAB 2 â€” READING LIST
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   const [books, setBooks] = useLocalStorage('sophia_reading_list', DEFAULT_BOOKS);
   const [bookNotes, setBookNotes] = useLocalStorage('sophia_book_notes', {});
   const [onShowAddBook, setShowAddBook] = useState(false);
@@ -495,9 +498,9 @@ export default function MindSection() {
     return prompts[category] || prompts['Other'];
   };
 
-  // ═══════════════════════════════════════════════════════════════
-  // TAB 3 — DAILY PRACTICES
-  // ═══════════════════════════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  // TAB 3 â€” DAILY PRACTICES
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   const [todayCompletions, setTodayCompletions] = useLocalStorage('sophia_today_completions', '');
   const [fiveWhyAnalysis, setFiveWhyAnalysis] = useState('');
   const [fiveWhySteps, setFiveWhySteps] = useState({ why1: '', why2: '', why3: '', why4: '', why5: '' });
@@ -574,9 +577,9 @@ export default function MindSection() {
     return savedCheckins.some(c => c.date === getTodayDate());
   };
 
-  // ═══════════════════════════════════════════════════════════════
-  // TAB 4 — QUIZ
-  // ═══════════════════════════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  // TAB 4 â€” QUIZ
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   const [quizStarted, setQuizStarted] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
@@ -619,9 +622,9 @@ export default function MindSection() {
     startQuiz();
   };
 
-  // ═══════════════════════════════════════════════════════════════
-  // TAB 5 — REFLECT
-  // ═══════════════════════════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  // TAB 5 â€” REFLECT
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   const [reflectionStep, setReflectionStep] = useState(1);
   const [reflectionResponse, setReflectionResponse] = useLocalStorage('sophia_reflection_response', '');
   const [thoughtRecord, setThoughtRecord] = useState({ situation: '', thought: '', emotion: '', evidence_for: '', evidence_against: '', balanced: '' });
@@ -644,9 +647,9 @@ export default function MindSection() {
     setSavedThoughtRecords(prev => prev.filter(r => r.id !== id));
   };
 
-  // ═══════════════════════════════════════════════════════════════
-  // TAB 6 — MOOD
-  // ═══════════════════════════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  // TAB 6 â€” MOOD
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   const [moodLog, setMoodLog] = useLocalStorage('sophia_mood_log', []);
   const [moodNote, setMoodNote] = useState('');
   const [badges, setBadges] = useLocalStorage('sophia_badges', {});
@@ -721,7 +724,7 @@ export default function MindSection() {
     const chartHeight = 150;
     const barWidth = 30;
     const moodColors = { 1: '#FF4444', 2: '#FFAA00', 3: '#888888', 4: '#00FFFF', 5: '#00FF88' };
-    const moodEmojis = { 1: '😔', 2: '😐', 3: '🙂', 4: '😊', 5: '🔥' };
+    const moodEmojis = { 1: 'ðŸ˜”', 2: 'ðŸ˜', 3: 'ðŸ™‚', 4: 'ðŸ˜Š', 5: 'ðŸ”¥' };
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -751,9 +754,9 @@ export default function MindSection() {
   const lowMoodDays = moodLog.filter(m => m.mood <= 2).slice(-3).length;
   const showWellnessTrigger = lowMoodDays >= 3;
 
-  // ═══════════════════════════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   // TAB STYLING HELPERS
-  // ═══════════════════════════════════════════════════════════════
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
   const tabButtonClass = (tab) => `
     text-sm px-4 py-2 rounded-lg transition-all
     ${activeTab === tab 
@@ -765,32 +768,32 @@ export default function MindSection() {
     <div style={styles.container}>
       {/* TAB NAVIGATION */}
       <div style={styles.tabNav}>
-        <button onClick={() => setActiveTab('models')} className={tabButtonClass('models')}>{renderIcon('🧠', 16)} Models</button>
-        <button onClick={() => setActiveTab('reading')} className={tabButtonClass('reading')}>{renderIcon('📚', 16)} Reading</button>
-        <button onClick={() => setActiveTab('practices')} className={tabButtonClass('practices')}>{renderIcon('🎯', 16)} Practices</button>
-        <button onClick={() => setActiveTab('quiz')} className={tabButtonClass('quiz')}>{renderIcon('🧠', 16)} Quiz</button>
-        <button onClick={() => setActiveTab('reflect')} className={tabButtonClass('reflect')}>{renderIcon('💡', 16)} Reflect</button>
-        <button onClick={() => setActiveTab('mood')} className={tabButtonClass('mood')}>{renderIcon('📊', 16)} Mood</button>
-        <button onClick={() => setActiveTab('journal')} className={tabButtonClass('journal')}>{renderIcon('📝', 16)} Journal</button>
+        <button onClick={() => setActiveTab('models')} className={tabButtonClass('models')}>{renderIcon('brain', 16)} Models</button>
+        <button onClick={() => setActiveTab('reading')} className={tabButtonClass('reading')}>{renderIcon('book', 16)} Reading</button>
+        <button onClick={() => setActiveTab('practices')} className={tabButtonClass('practices')}>{renderIcon('target', 16)} Practices</button>
+        <button onClick={() => setActiveTab('quiz')} className={tabButtonClass('quiz')}>{renderIcon('idea', 16)} Quiz</button>
+        <button onClick={() => setActiveTab('reflect')} className={tabButtonClass('reflect')}>{renderIcon('idea', 16)} Reflect</button>
+        <button onClick={() => setActiveTab('mood')} className={tabButtonClass('mood')}>{renderIcon('chart', 16)} Mood</button>
+        <button onClick={() => setActiveTab('journal')} className={tabButtonClass('journal')}>{renderIcon('book', 16)} Journal</button>
       </div>
 
       {/* TAB CONTENT */}
       <div style={styles.tabContent}>
 
-        {/* TAB 1 — MENTAL MODELS */}
+        {/* TAB 1 â€” MENTAL MODELS */}
         {activeTab === 'models' && (
           <div>
             <div style={styles.contextBanner}>
-              <p style={{ fontSize: '15px', fontStyle: 'italic', margin: 0, display: 'flex', alignItems: 'center', gap: '6px' }}>{renderIcon('💡', 16)} {getContextBanner()}</p>
+              <p style={{ fontSize: '15px', fontStyle: 'italic', margin: 0, display: 'flex', alignItems: 'center', gap: '6px', color: '#000' }}>{renderIcon('idea', 16)} {getContextBanner()}</p>
             </div>
             
             <div style={styles.modelsGrid}>
               {MENTAL_MODELS.map(model => (
                 <div key={model.id} style={styles.card} onClick={() => toggleModelExpand(model.id)}>
                   <div style={styles.modelHeader}>
-                    <span style={{ fontSize: '28px' }}>{renderIcon(model.emoji, 28)}</span>
+                    <span style={{ fontSize: '28px' }}>{renderIcon(model.icon, 28)}</span>
                     <span style={{ fontSize: '16px', fontWeight: '600' }}>{model.name}</span>
-                    {masteredModels[model.id] && <span style={{ color: '#00FFFF', marginLeft: 'auto' }}>✓</span>}
+                    {masteredModels[model.id] && <span style={{ color: '#00FFFF', marginLeft: 'auto' }}>âœ“</span>}
                   </div>
                   <p style={styles.modelDescription}>{model.description}</p>
 
@@ -805,8 +808,8 @@ export default function MindSection() {
                         padding: '16px',
                         transition: 'all 0.3s ease',
                       }}>
-                        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 600, color: '#00d4ff', fontSize: '14px', marginBottom: '4px' }}>
-                          {renderIcon('💡', 18)} Try it now
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 600, color: 'var(--color-primary)', fontSize: '14px', marginBottom: '4px' }}>
+                          {renderIcon('ðŸ’¡', 18)} Try it now
                         </label>
                         <textarea 
                           placeholder={model.tryItPrompt}
@@ -832,14 +835,14 @@ export default function MindSection() {
                             onClick={() => handleSaveResponse(model.id)}
                             style={{
                               ...styles.button,
-                              backgroundColor: modelResponses[model.id]?.trim() ? '#00d4ff' : '#333',
+                              backgroundColor: modelResponses[model.id]?.trim() ? 'var(--color-primary)' : '#333',
                               opacity: modelResponses[model.id]?.trim() ? 1 : 0.5,
                               padding: '8px 20px',
                               borderRadius: '8px',
                               transition: 'all 0.3s ease',
                             }}
                           >
-                            {savedFlash[model.id] ? '✓ Saved!' : '💾 Save Response'}
+                            {savedFlash[model.id] ? 'âœ“ Saved!' : 'ðŸ’¾ Save Response'}
                           </button>
                           {modelResponses[model.id]?.trim() && (
                             <span style={{ fontSize: '11px', color: '#888' }}>
@@ -863,7 +866,7 @@ export default function MindSection() {
                         onMouseEnter={(e) => { e.target.style.transform = 'translateY(-1px)'; e.target.style.boxShadow = '0 4px 12px rgba(0,255,255,0.2)'; }}
                         onMouseLeave={(e) => { e.target.style.transform = 'translateY(0)'; e.target.style.boxShadow = 'none'; }}
                       >
-                        {masteredModels[model.id] ? '✓ Mastered' : 'Mark as mastered'}
+                        {masteredModels[model.id] ? 'âœ“ Mastered' : 'Mark as mastered'}
                       </button>
                     </div>
                   )}
@@ -873,12 +876,12 @@ export default function MindSection() {
           </div>
         )}
 
-        {/* TAB 2 — READING LIST */}
+        {/* TAB 2 â€” READING LIST */}
         {activeTab === 'reading' && (
           <div>
             <div style={styles.readingStats}>
-              <span style={{ fontFamily: 'monospace', fontSize: '12px' }}>
-                {bookStats.finished} finished · {bookStats.reading} reading · {bookStats.toRead} to read
+              <span style={{ fontFamily: "'Dark Castle'", fontSize: '12px' }}>
+                {bookStats.finished} finished Â· {bookStats.reading} reading Â· {bookStats.toRead} to read
               </span>
               <div style={{ display: 'flex', gap: '4px', marginTop: '8px', height: '8px' }}>
                 <div style={{ flex: bookStats.finished, backgroundColor: '#00FF88' }} />
@@ -925,8 +928,8 @@ export default function MindSection() {
               {books.map(book => (
                 <div key={book.id} style={styles.card} onClick={() => setExpandedBooks(prev => ({ ...prev, [book.id]: !prev[book.id] }))}>
                   <div style={{ marginBottom: '8px' }}>
-                    <p style={{ margin: '0 0 4px 0', fontWeight: '600' }}>{book.title}</p>
-                    <p style={{ margin: 0, fontSize: '12px', color: '#888' }}>{book.author}</p>
+                    <p style={{ margin: '0 0 4px 0', fontWeight: '700', color: '#000' }}>{book.title}</p>
+                    <p style={{ margin: 0, fontSize: '12px', color: '#000', fontWeight: 600 }}>{book.author}</p>
                   </div>
 
                   <div style={{ display: 'flex', gap: '4px', marginBottom: '8px' }}>
@@ -936,9 +939,10 @@ export default function MindSection() {
                         onClick={(e) => { e.stopPropagation(); updateBookStatus(book.id, status); }}
                         style={{
                           ...styles.pillButton,
-                          backgroundColor: book.status === status ? (status === 'to-read' ? 'transparent' : status === 'reading' ? '#FFAA00' : '#00FF88') : 'transparent',
-                          borderColor: book.status === status ? (status === 'reading' ? '#FFAA00' : status === 'finished' ? '#00FF88' : '#666') : '#666',
-                          color: book.status === status && status !== 'to-read' ? '#000' : '#fff',
+                          backgroundColor: book.status === status ? (status === 'to-read' ? 'rgba(0,0,0,0.08)' : status === 'reading' ? '#FFAA00' : '#00FF88') : 'rgba(255,255,255,0.95)',
+                          borderColor: '#000',
+                          color: '#000',
+                          fontWeight: 700,
                         }}
                       >
                         {status === 'to-read' ? 'To Read' : status === 'reading' ? 'Reading' : 'Finished'}
@@ -956,7 +960,7 @@ export default function MindSection() {
                   {book.status === 'finished' && (
                     <div style={{ marginBottom: '8px' }}>
                       <div style={{ fontSize: '12px', marginBottom: '4px' }}>Rating</div>
-                      <div>{'⭐'.repeat(3)}</div>
+                      <div>{'â­'.repeat(3)}</div>
                     </div>
                   )}
 
@@ -976,7 +980,7 @@ export default function MindSection() {
                       </button>
                       {book.category && (
                         <p style={{ fontSize: '12px', marginTop: '8px', fontStyle: 'italic', color: '#00FFFF' }}>
-                          💭 {getReflectionPrompt(book.category)}
+                          ðŸ’­ {getReflectionPrompt(book.category)}
                         </p>
                       )}
                     </div>
@@ -987,7 +991,7 @@ export default function MindSection() {
           </div>
         )}
 
-        {/* TAB 3 — DAILY PRACTICES */}
+        {/* TAB 3 â€” DAILY PRACTICES */}
         {activeTab === 'practices' && (
           <div>
             <div style={styles.progressSection}>
@@ -1016,7 +1020,7 @@ export default function MindSection() {
                       justifyContent: 'center',
                     }}
                   >
-                    {isPracticeComplete(practice.id) ? '✓' : ''}
+                    {isPracticeComplete(practice.id) ? 'âœ“' : ''}
                   </button>
                   <div>
                     <p style={{ margin: '0 0 4px 0', fontWeight: '600', textDecoration: isPracticeComplete(practice.id) ? 'line-through' : 'none' }}>
@@ -1070,7 +1074,7 @@ export default function MindSection() {
 
             {/* EISENHOWER MATRIX */}
             <div style={styles.toolSection}>
-              <h3>Priority Matrix — What matters most right now?</h3>
+              <h3>Priority Matrix â€” What matters most right now?</h3>
               <div style={styles.matrix}>
                 {['q1', 'q2', 'q3', 'q4'].map((q, idx) => {
                   const labels = ['Urgent + Important\nDO NOW', 'Not urgent + Important\nSCHEDULE', 'Urgent + Not Important\nDELEGATE', 'Not urgent + Not Important\nDELETE'];
@@ -1082,7 +1086,7 @@ export default function MindSection() {
                         {matrixTasks[q].map(task => (
                           <div key={task.id} style={{ display: 'flex', gap: '4px', marginBottom: '4px' }}>
                             <span style={{ padding: '2px 6px', backgroundColor: '#333', borderRadius: '4px', fontSize: '11px' }}>{task.text}</span>
-                            <button onClick={() => removeMatrixTask(q, task.id)} style={{ background: 'none', border: 'none', color: '#888', cursor: 'pointer' }}>✕</button>
+                            <button onClick={() => removeMatrixTask(q, task.id)} style={{ background: 'none', border: 'none', color: '#888', cursor: 'pointer' }}>âœ•</button>
                           </div>
                         ))}
                       </div>
@@ -1104,14 +1108,14 @@ export default function MindSection() {
 
             {/* EVENING CHECK-IN */}
             <div style={styles.toolSection}>
-              <h3>🌙 Evening Check-in</h3>
+              <h3>ðŸŒ™ Evening Check-in</h3>
               {isCheckinDoneToday() ? (
-                <p style={{ color: '#00FFFF' }}>✓ Check-in saved for today</p>
+                <p style={{ color: '#00FFFF' }}>âœ“ Check-in saved for today</p>
               ) : (
                 <div>
                   <label style={{ fontSize: '12px', display: 'block', marginBottom: '8px' }}>How was today overall?</label>
                   <div style={{ display: 'flex', gap: '12px', marginBottom: '12px' }}>
-                    {['😔', '😐', '🙂', '😊', '🔥'].map((emoji, idx) => (
+                    {['ðŸ˜”', 'ðŸ˜', 'ðŸ™‚', 'ðŸ˜Š', 'ðŸ”¥'].map((emoji, idx) => (
                       <button 
                         key={idx}
                         onClick={() => setCheckinData(prev => ({ ...prev, mood: emoji }))}
@@ -1150,12 +1154,12 @@ export default function MindSection() {
           </div>
         )}
 
-        {/* TAB 4 — QUIZ */}
+        {/* TAB 4 â€” QUIZ */}
         {activeTab === 'quiz' && (
           <div>
             {!quizStarted ? (
               <div style={{ textAlign: 'center', padding: '20px' }}>
-                <h2>🧠 Active Recall Quiz</h2>
+                <h2>ðŸ§  Active Recall Quiz</h2>
                 <p>Test your knowledge of mental models and psychology concepts.</p>
                 <button onClick={startQuiz} style={styles.button}>Start Quiz</button>
                 {quizHistory.length > 0 && (
@@ -1173,7 +1177,7 @@ export default function MindSection() {
               <div style={{ textAlign: 'center', padding: '20px' }}>
                 <h1 style={{ fontSize: '48px' }}>{score} / 20</h1>
                 <p style={{ color: score >= 16 ? '#00FF88' : score >= 10 ? '#FFAA00' : '#FF4444', fontSize: '18px', marginBottom: '12px' }}>
-                  {score >= 16 ? '✓ Excellent' : score >= 10 ? 'Good' : 'Keep studying'}
+                  {score >= 16 ? 'âœ“ Excellent' : score >= 10 ? 'Good' : 'Keep studying'}
                 </p>
                 <button onClick={retakeQuiz} style={styles.button}>Retake Quiz</button>
               </div>
@@ -1182,7 +1186,7 @@ export default function MindSection() {
                 <div style={{ marginBottom: '16px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '12px' }}>
                     <span>Question {currentQuestion + 1} of {QUIZ_QUESTIONS.length}</span>
-                    <span style={{ fontFamily: 'monospace' }}>Score: {score}/{QUIZ_QUESTIONS.length}</span>
+                    <span style={{ fontFamily: "'Dark Castle'" }}>Score: {score}/{QUIZ_QUESTIONS.length}</span>
                   </div>
                   <div style={{ backgroundColor: '#333', height: '4px', borderRadius: '2px', overflow: 'hidden' }}>
                     <div style={{ backgroundColor: '#00FFFF', height: '100%', width: `${((currentQuestion + 1) / QUIZ_QUESTIONS.length) * 100}%` }} />
@@ -1220,12 +1224,12 @@ export default function MindSection() {
           </div>
         )}
 
-        {/* TAB 5 — REFLECT */}
+        {/* TAB 5 â€” REFLECT */}
         {activeTab === 'reflect' && (
           <div>
             {/* REFLECTION PROMPTS */}
             <div style={styles.toolSection}>
-              <h3>✨ Guided Reflection</h3>
+              <h3>âœ¨ Guided Reflection</h3>
               <div style={styles.reflectionBanner}>
                 <p style={{ margin: '0 0 12px 0', fontStyle: 'italic', fontSize: '16px' }}>
                   {getReflectionPromptForDay()}
@@ -1237,12 +1241,12 @@ export default function MindSection() {
                 onChange={(e) => setReflectionResponse(e.target.value)}
                 style={styles.textarea}
               />
-              <button style={styles.button}>Next prompt →</button>
+              <button style={styles.button}>Next prompt â†’</button>
             </div>
 
             {/* THOUGHT RECORD */}
             <div style={styles.toolSection}>
-              <h3>💭 Challenge a Negative Thought</h3>
+              <h3>ðŸ’­ Challenge a Negative Thought</h3>
               <p>CBT shows that examining our thoughts reduces their power.</p>
 
               <div style={{ display: 'flex', gap: '4px', marginBottom: '16px' }}>
@@ -1263,7 +1267,7 @@ export default function MindSection() {
                       fontSize: '12px',
                     }}
                   >
-                    {step <= reflectionStep ? '✓' : step}
+                    {step <= reflectionStep ? 'âœ“' : step}
                   </div>
                 ))}
               </div>
@@ -1361,7 +1365,7 @@ export default function MindSection() {
           </div>
         )}
 
-        {/* TAB 6 — MOOD */}
+        {/* TAB 6 â€” MOOD */}
         {activeTab === 'mood' && (
           <div>
             {/* MOOD LOG */}
@@ -1381,7 +1385,7 @@ export default function MindSection() {
                       padding: '4px',
                     }}
                   >
-                    {['😔', '😐', '🙂', '😊', '🔥'][mood - 1]}
+                    {['ðŸ˜”', 'ðŸ˜', 'ðŸ™‚', 'ðŸ˜Š', 'ðŸ”¥'][mood - 1]}
                   </button>
                 ))}
               </div>
@@ -1410,7 +1414,7 @@ export default function MindSection() {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', margin: '16px 0' }}>
               <div style={styles.statCard}>
                 <div style={{ fontSize: '28px', marginBottom: '4px' }}>
-                  {['😔', '😐', '🙂', '😊', '🔥'][Math.round(stats.average) - 1] || '❌'}
+                  {['ðŸ˜”', 'ðŸ˜', 'ðŸ™‚', 'ðŸ˜Š', 'ðŸ”¥'][Math.round(stats.average) - 1] || 'âŒ'}
                 </div>
                 <div style={{ fontSize: '12px', color: '#888' }}>Avg this week</div>
                 <div style={{ fontSize: '16px', fontWeight: 'bold' }}>{stats.average}</div>
@@ -1431,21 +1435,21 @@ export default function MindSection() {
 
             {/* BADGES */}
             <div style={styles.toolSection}>
-              <h3>🏆 Badges</h3>
+              <h3>ðŸ† Badges</h3>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px' }}>
                 {[
-                  { emoji: '🌱', name: 'First Log', unlocked: moodLog.length >= 1 },
-                  { emoji: '🔥', name: '3-Day Streak', unlocked: stats.streak >= 3 },
-                  { emoji: '💎', name: '7-Day Streak', unlocked: stats.streak >= 7 },
-                  { emoji: '⚡', name: 'Mood Master', unlocked: stats.average >= 4 },
-                  { emoji: '🏆', name: 'Consistent', unlocked: moodLog.length >= 30 },
-                  { emoji: '📚', name: 'Reader', unlocked: bookStats.finished >= 3 },
-                  { emoji: '🧠', name: 'Scholar', unlocked: score >= 15 },
-                  { emoji: '🪞', name: 'Reflector', unlocked: savedThoughtRecords.length >= 5 },
+                  { emoji: 'ðŸŒ±', name: 'First Log', unlocked: moodLog.length >= 1 },
+                  { emoji: 'ðŸ”¥', name: '3-Day Streak', unlocked: stats.streak >= 3 },
+                  { emoji: 'ðŸ’Ž', name: '7-Day Streak', unlocked: stats.streak >= 7 },
+                  { emoji: 'âš¡', name: 'Mood Master', unlocked: stats.average >= 4 },
+                  { emoji: 'ðŸ†', name: 'Consistent', unlocked: moodLog.length >= 30 },
+                  { emoji: 'ðŸ“š', name: 'Reader', unlocked: bookStats.finished >= 3 },
+                  { emoji: 'ðŸ§ ', name: 'Scholar', unlocked: score >= 15 },
+                  { emoji: 'ðŸªž', name: 'Reflector', unlocked: savedThoughtRecords.length >= 5 },
                 ].map((badge, idx) => (
                   <div key={idx} style={{...styles.badgeCard, opacity: badge.unlocked ? 1 : 0.3}}>
                     <div style={{ fontSize: '24px', marginBottom: '4px' }}>
-                      {badge.emoji}{!badge.unlocked && ' 🔒'}
+                      {badge.emoji}{!badge.unlocked && ' ðŸ”’'}
                     </div>
                     <div style={{ fontSize: '10px', textAlign: 'center' }}>{badge.name}</div>
                   </div>
@@ -1456,7 +1460,7 @@ export default function MindSection() {
             {/* WELLNESS TRIGGER */}
             {showWellnessTrigger && (
               <div style={styles.wellnessTrigger}>
-                <p>We noticed your mood has been lower lately. That's okay — it happens to everyone. Here are 3 things that might help:</p>
+                <p>We noticed your mood has been lower lately. That's okay â€” it happens to everyone. Here are 3 things that might help:</p>
                 <ul style={{ paddingLeft: '16px' }}>
                   <li>Complete one practice from your daily list</li>
                   <li>Write a thought record to challenge a negative belief</li>
@@ -1467,7 +1471,7 @@ export default function MindSection() {
           </div>
         )}
 
-        {/* TAB 7 — JOURNAL */}
+        {/* TAB 7 â€” JOURNAL */}
         {activeTab === 'journal' && <JournalPage />}
 
       </div>

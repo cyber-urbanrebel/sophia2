@@ -4,14 +4,20 @@ export default {
   theme: {
     extend: {
       colors: {
-        obsidian: '#050308',
-        gold: '#c9a44c',
-        'gold-soft': '#e8cf8a',
-        violet: '#7b2fff',
+        primary: '#30cfd0',
+        accent: '#9BE9EA',
+        background: '#330867',
+        obsidian: '#1a0440',
+        gold: '#9BE9EA',
+        'gold-soft': '#c8f4f4',
+        violet: '#330867',
+        cyan: '#30cfd0',
       },
       fontFamily: {
-        heading: ['"Cormorant Garamond"', 'serif'],
-        display: ['"Orbitron"', '"Space Grotesk"', 'sans-serif'],
+        heading: ['Dark Castle'],
+        display: ['Dark Castle'],
+        ui: ['Dark Castle'],
+        charm: ['Urban Jungle'],
       },
     },
   },

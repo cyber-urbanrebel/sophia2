@@ -1,4 +1,5 @@
 import React from 'react';
+import SophiaGyrate from './SophiaGyrate.jsx';
 
 const LoadingScreen = () => {
   return (
@@ -9,15 +10,20 @@ const LoadingScreen = () => {
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%)',
-      color: '#fff',
-      fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif',
+      backgroundImage: 'linear-gradient(to top, #7AF6F7 0%, #5B1FA8 100%)',
+      color: '#FFFFFF',
+      fontFamily: "'Dark Castle'",
       textAlign: 'center',
+      position: 'relative',
+      overflow: 'hidden',
     }}>
-      <div style={{ fontSize: '44px', fontWeight: 700, marginBottom: '16px' }}>SOPHIA</div>
-      <div style={{ width: '48px', height: '48px', border: '5px solid rgba(255, 255, 255, 0.2)', borderTopColor: '#00d4ff', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
-      <div style={{ marginTop: '16px', color: '#aaa' }}>Loading your Personal AI Workspace...</div>
-      <style>{`@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}</style>
+      <SophiaGyrate className="sophia-gyrate-load" size={280} />
+      <div style={{ fontFamily: "'Dark Castle'", fontSize: 36, fontWeight: 400, marginBottom: 8 }}>SOPHIA</div>
+      <div style={{ fontFamily: "'Dark Castle'", fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(244,251,255,0.72)' }}>
+        take a breath — we are preparing your space
+      </div>
+      <style>{`@keyframes sophia-breathe { 0%,100% { transform: scale(1); opacity: 0.85 } 50% { transform: scale(1.06); opacity: 1 } }
+        @media (prefers-reduced-motion: reduce) { * { animation: none !important } }`}</style>
     </div>
   );
 };

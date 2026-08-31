@@ -1,10 +1,11 @@
 # SOPHIA
 
-Sophia is a conscious operating system for the soul — a digital wellness and
-self-improvement platform combining habit tracking, journaling, shadow work,
-an interfaith wisdom library, and an AI voice/chat coach, in one dark,
-cinematic app that runs as both a desktop web experience and a responsive
-mobile web app from a single codebase.
+SOPHIA is a digital wellness companion — habits, journaling, shadow work,
+an interfaith wisdom library, and a calm AI coach — in one web app that
+feels human, not like a command center.
+
+The live project is this GitHub repo:
+[github.com/cyber-urbanrebel/sophia2](https://github.com/cyber-urbanrebel/sophia2)
 
 ## System Flow
 
@@ -50,7 +51,7 @@ nothing above is aspirational; it's what's wired and tested.
 ### Frontend (`sophia_mobile_web/`)
 - React 18 + Vite 5, React Router 6, Redux Toolkit
 - Tailwind CSS (utility classes) alongside CSS Modules / inline styles for
-  the cinematic obsidian/gold/violet theme (see `src/styles/sophia-theme.css`)
+  the warm teal / amber wellness theme (see `src/styles/tokens.css` and `src/styles/sophia-theme.css`)
 - Web Speech API for free voice input/output
 - Firebase is optional (`VITE_USE_FIREBASE=true`) and falls back to the
   backend otherwise

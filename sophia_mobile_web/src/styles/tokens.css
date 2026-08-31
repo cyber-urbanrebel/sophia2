@@ -1,0 +1,72 @@
+:root {
+  --color-cyan: #7AF6F7;
+  --color-violet: #5B1FA8;
+  --color-gradient: linear-gradient(to top, #7AF6F7 0%, #5B1FA8 100%);
+
+  --color-primary: #7AF6F7;
+  --color-primary-dark: #2EE0E2;
+  --color-background: #5B1FA8;
+  --color-surface: rgba(255, 255, 255, 0.88);
+  --color-text: #000000;
+  --color-text-muted: #1a1a1a;
+  --color-ink: #000000;
+  --color-accent: #1a1033;
+  --color-success: #0d5c4d;
+  --color-warning: #5c4a00;
+  --color-border: rgba(0, 0, 0, 0.22);
+
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 40px;
+  --space-6: 48px;
+  --space-8: 64px;
+
+  --shadow-soft:
+    0 1px 2px rgba(26, 16, 51, 0.12),
+    0 12px 32px rgba(91, 31, 168, 0.18);
+  --shadow-glow: 0 0 0 1px rgba(0, 0, 0, 0.12), 0 0 20px rgba(122, 246, 247, 0.22);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 0.2s;
+  --duration-base: 0.4s;
+  --duration-slow: 0.6s;
+
+  --font-display: 'Dark Castle';
+  --font-ui: 'Dark Castle';
+  --font-charm: 'Urban Jungle';
+  --font-mono: 'Dark Castle';
+
+  --sophia-bg: #5B1FA8;
+  --sophia-bg-2: #6E2BC4;
+  --sophia-panel: rgba(255, 255, 255, 0.78);
+  --sophia-panel-strong: rgba(255, 255, 255, 0.9);
+  --sophia-border: var(--color-border);
+  --sophia-border-alt: rgba(0, 0, 0, 0.28);
+  --sophia-text: #000000;
+  --sophia-text-dim: #1a1a1a;
+  --sophia-cyan: var(--color-cyan);
+  --sophia-purple: var(--color-violet);
+  --sophia-gold: #1a1033;
+  --sophia-gold-soft: #2a1060;
+  --sophia-obsidian: #ffffff;
+  --sophia-mono: var(--font-display);
+  --sophia-body: var(--font-ui);
+  --sophia-display: var(--font-display);
+  --sophia-shadow: var(--shadow-soft);
+  --sophia-glow: var(--shadow-glow);
+  --sophia-ease: var(--duration-base) var(--ease);
+}
+
+.dark,
+body.dark,
+html.dark,
+.light,
+body.light,
+html.light {
+  --color-text: #000000;
+  --color-text-muted: #1a1a1a;
+  --sophia-text: #000000;
+  --sophia-text-dim: #1a1a1a;
+  --sophia-panel-strong: rgba(255, 255, 255, 0.9);
+}

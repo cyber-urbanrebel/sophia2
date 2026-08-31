@@ -5,7 +5,7 @@
   min-height: 100vh;
   background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #000000 100%);
   color: #ffffff;
-  font-family: 'Courier New', monospace;
+  font-family: var(--font-display);
 }
 
 /* Header */

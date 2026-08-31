@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 
 const C = {
   card: "#150e22",
@@ -6,16 +6,16 @@ const C = {
   border: "#2a1f3d",
   gold: "#c9a44c",
   goldSoft: "#e8cf8a",
-  violet: "#7b2fff",
+  violet: "var(--color-violet)",
   violetSoft: "#a855f7",
-  cyan: "#00d4ff",
+  cyan: "var(--color-primary)",
   text: "#e9e2f5",
   muted: "#8f80a8",
   danger: "#e0664f",
 };
 
 const styles = {
-  wrap: { color: C.text, fontFamily: "'DM Mono', 'Fira Code', monospace", paddingBottom: 40 },
+  wrap: { color: C.text, fontFamily: "'Dark Castle'", paddingBottom: 40 },
   header: { display: "flex", alignItems: "center", gap: 14, marginBottom: 22, paddingBottom: 18, borderBottom: `1px solid ${C.border}` },
   icon: { width: 42, height: 42, borderRadius: 10, background: `linear-gradient(135deg, ${C.violet}, ${C.gold})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 },
   title: { fontSize: 20, fontWeight: 700, letterSpacing: "-0.02em", color: C.goldSoft },
@@ -51,7 +51,7 @@ const styles = {
   questionBody: { padding: "0 16px 16px", fontSize: 12, color: C.muted, lineHeight: 1.7 },
   btn: { background: `linear-gradient(135deg, ${C.violet}, ${C.violetSoft})`, color: "#fff", border: "none", borderRadius: 8, padding: "10px 22px", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "inherit" },
   btnDisabled: { opacity: 0.4, cursor: "not-allowed" },
-  pre: { color: C.muted, fontSize: 12, whiteSpace: "pre-wrap", fontFamily: "'DM Mono', monospace", lineHeight: 1.7, padding: "0 16px 16px" },
+  pre: { color: C.muted, fontSize: 12, whiteSpace: "pre-wrap", fontFamily: "'Dark Castle'", lineHeight: 1.7, padding: "0 16px 16px" },
   summary: { padding: "14px 16px", fontWeight: 700, color: C.text, fontSize: 13, cursor: "pointer" },
 };
 
@@ -95,33 +95,33 @@ const PhilosophyExplorer = ({ profile, setProfile }) => {
   const analyzeDilemma = () => {
     if (!dilemmaText.trim()) return;
 
-    const analysis = `────────────────────────────────────
+    const analysis = `â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 STOIC ANALYSIS: "${dilemmaText}"
-────────────────────────────────────
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 1. CONTROL CHECK
    What you control: Your response, preparation, and attitude toward this situation.
    What you don't: The outcome, others' reactions, and external circumstances.
-   → Focus your energy only on the first column.
+   â†’ Focus your energy only on the first column.
 
 2. WORST CASE
    Realistic worst outcome: Consider what could actually go wrong, not what might.
-   Could you recover? Yes — human resilience is remarkable.
-   → Fear loses power when you name it clearly.
+   Could you recover? Yes â€” human resilience is remarkable.
+   â†’ Fear loses power when you name it clearly.
 
 3. WISEST SELF
    What would the most disciplined, clear-headed version of you choose?
-   → Choose the path that aligns with your core values and long-term growth.
+   â†’ Choose the path that aligns with your core values and long-term growth.
 
 4. VIRTUE CHECK
    The virtue being tested here: Courage (acting despite fear) or Wisdom (right judgment).
-   → Apply this virtue to guide your decision.
+   â†’ Apply this virtue to guide your decision.
 
 5. LONG-TERM VIEW
    In 5 years, what will matter most about this decision?
-   → The character you build and the person you become.
+   â†’ The character you build and the person you become.
 
 SUMMARY: Trust your judgment. You know what aligns with your values. Take the step.
-────────────────────────────────────`;
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€`;
 
     const newAnalysis = {
       dilemma: dilemmaText,
@@ -141,17 +141,17 @@ SUMMARY: Trust your judgment. You know what aligns with your values. Take the st
     {
       id: 1,
       question: 'Is this within my control?',
-      expanded: 'Epictetus taught that we only control our judgments, intentions, desires, and aversions. External outcomes, other people, reputation, and possessions are NOT in our control. Ask: am I agonizing over something I cannot change? If yes — release it.'
+      expanded: 'Epictetus taught that we only control our judgments, intentions, desires, and aversions. External outcomes, other people, reputation, and possessions are NOT in our control. Ask: am I agonizing over something I cannot change? If yes â€” release it.'
     },
     {
       id: 2,
       question: 'What is the worst realistic case?',
-      expanded: "This is premeditatio malorum — negative visualization. Seneca wrote: 'Let us prepare our minds as if we had come to the very end of life.' Imagining the worst removes its power. Now ask: could I survive it? Could I recover? Almost always — yes."
+      expanded: "This is premeditatio malorum â€” negative visualization. Seneca wrote: 'Let us prepare our minds as if we had come to the very end of life.' Imagining the worst removes its power. Now ask: could I survive it? Could I recover? Almost always â€” yes."
     },
     {
       id: 3,
       question: 'What would my wisest self do?',
-      expanded: 'Picture the person you are working to become. Not who you are today — who you are becoming. What would that version of you choose? Act from that identity, not from fear or impulse.'
+      expanded: 'Picture the person you are working to become. Not who you are today â€” who you are becoming. What would that version of you choose? Act from that identity, not from fear or impulse.'
     },
     {
       id: 4,
@@ -161,21 +161,21 @@ SUMMARY: Trust your judgment. You know what aligns with your values. Take the st
     {
       id: 5,
       question: 'Will this matter in 5 years?',
-      expanded: "Marcus Aurelius wrote: 'How soon will you be ashes or bare bones, and either a name or not even a name.' This is not pessimism — it is perspective. Most urgent-feeling problems dissolve under long-term view."
+      expanded: "Marcus Aurelius wrote: 'How soon will you be ashes or bare bones, and either a name or not even a name.' This is not pessimism â€” it is perspective. Most urgent-feeling problems dissolve under long-term view."
     }
   ];
 
   const ikigaiFields = [
-    { key: 'love', icon: '💚', label: 'What do you love doing?', hint: 'things that make you lose track of time', placeholder: 'e.g. helping others learn, creating art, solving complex problems...' },
-    { key: 'goodAt', icon: '💛', label: 'What are you good at?', hint: 'your natural talents and trained skills', placeholder: 'e.g. teaching, writing, coding, leadership...' },
-    { key: 'worldNeeds', icon: '🧡', label: 'What does the world need?', hint: 'problems you care about solving', placeholder: 'e.g. education access, mental health support, environmental protection...' },
-    { key: 'paidFor', icon: '💙', label: 'What can you be paid for?', hint: 'skills others value and will compensate', placeholder: 'e.g. consulting, content creation, software development...' },
+    { key: 'love', icon: 'ðŸ’š', label: 'What do you love doing?', hint: 'things that make you lose track of time', placeholder: 'e.g. helping others learn, creating art, solving complex problems...' },
+    { key: 'goodAt', icon: 'ðŸ’›', label: 'What are you good at?', hint: 'your natural talents and trained skills', placeholder: 'e.g. teaching, writing, coding, leadership...' },
+    { key: 'worldNeeds', icon: 'ðŸ§¡', label: 'What does the world need?', hint: 'problems you care about solving', placeholder: 'e.g. education access, mental health support, environmental protection...' },
+    { key: 'paidFor', icon: 'ðŸ’™', label: 'What can you be paid for?', hint: 'skills others value and will compensate', placeholder: 'e.g. consulting, content creation, software development...' },
   ];
 
   return (
     <div style={styles.wrap}>
       <div style={styles.header}>
-        <div style={styles.icon}>🧭</div>
+        <div style={styles.icon}>ðŸ§­</div>
         <div>
           <div style={styles.title}>Philosophy</div>
           <div style={styles.subtitle}>Values, purpose, and a Stoic lens on hard decisions</div>
@@ -183,9 +183,9 @@ SUMMARY: Trust your judgment. You know what aligns with your values. Take the st
       </div>
 
       <div style={styles.tabs}>
-        <button style={styles.tabBtn(activeTab === 'values')} onClick={() => setActiveTab('values')}>⚖️ Values</button>
-        <button style={styles.tabBtn(activeTab === 'purpose')} onClick={() => setActiveTab('purpose')}>🌟 Purpose</button>
-        <button style={styles.tabBtn(activeTab === 'decisions')} onClick={() => setActiveTab('decisions')}>🧭 Decisions</button>
+        <button style={styles.tabBtn(activeTab === 'values')} onClick={() => setActiveTab('values')}>âš–ï¸ Values</button>
+        <button style={styles.tabBtn(activeTab === 'purpose')} onClick={() => setActiveTab('purpose')}>ðŸŒŸ Purpose</button>
+        <button style={styles.tabBtn(activeTab === 'decisions')} onClick={() => setActiveTab('decisions')}>ðŸ§­ Decisions</button>
       </div>
 
       {activeTab === 'values' && (

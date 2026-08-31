@@ -57,6 +57,15 @@ class Task(SQLModel, table=True):
     completed_at: Optional[str] = None
 
 
+class CoachMessage(SQLModel, table=True):
+    id: str = Field(default_factory=_uuid, primary_key=True)
+    user_id: str = Field(index=True, foreign_key="user.id")
+    conversation_id: str = Field(index=True)
+    role: str  # "user" | "assistant"
+    content: str
+    created_at: str = Field(default_factory=_now_iso)
+
+
 class ShadowEntry(SQLModel, table=True):
     """Private reflective journaling — deliberately separate from JournalEntry
     so shadow work never surfaces in general progress/streak surfaces."""

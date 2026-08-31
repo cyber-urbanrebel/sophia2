@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+﻿import { useState, useRef, useEffect, useCallback } from "react";
 import api from '../services/api.js';
 
 const uid = () => Math.random().toString(36).slice(2, 9);
@@ -9,14 +9,14 @@ const C = {
   border: "#2a1f3d",
   gold: "#c9a44c",
   goldSoft: "#e8cf8a",
-  violet: "#7b2fff",
-  cyan: "#00d4ff",
+  violet: "var(--color-violet)",
+  cyan: "var(--color-primary)",
   text: "#e9e2f5",
   muted: "#8f80a8",
 };
 
 const styles = {
-  wrap: { display: "flex", flexDirection: "column", alignItems: "center", color: C.text, fontFamily: "'DM Mono', 'Fira Code', monospace", minHeight: "calc(100vh - 64px)", padding: "0 0 40px" },
+  wrap: { display: "flex", flexDirection: "column", alignItems: "center", color: C.text, fontFamily: "'Dark Castle'", minHeight: "calc(100vh - 64px)", padding: "0 0 40px" },
   header: { textAlign: "center", marginBottom: 24 },
   title: { fontSize: 22, fontWeight: 700, letterSpacing: "0.04em", color: C.goldSoft, textTransform: "uppercase" },
   subtitle: { fontSize: 12, color: C.muted, marginTop: 6 },
@@ -76,19 +76,19 @@ function localBriefing() {
     : 0;
   const total = Array.isArray(habits) ? habits.length : 0;
   if (!total) {
-    return "Systems nominal. No habits tracked yet — head to Discipline, Body, or Mind to set your first one, and I'll start giving you real status reports.";
+    return "Systems nominal. No habits tracked yet â€” head to Discipline, Body, or Mind to set your first one, and I'll start giving you real status reports.";
   }
   const behind = total - doneToday;
   return behind === 0
-    ? `Systems nominal. All ${total} habits are complete today — that's a clean sweep.`
-    : `Status: ${doneToday} of ${total} habits done today. ${behind} still open — nothing urgent, just naming it.`;
+    ? `Systems nominal. All ${total} habits are complete today â€” that's a clean sweep.`
+    : `Status: ${doneToday} of ${total} habits done today. ${behind} still open â€” nothing urgent, just naming it.`;
 }
 
 function localReply(message) {
   const trimmed = message.trim().toLowerCase();
-  if (!trimmed) return "I didn't catch that — try again?";
+  if (!trimmed) return "I didn't catch that â€” try again?";
   if (trimmed.includes("shadow")) {
-    return "Shadow work is under the Shadow tab. It's unguarded space — no streaks, no scoring, just honesty.";
+    return "Shadow work is under the Shadow tab. It's unguarded space â€” no streaks, no scoring, just honesty.";
   }
   if (trimmed.includes("progress") || trimmed.includes("how am i doing")) {
     return `${localBriefing()} Check the Progress tab for the full breakdown.`;
@@ -121,7 +121,7 @@ export default function VoiceAssistant() {
     setTranscript((prev) => [...prev, { id: uid(), role, text }]);
   }, []);
 
-  // Proactive briefing on open — the Jarvis-style "systems nominal" moment,
+  // Proactive briefing on open â€” the Jarvis-style "systems nominal" moment,
   // grounded in real habit data whether the backend is reachable or not.
   useEffect(() => {
     if (briefed) return;
@@ -211,16 +211,16 @@ export default function VoiceAssistant() {
 
       {supported ? (
         <button style={styles.micBtn(listening)} onClick={togglePushToTalk} aria-label={listening ? "Stop listening" : "Push to talk"}>
-          {listening ? "■" : "🎙"}
+          {listening ? "â– " : "ðŸŽ™"}
         </button>
       ) : (
-        <div style={{ fontSize: 12, color: C.muted }}>Voice input isn't supported in this browser — use text below.</div>
+        <div style={{ fontSize: 12, color: C.muted }}>Voice input isn't supported in this browser â€” use text below.</div>
       )}
 
       <div style={styles.hint}>
         {supported
-          ? (listening ? "Listening…" : "Tap to speak, or type below")
-          : "Browser speech recognition unavailable — Chrome/Edge recommended"}
+          ? (listening ? "Listeningâ€¦" : "Tap to speak, or type below")
+          : "Browser speech recognition unavailable â€” Chrome/Edge recommended"}
       </div>
 
       <div style={styles.textRow}>
@@ -229,7 +229,7 @@ export default function VoiceAssistant() {
           value={textInput}
           onChange={(e) => setTextInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && submitText()}
-          placeholder="Or type a message…"
+          placeholder="Or type a messageâ€¦"
         />
         <button style={styles.sendBtn} onClick={submitText}>Send</button>
       </div>

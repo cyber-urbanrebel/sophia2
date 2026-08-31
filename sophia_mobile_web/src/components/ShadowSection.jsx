@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+﻿import { useState, useEffect, useCallback, useMemo } from "react";
 import api from '../services/api.js';
 
 function useLocalStorage(key, initial) {
@@ -25,21 +25,21 @@ const uid = () => Math.random().toString(36).slice(2, 9);
 const today = () => new Date().toISOString().slice(0, 10);
 
 const C = {
-  obsidian: "#050308",
-  surface: "#0f0a17",
-  card: "#150e22",
-  border: "#2a1f3d",
-  gold: "#c9a44c",
-  goldSoft: "#e8cf8a",
-  violet: "#7b2fff",
-  violetSoft: "#a855f7",
-  text: "#e9e2f5",
-  muted: "#8f80a8",
-  danger: "#e0664f",
+  obsidian: "transparent",
+  surface: "rgba(255,255,255,0.88)",
+  card: "rgba(255,255,255,0.88)",
+  border: "rgba(0,0,0,0.16)",
+  gold: "#000000",
+  goldSoft: "#000000",
+  violet: "#000000",
+  violetSoft: "#000000",
+  text: "#000000",
+  muted: "#000000",
+  danger: "#000000",
 };
 
 const styles = {
-  wrap: { background: "transparent", color: C.text, fontFamily: "'DM Mono', 'Fira Code', monospace", padding: 0, paddingBottom: 40 },
+  wrap: { background: "transparent", color: C.text, fontFamily: "'Dark Castle'", padding: 0, paddingBottom: 40 },
   header: { display: "flex", alignItems: "center", gap: 14, marginBottom: 22, paddingBottom: 18, borderBottom: `1px solid ${C.border}` },
   icon: { width: 42, height: 42, borderRadius: 10, background: `linear-gradient(135deg, ${C.violet}, ${C.gold})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 },
   title: { fontSize: 20, fontWeight: 700, letterSpacing: "-0.02em", color: C.goldSoft },
@@ -57,7 +57,7 @@ const styles = {
 const PROMPTS = [
   "What did I avoid today, and what did avoiding it cost me?",
   "What belief about myself, if I said it out loud, would embarrass me?",
-  "Who or what triggered a disproportionate reaction from me recently — what old wound did it touch?",
+  "Who or what triggered a disproportionate reaction from me recently â€” what old wound did it touch?",
   "What part of myself have I disowned because it once wasn't safe to show it?",
   "Where am I performing strength instead of admitting I need help?",
   "What pattern keeps repeating in my relationships that I haven't named yet?",
@@ -86,12 +86,12 @@ function UnlockGate({ onUnlock }) {
         pointerEvents: "none",
       }} />
       <div style={{ position: "relative" }}>
-        <div style={{ fontSize: 34, marginBottom: 10 }}>🔒</div>
+        <div style={{ fontSize: 34, marginBottom: 10 }}>ðŸ”’</div>
         <div style={{ fontSize: 18, fontWeight: 700, color: C.goldSoft, letterSpacing: "0.02em", marginBottom: 8 }}>
-          SHADOW WORK — LOCKED
+          SHADOW WORK â€” LOCKED
         </div>
         <div style={{ fontSize: 13, color: C.muted, lineHeight: 1.7, maxWidth: 460, margin: "0 auto 24px" }}>
-          What you avoid looking at runs your life from the dark. This room is for looking anyway —
+          What you avoid looking at runs your life from the dark. This room is for looking anyway â€”
           at the fears, shame, anger, and limiting beliefs you've disowned. It's private, unfiltered,
           and only for you. Nothing here is graded or streaked.
         </div>
@@ -186,7 +186,7 @@ function TheWorkTab({ entries, addEntry }) {
         </div>
         <div style={{ display: "flex", gap: 10 }}>
           <button style={{ ...styles.btn, opacity: saving ? 0.6 : 1 }} onClick={save} disabled={saving}>
-            {saving ? "Saving…" : "Save & Sit With It"}
+            {saving ? "Savingâ€¦" : "Save & Sit With It"}
           </button>
           <button style={styles.btnGhost} onClick={() => setPromptIdx(Math.floor(Math.random() * PROMPTS.length))}>
             Different prompt
@@ -230,7 +230,7 @@ function IntegrationTab({ entries, toggleIntegrated }) {
       <div style={{ ...styles.card, border: `1px solid ${C.gold}33` }}>
         <div style={styles.h3}>What Integration Means</div>
         <div style={{ fontSize: 12, color: C.muted, lineHeight: 1.7 }}>
-          Naming a shadow isn't the end of the work — integration is when you've made peace with it,
+          Naming a shadow isn't the end of the work â€” integration is when you've made peace with it,
           taken responsibility for its effect on others, or turned it into conscious choice instead of
           a blind reaction. Mark an entry integrated when you feel that shift, not before.
         </div>
@@ -252,12 +252,12 @@ function IntegrationTab({ entries, toggleIntegrated }) {
 
       <div style={styles.h3}>Integrated ({integrated.length})</div>
       {integrated.length === 0 ? (
-        <div style={{ textAlign: "center", color: C.muted, padding: "20px 0", fontSize: 13 }}>None yet — and that's honest.</div>
+        <div style={{ textAlign: "center", color: C.muted, padding: "20px 0", fontSize: 13 }}>None yet â€” and that's honest.</div>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           {integrated.map((e) => (
             <div key={e.id} style={{ ...styles.card, borderColor: `${C.gold}44` }}>
-              <div style={{ fontSize: 12, color: C.goldSoft }}>✓ {e.prompt}</div>
+              <div style={{ fontSize: 12, color: C.goldSoft }}>âœ“ {e.prompt}</div>
             </div>
           ))}
         </div>
@@ -279,7 +279,7 @@ export default function ShadowSection() {
         const remote = await api.getShadowEntries();
         if (Array.isArray(remote) && remote.length) setEntries(remote);
       } catch {
-        // Backend unavailable — local entries remain the source of truth.
+        // Backend unavailable â€” local entries remain the source of truth.
       } finally {
         setSynced(true);
       }
@@ -308,7 +308,7 @@ export default function ShadowSection() {
   return (
     <div style={styles.wrap}>
       <div style={styles.header}>
-        <div style={styles.icon}>🜏</div>
+        <div style={styles.icon}>ðŸœ</div>
         <div>
           <div style={styles.title}>Shadow</div>
           <div style={styles.subtitle}>What you don't look at, runs you</div>

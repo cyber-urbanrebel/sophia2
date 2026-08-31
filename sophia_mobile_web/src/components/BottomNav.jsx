@@ -1,16 +1,15 @@
-import React, { useCallback } from 'react';
+﻿import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 import styles from '../styles/BottomNav.module.css';
 
-/* ── Animated SVG icons ── */
+/* â”€â”€ Animated SVG icons â”€â”€ */
 const PathIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <linearGradient id="pathG" x1="0" y1="0" x2="24" y2="24">
-        <stop offset="0%" stopColor="#c9a44c" />
-        <stop offset="100%" stopColor="#7b2fff" />
+        <stop offset="0%" stopColor="#30cfd0" />
+        <stop offset="100%" stopColor="#330867" />
       </linearGradient>
     </defs>
     <circle cx="12" cy="12" r="9" stroke="url(#pathG)" strokeWidth="1.6">
@@ -44,7 +43,7 @@ const HomeIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <linearGradient id="homeG" x1="0" y1="0" x2="24" y2="24">
-        <stop offset="0%" stopColor="#00d4ff" />
+        <stop offset="0%" stopColor="var(--color-primary)" />
         <stop offset="100%" stopColor="#a855f7" />
       </linearGradient>
     </defs>
@@ -61,8 +60,8 @@ const BodyIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <linearGradient id="bodyG" x1="0" y1="0" x2="24" y2="24">
-        <stop offset="0%" stopColor="#ff6b6b" />
-        <stop offset="100%" stopColor="#ffa502" />
+        <stop offset="0%" stopColor="#30cfd0" />
+        <stop offset="100%" stopColor="#9BE9EA" />
       </linearGradient>
     </defs>
     <circle cx="12" cy="5" r="2.5" stroke="url(#bodyG)" strokeWidth="1.5">
@@ -136,7 +135,7 @@ const AiIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <linearGradient id="aiG" x1="0" y1="0" x2="24" y2="24">
-        <stop offset="0%" stopColor="#00d4ff" />
+        <stop offset="0%" stopColor="var(--color-primary)" />
         <stop offset="100%" stopColor="#00ff88" />
       </linearGradient>
     </defs>
@@ -176,70 +175,30 @@ const iconMap = {
   path: <PathIcon />,
   mind: <MindIcon />,
   body: <BodyIcon />,
-  discipline: <DisciplineIcon />,
-  shadow: <ShadowIcon />,
   progress: <ProgressIcon />,
-  admin: <AdminIcon />,
+  profile: <PathIcon />,
 };
 
 const baseTabs = [
   { id: 'path', label: 'Path', path: '/path' },
   { id: 'mind', label: 'Mind', path: '/mind' },
   { id: 'body', label: 'Body', path: '/body' },
-  { id: 'discipline', label: 'Discipline', path: '/discipline' },
-  { id: 'shadow', label: 'Shadow', path: '/shadow' },
   { id: 'progress', label: 'Progress', path: '/progress' },
+  { id: 'profile', label: 'You', path: '/profile' },
 ];
-
-const adminTab = { id: 'admin', label: 'Admin', path: '/admin' };
 
 export default function BottomNav({ activeTab, setActiveTab }) {
   const navigate = useNavigate();
-  const user = useSelector(s => s.auth.user);
-
-  const tabs = user?.role === 'admin' ? [...baseTabs, adminTab] : baseTabs;
 
   const handleTabClick = (tab) => {
     setActiveTab(tab.id);
-    if (tab.path) {
-      navigate(tab.path);
-    }
+    if (tab.path) navigate(tab.path);
   };
 
-  /* Directional navigation helpers */
-  const move = useCallback((direction) => {
-    const idx = tabs.findIndex((t) => t.id === activeTab);
-    let next;
-
-    switch (direction) {
-      case 'up':
-        next = idx > 0 ? idx - 1 : tabs.length - 1;
-        break;
-      case 'down':
-        next = idx < tabs.length - 1 ? idx + 1 : 0;
-        break;
-      case 'left': {
-        const el = document.querySelector('[class*="pageContainer"]');
-        if (el) el.scrollBy({ left: -300, behavior: 'smooth' });
-        return;
-      }
-      case 'right': {
-        const el = document.querySelector('[class*="pageContainer"]');
-        if (el) el.scrollBy({ left: 300, behavior: 'smooth' });
-        return;
-      }
-      default:
-        return;
-    }
-
-    handleTabClick(tabs[next]);
-  }, [activeTab]);
-
   return (
-    <nav className={styles.nav} aria-label="Primary" style={{overflowY:'auto'}}>
-      {tabs.map((tab) => {
-        const isActive = activeTab === tab.id;
-
+    <nav className={styles.nav} aria-label="Primary">
+      {baseTabs.map((tab) => {
+        const isActive = activeTab === tab.id || (tab.id === 'path' && activeTab === 'dashboard');
         return (
           <button
             key={tab.id}
@@ -253,24 +212,7 @@ export default function BottomNav({ activeTab, setActiveTab }) {
           </button>
         );
       })}
-
-      <button
-        className={styles.fab}
-        onClick={() => handleTabClick({ id: 'voice', path: '/voice' })}
-        aria-label="Voice Assistant"
-        title="Talk to Sophia"
-      >
-        <span className={styles.fabIcon}><AiIcon /></span>
-      </button>
-
-      {/* Directional D-pad */}
-      <div className={styles.dpad} aria-label="Navigate sections">
-        <button type="button" className={clsx(styles.dpadBtn, styles.dpadUp)} onClick={() => move('up')} aria-label="Previous section">▲</button>
-        <button type="button" className={clsx(styles.dpadBtn, styles.dpadLeft)} onClick={() => move('left')} aria-label="Scroll left">◀</button>
-        <button type="button" className={clsx(styles.dpadBtn, styles.dpadCenter)} aria-label="Current section">●</button>
-        <button type="button" className={clsx(styles.dpadBtn, styles.dpadRight)} onClick={() => move('right')} aria-label="Scroll right">▶</button>
-        <button type="button" className={clsx(styles.dpadBtn, styles.dpadDown)} onClick={() => move('down')} aria-label="Next section">▼</button>
-      </div>
     </nav>
   );
 }
+

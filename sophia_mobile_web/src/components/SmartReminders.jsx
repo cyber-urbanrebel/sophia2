@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+﻿import React, { useState, useEffect, useCallback } from 'react';
 import notificationService from '../services/notifications.js';
 
 const REMINDERS_KEY = 'sophia_habit_reminders';
@@ -54,7 +54,7 @@ export default function SmartReminders() {
       if (delay > 0 && delay < 86400000) {
         timers.push(setTimeout(() => {
           notificationService.showNotification(`Habit Reminder: ${r.name}`, {
-            body: `Time to ${r.name.toLowerCase()}. Stay consistent! 💪`,
+            body: `Time to ${r.name.toLowerCase()}. Stay consistent! ðŸ’ª`,
             tag: `habit-${r.id}`,
           });
         }, delay));
@@ -81,7 +81,7 @@ export default function SmartReminders() {
       if (delay > 0) {
         timers.push(setTimeout(() => {
           const todayReminders = reminders.filter(r => r.enabled && r.days.includes(new Date().getDay()));
-          notificationService.showNotification('Good Morning! ☀️', {
+          notificationService.showNotification('Good Morning! â˜€ï¸', {
             body: `You have ${todayReminders.length} habits scheduled today. Let's make it count!`,
             tag: 'morning-brief',
           });
@@ -135,7 +135,7 @@ export default function SmartReminders() {
 
   const s = {
     page: { minHeight: '100vh', padding: '32px 24px', color: '#e0ddd6', fontFamily: 'var(--sophia-body)', position: 'relative', zIndex: 3 },
-    header: { fontSize: 28, fontWeight: 700, marginBottom: 4, background: 'linear-gradient(135deg, #3fb950, #00d4ff)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' },
+    header: { fontSize: 28, fontWeight: 700, marginBottom: 4, background: 'linear-gradient(135deg, #3fb950, var(--color-primary))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' },
     sub: { color: '#8a8a9a', fontSize: 14, marginBottom: 28 },
     permCard: {
       background: 'linear-gradient(180deg, rgba(7, 15, 32, 0.95), rgba(8, 17, 35, 0.94))', border: '1px solid rgba(0,212,255,0.14)', borderRadius: 20,
@@ -144,7 +144,7 @@ export default function SmartReminders() {
     },
     permBtn: (granted) => ({
       padding: '10px 24px', borderRadius: 10, border: 'none', cursor: 'pointer', fontSize: 13, fontWeight: 600,
-      background: granted ? '#3fb950' : 'linear-gradient(135deg, #00d4ff, #bb86fc)',
+      background: granted ? '#3fb950' : 'linear-gradient(135deg, var(--color-primary), #bb86fc)',
       color: '#000',
     }),
     section: { marginBottom: 28 },
@@ -165,7 +165,7 @@ export default function SmartReminders() {
     },
     toggle: (on) => ({
       width: 42, height: 22, borderRadius: 11, position: 'relative', cursor: 'pointer', flexShrink: 0,
-      background: on ? 'linear-gradient(135deg, #3fb950, #00d4ff)' : 'rgba(255,255,255,0.1)',
+      background: on ? 'linear-gradient(135deg, #3fb950, var(--color-primary))' : 'rgba(255,255,255,0.1)',
     }),
     toggleDot: (on) => ({
       position: 'absolute', top: 2, left: on ? 22 : 2, width: 18, height: 18,
@@ -175,7 +175,7 @@ export default function SmartReminders() {
     dayPill: (active) => ({
       width: 32, height: 26, borderRadius: 6, border: 'none', cursor: 'pointer', fontSize: 11, fontWeight: 500,
       background: active ? 'rgba(0,212,255,0.15)' : 'rgba(255,255,255,0.03)',
-      color: active ? '#00d4ff' : '#6a6a7a',
+      color: active ? 'var(--color-primary)' : '#6a6a7a',
       outline: active ? '1px solid rgba(0,212,255,0.3)' : '1px solid rgba(255,255,255,0.05)',
     }),
     addBtn: {
@@ -202,7 +202,7 @@ export default function SmartReminders() {
       <div style={s.permCard}>
         <div>
           <div style={{ fontSize: 14, fontWeight: 500, color: '#e0ddd6' }}>
-            {permission === 'granted' ? '✅ Notifications enabled' : '🔔 Enable notifications'}
+            {permission === 'granted' ? 'âœ… Notifications enabled' : 'ðŸ”” Enable notifications'}
           </div>
           <div style={{ fontSize: 12, color: '#8a8a9a', marginTop: 4 }}>
             {permission === 'granted' ? 'You\'ll receive reminders at scheduled times' : 'Allow SOPHIA to send you habit reminders'}
@@ -214,7 +214,7 @@ export default function SmartReminders() {
           )}
           {permission === 'granted' && (
             <button style={{ ...s.permBtn(true), background: testSent ? '#3fb950' : 'rgba(255,255,255,0.08)', color: testSent ? '#000' : '#8a8a9a' }}
-              onClick={sendTest}>{testSent ? '✓ Sent!' : 'Test'}</button>
+              onClick={sendTest}>{testSent ? 'âœ“ Sent!' : 'Test'}</button>
           )}
         </div>
       </div>
@@ -237,7 +237,7 @@ export default function SmartReminders() {
               <div style={s.toggle(r.enabled)} onClick={() => toggleReminder(r.id)}>
                 <div style={s.toggleDot(r.enabled)} />
               </div>
-              <button style={s.removeBtn} onClick={() => removeReminder(r.id)}>✕</button>
+              <button style={s.removeBtn} onClick={() => removeReminder(r.id)}>âœ•</button>
             </div>
             {r.enabled && (
               <div style={s.dayPills}>

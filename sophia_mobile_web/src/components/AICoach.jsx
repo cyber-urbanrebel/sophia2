@@ -37,6 +37,29 @@ const AICoach = () => {
     return next;
   });
 
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await api.getCoachHistory(conversationId);
+        const rows = Array.isArray(res?.messages) ? res.messages : [];
+        if (!cancelled && rows.length) {
+          const mapped = rows.map((row, index) => ({
+            id: row.id || index,
+            role: row.role,
+            content: row.content,
+            timestamp: row.created_at || new Date(),
+          }));
+          setMessages(mapped);
+          localStorage.setItem('sophia_ai_coach_messages', JSON.stringify(mapped));
+        }
+      } catch {
+        /* keep local cache */
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [conversationId]);
+
   const sendMessage = useCallback(async (userMessage) => {
     if (!userMessage.trim()) return;
 
@@ -93,8 +116,8 @@ const AICoach = () => {
   ];
 
   return (
-    <div style={{ padding: '0', color: '#fff', background: 'transparent', fontFamily: '"DM Mono", monospace', display: 'flex', flexDirection: 'column', minHeight: 'calc(100vh - 64px)' }}>
-      <h2 style={{ fontSize: '24px', marginBottom: '24px', color: '#00d4ff' }}>🤖 AI Coach</h2>
+    <div style={{ padding: '0', color: '#fff', background: 'transparent', fontFamily: "'Dark Castle'", display: 'flex', flexDirection: 'column', minHeight: 'calc(100vh - 64px)' }}>
+      <h2 style={{ fontSize: '24px', marginBottom: '24px', color: 'var(--color-primary)' }}>🤖 AI Coach</h2>
 
       {/* Chat Area */}
       <div style={{ flex: 1, background: '#111111', border: '1px solid #222222', borderRadius: '12px', padding: '20px', marginBottom: '20px', overflowY: 'auto', maxHeight: '400px' }}>
@@ -115,7 +138,7 @@ const AICoach = () => {
               <div
                 style={{
                   maxWidth: '75%',
-                  background: msg.role === 'user' ? '#00d4ff' : '#161616',
+                  background: msg.role === 'user' ? 'var(--color-primary)' : '#161616',
                   color: msg.role === 'user' ? '#000' : '#fff',
                   border: msg.role === 'user' ? 'none' : '1px solid #222222',
                   borderRadius: '12px',
@@ -153,7 +176,7 @@ const AICoach = () => {
                 style={{
                   background: 'transparent',
                   border: '1px solid #222222',
-                  color: '#00d4ff',
+                  color: 'var(--color-primary)',
                   borderRadius: '8px',
                   padding: '10px 12px',
                   cursor: 'pointer',
@@ -194,7 +217,7 @@ const AICoach = () => {
           onClick={handleSend}
           disabled={loading || !input.trim()}
           style={{
-            background: '#00d4ff',
+            background: 'var(--color-primary)',
             color: '#000',
             border: 'none',
             borderRadius: '8px',

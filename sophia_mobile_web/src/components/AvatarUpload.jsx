@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+﻿import React, { useState, useRef, useCallback } from 'react';
 
 const AVATAR_KEY = 'sophia_user_avatar';
 const MAX_SIZE = 512 * 1024; // 512KB max
@@ -15,7 +15,7 @@ function storeAvatar(dataUrl) {
   try {
     localStorage.setItem(AVATAR_KEY, dataUrl);
   } catch {
-    // localStorage full — silently fail
+    // localStorage full â€” silently fail
   }
 }
 
@@ -28,12 +28,12 @@ function clearAvatar() {
 }
 
 /**
- * AvatarUpload — Cinematic avatar component for Sophia.
+ * AvatarUpload â€” Cinematic avatar component for Sophia.
  * @param {Object} props
- * @param {number} [props.size=96] — diameter in px
- * @param {string} [props.fallbackName] — user name for initials fallback
- * @param {boolean} [props.editable=true] — show upload overlay
- * @param {function} [props.onAvatarChange] — callback(dataUrl | null)
+ * @param {number} [props.size=96] â€” diameter in px
+ * @param {string} [props.fallbackName] â€” user name for initials fallback
+ * @param {boolean} [props.editable=true] â€” show upload overlay
+ * @param {function} [props.onAvatarChange] â€” callback(dataUrl | null)
  */
 export default function AvatarUpload({ size = 96, fallbackName = 'User', editable = true, onAvatarChange }) {
   const [avatarUrl, setAvatarUrl] = useState(getStoredAvatar);
@@ -118,7 +118,7 @@ export default function AvatarUpload({ size = 96, fallbackName = 'User', editabl
           position: 'absolute',
           inset: -3,
           borderRadius: '50%',
-          background: 'conic-gradient(from 0deg, #00d4ff, #bb86fc, #ffaa00, #00d4ff)',
+          background: 'conic-gradient(from 0deg, var(--color-primary), #bb86fc, #ffaa00, var(--color-primary))',
           opacity: hover ? 0.9 : 0.5,
           transition: 'opacity 0.4s ease',
           filter: 'blur(1px)',
@@ -167,7 +167,7 @@ export default function AvatarUpload({ size = 96, fallbackName = 'User', editabl
               color: '#fff',
               textShadow: '0 2px 8px rgba(0,0,0,0.5)',
               letterSpacing: '1px',
-              fontFamily: '"Inter", -apple-system, sans-serif',
+              fontFamily: "'Dark Castle'",
             }}
           >
             {initials}
@@ -196,7 +196,7 @@ export default function AvatarUpload({ size = 96, fallbackName = 'User', editabl
                   width: 20,
                   height: 20,
                   border: '2px solid rgba(255,255,255,0.3)',
-                  borderTopColor: '#00d4ff',
+                  borderTopColor: 'var(--color-primary)',
                   borderRadius: '50%',
                   animation: 'spin 0.8s linear infinite',
                 }}
@@ -241,7 +241,7 @@ export default function AvatarUpload({ size = 96, fallbackName = 'User', editabl
           }}
           title="Remove avatar"
         >
-          ×
+          Ã—
         </button>
       )}
 
@@ -264,7 +264,7 @@ export default function AvatarUpload({ size = 96, fallbackName = 'User', editabl
 }
 
 /**
- * AvatarDisplay — Read-only avatar for headers/nav.
+ * AvatarDisplay â€” Read-only avatar for headers/nav.
  */
 export function AvatarDisplay({ size = 36, fallbackName = 'User' }) {
   const [avatarUrl] = useState(getStoredAvatar);
@@ -296,7 +296,7 @@ export function AvatarDisplay({ size = 36, fallbackName = 'User' }) {
       {avatarUrl ? (
         <img src={avatarUrl} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
       ) : (
-        <span style={{ fontSize, fontWeight: 700, color: '#fff', fontFamily: '"Inter", sans-serif' }}>{initials}</span>
+        <span style={{ fontSize, fontWeight: 400, color: '#fff', fontFamily: "'Dark Castle'" }}>{initials}</span>
       )}
     </div>
   );

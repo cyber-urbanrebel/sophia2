@@ -54,7 +54,7 @@ const C = {
 };
 
 const S = {
-  page: { color: C.text, fontFamily: "'Inter', system-ui, sans-serif", paddingBottom: 40 },
+  page: { color: C.text, fontFamily: "'Dark Castle'", paddingBottom: 40 },
   header: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 },
   h1: { fontSize: 22, fontWeight: 600, margin: 0, color: C.text },
   streakBadge: { display: 'inline-flex', alignItems: 'center', gap: 6, background: C.accentDim, color: C.accent, borderRadius: 20, padding: '6px 14px', fontSize: 13, fontWeight: 600 },

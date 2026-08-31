@@ -1,10 +1,10 @@
-import React from 'react';
+﻿import React from 'react';
 
-/* ─────────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    SOPHIA Infographic Icons
    Premium SVG icons with gradient fills to
    replace plain emojis throughout the app.
-   ───────────────────────────────────────────── */
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 const W = ({ size, children }) => (
   <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: size, height: size, flexShrink: 0, verticalAlign: 'middle' }}>
@@ -12,13 +12,13 @@ const W = ({ size, children }) => (
   </span>
 );
 
-/* ── Water Droplet ── */
+/* â”€â”€ Water Droplet â”€â”€ */
 export const WaterIcon = ({ size = 24 }) => (
   <W size={size}>
     <svg viewBox="0 0 24 24" fill="none">
       <defs>
         <linearGradient id="si-w" x1="12" y1="2" x2="12" y2="22" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#00d4ff" />
+          <stop stopColor="var(--color-primary)" />
           <stop offset="1" stopColor="#0066ff" />
         </linearGradient>
       </defs>
@@ -28,14 +28,14 @@ export const WaterIcon = ({ size = 24 }) => (
   </W>
 );
 
-/* ── Meditation / Lotus ── */
+/* â”€â”€ Meditation / Lotus â”€â”€ */
 export const MeditationIcon = ({ size = 24 }) => (
   <W size={size}>
     <svg viewBox="0 0 24 24" fill="none">
       <defs>
         <linearGradient id="si-m" x1="4" y1="4" x2="20" y2="20" gradientUnits="userSpaceOnUse">
           <stop stopColor="#3d9e75" />
-          <stop offset="1" stopColor="#00d4ff" />
+          <stop offset="1" stopColor="var(--color-primary)" />
         </linearGradient>
       </defs>
       <circle cx="12" cy="6" r="2.8" fill="url(#si-m)" />
@@ -46,7 +46,7 @@ export const MeditationIcon = ({ size = 24 }) => (
   </W>
 );
 
-/* ── Task / Checkmark ── */
+/* â”€â”€ Task / Checkmark â”€â”€ */
 export const TaskCheckIcon = ({ size = 24 }) => (
   <W size={size}>
     <svg viewBox="0 0 24 24" fill="none">
@@ -62,31 +62,39 @@ export const TaskCheckIcon = ({ size = 24 }) => (
   </W>
 );
 
-/* ── Analytics / Bar Chart ── */
+/* â”€â”€ Analytics / Bar Chart â”€â”€ */
 export const ChartBarIcon = ({ size = 24 }) => (
   <W size={size}>
-    <svg viewBox="0 0 24 24" fill="none">
-      <defs>
-        <linearGradient id="si-ch" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#a855f7" />
-          <stop offset="1" stopColor="#3b82f6" />
-        </linearGradient>
-      </defs>
-      <rect x="3" y="13" width="4" height="8" rx="1.2" fill="url(#si-ch)" fillOpacity="0.7" />
-      <rect x="10" y="8" width="4" height="13" rx="1.2" fill="url(#si-ch)" fillOpacity="0.85" />
-      <rect x="17" y="3" width="4" height="18" rx="1.2" fill="url(#si-ch)" />
-    </svg>
+    <img
+      src="/assets/icon-analytics.png"
+      alt=""
+      width={size}
+      height={size}
+      style={{ width: size, height: size, objectFit: 'contain', filter: 'sepia(0.2) saturate(0.7) hue-rotate(130deg) brightness(1.15)' }}
+    />
   </W>
 );
 
-/* ── Body / Fitness ── */
+export const SettingsGearIcon = ({ size = 24 }) => (
+  <W size={size}>
+    <img
+      src="/assets/icon-settings.png"
+      alt=""
+      width={size}
+      height={size}
+      style={{ width: size, height: size, objectFit: 'contain', filter: 'sepia(0.2) saturate(0.7) hue-rotate(130deg) brightness(1.15)' }}
+    />
+  </W>
+);
+
+/* â”€â”€ Body / Fitness â”€â”€ */
 export const BodyFitIcon = ({ size = 24 }) => (
   <W size={size}>
     <svg viewBox="0 0 24 24" fill="none">
       <defs>
         <linearGradient id="si-bf" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#ff6b6b" />
-          <stop offset="1" stopColor="#ffa502" />
+          <stop stopColor="#30cfd0" />
+          <stop offset="1" stopColor="#330867" />
         </linearGradient>
       </defs>
       <rect x="2" y="8" width="3" height="8" rx="1.5" fill="url(#si-bf)" />
@@ -98,7 +106,7 @@ export const BodyFitIcon = ({ size = 24 }) => (
   </W>
 );
 
-/* ── Brain / Mind ── */
+/* â”€â”€ Brain / Mind â”€â”€ */
 export const BrainIcon = ({ size = 24 }) => (
   <W size={size}>
     <svg viewBox="0 0 24 24" fill="none">
@@ -115,7 +123,7 @@ export const BrainIcon = ({ size = 24 }) => (
   </W>
 );
 
-/* ── Lightning / Discipline ── */
+/* â”€â”€ Lightning / Discipline â”€â”€ */
 export const LightningIcon = ({ size = 24 }) => (
   <W size={size}>
     <svg viewBox="0 0 24 24" fill="none">
@@ -130,7 +138,7 @@ export const LightningIcon = ({ size = 24 }) => (
   </W>
 );
 
-/* ── Flame / Streak ── */
+/* â”€â”€ Flame / Streak â”€â”€ */
 export const FlameIcon = ({ size = 24 }) => (
   <W size={size}>
     <svg viewBox="0 0 24 24" fill="none">
@@ -147,7 +155,7 @@ export const FlameIcon = ({ size = 24 }) => (
   </W>
 );
 
-/* ── Trend Up / Progress ── */
+/* â”€â”€ Trend Up / Progress â”€â”€ */
 export const TrendUpIcon = ({ size = 24 }) => (
   <W size={size}>
     <svg viewBox="0 0 24 24" fill="none">
@@ -164,7 +172,7 @@ export const TrendUpIcon = ({ size = 24 }) => (
   </W>
 );
 
-/* ── Lightbulb / Tip ── */
+/* â”€â”€ Lightbulb / Tip â”€â”€ */
 export const LightbulbIcon = ({ size = 24 }) => (
   <W size={size}>
     <svg viewBox="0 0 24 24" fill="none">
@@ -182,7 +190,7 @@ export const LightbulbIcon = ({ size = 24 }) => (
   </W>
 );
 
-/* ── Sunrise / Morning ── */
+/* â”€â”€ Sunrise / Morning â”€â”€ */
 export const SunriseIcon = ({ size = 24 }) => (
   <W size={size}>
     <svg viewBox="0 0 24 24" fill="none">
@@ -202,7 +210,7 @@ export const SunriseIcon = ({ size = 24 }) => (
   </W>
 );
 
-/* ── Sun / Afternoon ── */
+/* â”€â”€ Sun / Afternoon â”€â”€ */
 export const SunIcon = ({ size = 24 }) => (
   <W size={size}>
     <svg viewBox="0 0 24 24" fill="none">
@@ -227,7 +235,7 @@ export const SunIcon = ({ size = 24 }) => (
   </W>
 );
 
-/* ── Moon / Evening ── */
+/* â”€â”€ Moon / Evening â”€â”€ */
 export const MoonIcon = ({ size = 24 }) => (
   <W size={size}>
     <svg viewBox="0 0 24 24" fill="none">
@@ -244,7 +252,7 @@ export const MoonIcon = ({ size = 24 }) => (
   </W>
 );
 
-/* ── Target / Goal ── */
+/* â”€â”€ Target / Goal â”€â”€ */
 export const TargetIcon = ({ size = 24 }) => (
   <W size={size}>
     <svg viewBox="0 0 24 24" fill="none">
@@ -261,7 +269,7 @@ export const TargetIcon = ({ size = 24 }) => (
   </W>
 );
 
-/* ── Invite / Person+ ── */
+/* â”€â”€ Invite / Person+ â”€â”€ */
 export const InviteIcon = ({ size = 24 }) => (
   <W size={size}>
     <svg viewBox="0 0 24 24" fill="none">
@@ -279,30 +287,48 @@ export const InviteIcon = ({ size = 24 }) => (
   </W>
 );
 
-/* ── Emoji → Icon mapping utility ── */
+/* â”€â”€ Emoji â†’ Icon mapping utility â”€â”€ */
 const ICON_MAP = {
-  '💧': WaterIcon,
-  '🧘': MeditationIcon,
-  '✅': TaskCheckIcon,
-  '📊': ChartBarIcon,
-  '💪': BodyFitIcon,
-  '🧠': BrainIcon,
-  '⚡': LightningIcon,
-  '🔥': FlameIcon,
-  '📈': TrendUpIcon,
-  '💡': LightbulbIcon,
-  '🌅': SunriseIcon,
-  '☀️': SunIcon,
-  '🌙': MoonIcon,
-  '🎯': TargetIcon,
+  'ðŸ’§': WaterIcon,
+  'ðŸ§˜': MeditationIcon,
+  'âœ…': TaskCheckIcon,
+  'ðŸ“Š': ChartBarIcon,
+  'ðŸ’ª': BodyFitIcon,
+  'ðŸ§ ': BrainIcon,
+  'âš¡': LightningIcon,
+  'ðŸ”¥': FlameIcon,
+  'ðŸ“ˆ': TrendUpIcon,
+  'ðŸ’¡': LightbulbIcon,
+  'ðŸŒ…': SunriseIcon,
+  'â˜€ï¸': SunIcon,
+  'ðŸŒ™': MoonIcon,
+  'ðŸŽ¯': TargetIcon,
 };
 
 /**
  * Converts an emoji string to a rich SVG icon.
  * Falls back to the original emoji if no icon exists.
  */
-export function renderIcon(emoji, size = 24) {
-  const Comp = ICON_MAP[emoji];
+const NAMED_ICONS = {
+  brain: BrainIcon,
+  book: LightbulbIcon,
+  target: TargetIcon,
+  chart: ChartBarIcon,
+  idea: LightbulbIcon,
+  search: TrendUpIcon,
+  invert: LightningIcon,
+  waves: WaterIcon,
+  razor: TaskCheckIcon,
+  puzzle: BrainIcon,
+  mask: MeditationIcon,
+  flame: FlameIcon,
+  body: BodyFitIcon,
+  lightning: LightningIcon,
+  check: TaskCheckIcon,
+};
+
+export function renderIcon(key, size = 24) {
+  const Comp = NAMED_ICONS[key] || ICON_MAP[key];
   if (Comp) return <Comp size={size} />;
-  return <span style={{ fontSize: size * 0.85 }}>{emoji}</span>;
+  return <span style={{ width: size, height: size, display: 'inline-block' }} aria-hidden="true" />;
 }

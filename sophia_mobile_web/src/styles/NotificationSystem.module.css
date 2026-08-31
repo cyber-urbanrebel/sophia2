@@ -1,4 +1,4 @@
-/* Notification System Styles */
+﻿/* Notification System Styles */
 .notificationsContainer {
   padding: 20px;
   max-width: 600px;
@@ -58,7 +58,7 @@
 }
 
 .allowButton {
-  background: linear-gradient(135deg, #00d4ff, #0099cc);
+  background: linear-gradient(135deg, var(--color-primary), #0099cc);
   border: none;
   border-radius: 12px;
   color: white;
@@ -82,7 +82,7 @@
 .settingsSection h3 {
   font-size: 20px;
   margin-bottom: 20px;
-  color: #00d4ff;
+  color: var(--color-primary);
 }
 
 .settingItem {
@@ -142,7 +142,7 @@
 }
 
 input:checked + .toggleSwitch {
-  background-color: #00d4ff;
+  background-color: var(--color-primary);
 }
 
 input:checked + .toggleSwitch:before {
@@ -172,7 +172,7 @@ input:checked + .toggleSwitch:before {
 }
 
 .timeInput:focus, .intervalSelect:focus {
-  border-color: #00d4ff;
+  border-color: var(--color-primary);
   box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.2);
 }
 
@@ -205,7 +205,7 @@ input:checked + .toggleSwitch:before {
 .historySection h3 {
   font-size: 20px;
   margin-bottom: 20px;
-  color: #00d4ff;
+  color: var(--color-primary);
 }
 
 .emptyHistory {

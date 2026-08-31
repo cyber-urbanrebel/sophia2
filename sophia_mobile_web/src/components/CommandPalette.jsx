@@ -3,21 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 
 const ROUTES = [
-  { id: 'dashboard', label: 'Dashboard', path: '/dashboard', icon: '🏠', keywords: 'home overview stats' },
-  { id: 'body', label: 'Body', path: '/body', icon: '💪', keywords: 'fitness health workout exercise' },
-  { id: 'mind', label: 'Mind', path: '/mind', icon: '🧠', keywords: 'meditation journal mental focus' },
-  { id: 'discipline', label: 'Discipline', path: '/discipline', icon: '⚡', keywords: 'habits goals tasks productivity' },
-  { id: 'progress', label: 'Progress', path: '/progress', icon: '📈', keywords: 'analytics charts data reports' },
-  { id: 'growth', label: 'Inner Growth', path: '/growth', icon: '🌱', keywords: 'growth wisdom spiritual' },
-  { id: 'projects', label: 'Projects', path: '/projects', icon: '📂', keywords: 'project portfolio work' },
-  { id: 'focus', label: 'Focus Timer', path: '/focus', icon: '⏱️', keywords: 'pomodoro timer concentration' },
-  { id: 'achievements', label: 'Achievements', path: '/achievements', icon: '🏆', keywords: 'trophy badges gamification rewards' },
-  { id: 'reminders', label: 'Reminders', path: '/reminders', icon: '🔔', keywords: 'alarm notify schedule' },
-  { id: 'reports', label: 'Reports', path: '/reports', icon: '📊', keywords: 'weekly summary analysis' },
-  { id: 'profile', label: 'Profile', path: '/profile', icon: '👤', keywords: 'account settings user' },
-  { id: 'notifications', label: 'Notifications', path: '/notifications', icon: '📬', keywords: 'alerts messages inbox' },
-  { id: 'premium', label: 'Premium', path: '/premium', icon: '⭐', keywords: 'upgrade plan subscription' },
-  { id: 'admin', label: 'Admin Panel', path: '/admin', icon: '🔒', keywords: 'admin users manage system' },
+  { id: 'path', label: 'Path', path: '/path', icon: '◎', keywords: 'home overview path' },
+  { id: 'mind', label: 'Mind', path: '/mind', icon: '◉', keywords: 'journal mood mind' },
+  { id: 'body', label: 'Body', path: '/body', icon: '○', keywords: 'body water sleep' },
+  { id: 'discipline', label: 'Discipline', path: '/discipline', icon: '△', keywords: 'habits tasks' },
+  { id: 'shadow', label: 'Shadow', path: '/shadow', icon: '◐', keywords: 'shadow journal' },
+  { id: 'progress', label: 'Progress', path: '/progress', icon: '▷', keywords: 'progress review' },
+  { id: 'voice', label: 'Voice', path: '/voice', icon: '◈', keywords: 'voice coach talk' },
+  { id: 'wisdom', label: 'Wisdom', path: '/wisdom', icon: '◇', keywords: 'wisdom library' },
+  { id: 'goals', label: 'Goals', path: '/goals', icon: '□', keywords: 'goals' },
+  { id: 'focus', label: 'Focus', path: '/focus', icon: '◯', keywords: 'timer focus' },
+  { id: 'profile', label: 'You', path: '/profile', icon: '▣', keywords: 'profile you settings' },
 ];
 
 const ACTIONS = [

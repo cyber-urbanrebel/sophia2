@@ -1,24 +1,4 @@
-:root {
-  --sophia-bg: #030610;
-  --sophia-bg-2: #050d1e;
-  --sophia-panel: rgba(7, 15, 32, 0.82);
-  --sophia-panel-strong: rgba(10, 19, 39, 0.94);
-  --sophia-border: rgba(0, 212, 255, 0.34);
-  --sophia-border-alt: rgba(123, 47, 255, 0.28);
-  --sophia-text: #f5fbff;
-  --sophia-text-dim: #9ab2ca;
-  --sophia-cyan: #00d4ff;
-  --sophia-purple: #7b2fff;
-  --sophia-gold: #c9a44c;
-  --sophia-gold-soft: #e8cf8a;
-  --sophia-obsidian: #050308;
-  --sophia-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  --sophia-body: 'Space Grotesk', system-ui, sans-serif;
-  --sophia-display: 'Orbitron', 'Space Grotesk', sans-serif;
-  --sophia-shadow: 0 0 0 1px rgba(0, 212, 255, 0.08), 0 20px 60px rgba(0, 10, 24, 0.55);
-  --sophia-glow: 0 0 24px rgba(0, 212, 255, 0.18), 0 0 42px rgba(123, 47, 255, 0.14);
-  --sophia-ease: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
+﻿/* Tokens live in tokens.css â€” aliases kept for existing components. */
 
 html {
   scroll-behavior: smooth;
@@ -26,12 +6,11 @@ html {
 
 html,
 body {
-  background:
-    radial-gradient(circle at top center, rgba(0, 212, 255, 0.09), transparent 28%),
-    radial-gradient(circle at 80% 20%, rgba(123, 47, 255, 0.08), transparent 24%),
-    linear-gradient(180deg, var(--sophia-bg) 0%, var(--sophia-bg-2) 100%) !important;
-  color: var(--sophia-text) !important;
-  font-family: var(--sophia-body) !important;
+  background-color: #330867 !important;
+  background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%) !important;
+  background-attachment: fixed !important;
+  color: var(--color-text) !important;
+  font-family: var(--font-ui) !important;
 }
 
 body {
@@ -44,25 +23,37 @@ body::before {
   inset: 0;
   pointer-events: none;
   z-index: 1;
-  opacity: 0.065;
-  background-image:
-    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.5) 0.7px, transparent 0.8px),
-    radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.45) 0.8px, transparent 0.9px),
-    radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.35) 0.6px, transparent 0.7px);
-  background-size: 180px 180px, 220px 220px, 140px 140px;
-  mix-blend-mode: soft-light;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  mix-blend-mode: multiply;
+}
+
+.sophia-aurora {
+  position: fixed;
+  inset: -20% -10% auto -10%;
+  height: 70vh;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse at 30% 40%, rgba(42, 157, 143, 0.16), transparent 55%),
+    radial-gradient(ellipse at 72% 30%, rgba(233, 161, 91, 0.1), transparent 50%);
+  filter: blur(28px);
+  animation: sophia-aurora-drift 28s var(--ease) infinite alternate;
+}
+
+@keyframes sophia-aurora-drift {
+  from { transform: translate3d(-2%, 0, 0) scale(1); }
+  to { transform: translate3d(3%, 4%, 0) scale(1.06); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sophia-aurora { animation: none; }
 }
 
 #particle-canvas {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
+  display: block !important;
   pointer-events: none;
-  opacity: 1;
-  mix-blend-mode: screen;
-  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.82) 74%, rgba(0, 0, 0, 0.42) 100%);
 }
 
 body[data-sophia-ambient='calm'] #particle-canvas {
@@ -75,13 +66,26 @@ body[data-sophia-ambient='calm'] .sophia-particles {
 
 #sophia-scroll-progress {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
+  top: 12%;
+  right: 14px;
+  width: 2px;
+  height: 0;
   z-index: 9999;
-  background: linear-gradient(90deg, var(--sophia-cyan), var(--sophia-purple));
-  box-shadow: 0 0 12px rgba(0, 212, 255, 0.42), 0 0 18px rgba(123, 47, 255, 0.24);
+  background: var(--color-primary);
+  border-radius: 999px;
+  box-shadow: 0 0 12px rgba(42, 157, 143, 0.28);
+}
+
+#sophia-scroll-label {
+  position: fixed;
+  right: 8px;
+  bottom: 18px;
+  z-index: 9999;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
 }
 
 #root,
@@ -118,6 +122,9 @@ body[data-sophia-ambient='calm'] .sophia-particles {
   .stat-card,
   .activity-item,
   .sophia-feature-card,
+  .sophia-gyrate,
+  .sophia-gyrate-behind,
+  .hud-gyrate,
   .sophia-orb,
   .sophia-orbit,
   .sophia-orbit.reverse,
@@ -140,10 +147,11 @@ body[data-sophia-ambient='calm'] .sophia-particles {
 .sophia-timeline,
 .sophia-footer,
 .sophia-panel {
-  background: linear-gradient(180deg, rgba(6, 14, 30, 0.92), rgba(5, 12, 24, 0.92)) !important;
-  border: 1px solid transparent !important;
-  border-radius: 26px !important;
-  box-shadow: var(--sophia-shadow);
+  background: var(--sophia-panel-strong) !important;
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--color-border) !important;
+  border-radius: 24px !important;
+  box-shadow: var(--shadow-soft);
   position: relative;
   overflow: hidden;
 }
@@ -164,11 +172,12 @@ body[data-sophia-ambient='calm'] .sophia-particles {
   inset: 0;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.72), rgba(123, 47, 255, 0.44));
+  background: linear-gradient(135deg, rgba(42, 157, 143, 0.28), rgba(233, 161, 91, 0.12));
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
+  opacity: 0.55;
 }
 
 .sophia-card-hover,
@@ -186,8 +195,8 @@ body[data-sophia-ambient='calm'] .sophia-particles {
 .stat-card:hover,
 .activity-item:hover,
 .sophia-feature-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 0 0 1px rgba(0, 212, 255, 0.18), 0 24px 70px rgba(0, 14, 35, 0.68), 0 0 28px rgba(0, 212, 255, 0.12);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-soft), var(--shadow-glow);
 }
 
 .sophia-card-hover::after,
@@ -229,19 +238,20 @@ h2,
 h3,
 h4 {
   font-family: var(--sophia-display) !important;
-  color: var(--sophia-text) !important;
-  letter-spacing: -0.04em;
+  color: var(--color-text) !important;
+  letter-spacing: -0.03em;
+  font-weight: 600;
 }
 
 .hero-title,
 .title {
-  text-shadow: 0 0 26px rgba(0, 212, 255, 0.22);
+  text-shadow: none;
 }
 
 .sophia-gradient-text,
 .hero-title strong,
 .sophia-wordmark {
-  background: linear-gradient(135deg, #ffffff 0%, var(--sophia-cyan) 42%, #b2e9ff 75%);
+  background: linear-gradient(120deg, var(--color-primary) 0%, var(--color-accent) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -253,15 +263,21 @@ span,
 div,
 a,
 button,
-input,
-textarea,
 label,
-select,
 option,
 th,
 td,
 small {
   font-family: var(--sophia-body);
+}
+
+input,
+textarea,
+select,
+[contenteditable='true'] {
+  font-family: var(--font-charm) !important;
+  font-size: 22px;
+  font-weight: 800;
 }
 
 body,
@@ -297,25 +313,25 @@ li {
 .brandChip,
 .hero-kicker,
 .eyebrow {
-  border: 1px solid rgba(0, 212, 255, 0.2) !important;
-  background: rgba(0, 212, 255, 0.06) !important;
-  color: #bfeaff !important;
+  border: 1px solid var(--color-border) !important;
+  background: rgba(42, 157, 143, 0.08) !important;
+  color: var(--color-primary-dark) !important;
 }
 
 .sophia-primary-btn,
 .primaryButton,
 .onb-next {
-  background: linear-gradient(135deg, var(--sophia-cyan), var(--sophia-purple)) !important;
-  color: #04111f !important;
-  box-shadow: 0 0 22px rgba(0, 212, 255, 0.24), 0 0 38px rgba(123, 47, 255, 0.22) !important;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent)) !important;
+  color: #F7F5F0 !important;
+  box-shadow: var(--shadow-glow) !important;
   border: none !important;
 }
 
 .sophia-secondary-btn {
   background: transparent !important;
-  color: var(--sophia-text) !important;
-  border: 1px solid rgba(0, 212, 255, 0.34) !important;
-  box-shadow: inset 0 0 0 1px rgba(123, 47, 255, 0.1), 0 0 20px rgba(0, 212, 255, 0.08);
+  color: var(--color-text) !important;
+  border: 1px solid var(--color-border) !important;
+  box-shadow: var(--shadow-soft);
 }
 
 .sophia-stat-number {
@@ -440,6 +456,7 @@ li {
 
 .sophia-orb {
   position: relative;
+  z-index: 1;
   width: min(320px, 72vw);
   aspect-ratio: 1;
   border-radius: 50%;
@@ -455,7 +472,7 @@ li {
   position: absolute;
   inset: 26%;
   border-radius: 50%;
-  background: radial-gradient(circle at 40% 35%, #ffffff 0%, #9befff 24%, #00d4ff 54%, #7b2fff 100%);
+  background: radial-gradient(circle at 40% 35%, #ffffff 0%, #9befff 24%, var(--color-primary) 54%, var(--color-violet) 100%);
   box-shadow: 0 0 20px rgba(0, 212, 255, 0.72), 0 0 42px rgba(123, 47, 255, 0.3);
   animation: sophia-breathe 5.4s ease-in-out infinite;
 }
@@ -529,10 +546,10 @@ li {
   padding: 10px 14px;
   border-radius: 999px;
   font-size: 12px;
-  color: var(--sophia-text);
-  background: rgba(5, 13, 30, 0.82);
-  border: 1px solid rgba(0, 212, 255, 0.26);
-  box-shadow: 0 0 16px rgba(0, 212, 255, 0.12);
+  color: #000000;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  box-shadow: 0 8px 20px rgba(26, 16, 51, 0.18);
   backdrop-filter: blur(10px);
   animation: sophia-float 4.2s ease-in-out infinite;
 }
@@ -547,16 +564,18 @@ li {
 input,
 textarea,
 select {
-  background: rgba(6, 14, 30, 0.82) !important;
-  border: 1px solid rgba(0, 212, 255, 0.18) !important;
-  color: var(--sophia-text) !important;
+  background: var(--color-surface) !important;
+  border: 1px solid var(--color-border) !important;
+  color: var(--color-text) !important;
 }
 
 .sophia-input::placeholder,
 .inputWrap input::placeholder,
 input::placeholder,
 textarea::placeholder {
-  color: rgba(154, 178, 202, 0.72) !important;
+  color: #111111 !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
 }
 
 .sophia-shell-copy,

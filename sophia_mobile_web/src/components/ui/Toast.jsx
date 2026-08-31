@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, createContext, useContext } from 'react';
+﻿import React, { useState, useEffect, useCallback, createContext, useContext } from 'react';
 import ReactDOM from 'react-dom';
 
 const ToastContext = createContext(null);
@@ -8,17 +8,17 @@ export function useToast() {
 }
 
 const ICONS = {
-  success: '✓',
-  error: '✕',
-  warning: '⚠',
-  info: 'ℹ',
+  success: 'âœ“',
+  error: 'âœ•',
+  warning: 'âš ',
+  info: 'â„¹',
 };
 
 const COLORS = {
   success: { bg: 'rgba(63,185,80,0.12)', border: 'rgba(63,185,80,0.25)', icon: '#3fb950' },
   error: { bg: 'rgba(255,107,107,0.12)', border: 'rgba(255,107,107,0.25)', icon: '#ff6b6b' },
   warning: { bg: 'rgba(201,168,76,0.12)', border: 'rgba(201,168,76,0.25)', icon: '#c9a84c' },
-  info: { bg: 'rgba(0,212,255,0.12)', border: 'rgba(0,212,255,0.25)', icon: '#00d4ff' },
+  info: { bg: 'rgba(0,212,255,0.12)', border: 'rgba(0,212,255,0.25)', icon: 'var(--color-primary)' },
 };
 
 function Toast({ id, message, type = 'info', onRemove }) {
@@ -46,7 +46,7 @@ function Toast({ id, message, type = 'info', onRemove }) {
         padding: '12px 18px', borderRadius: 12,
         background: c.bg, border: `1px solid ${c.border}`,
         backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
-        color: '#e0ddd6', fontSize: 14, fontFamily: '"Inter", -apple-system, sans-serif',
+        color: '#e0ddd6', fontSize: 14, fontFamily: "'Dark Castle'",
         boxShadow: '0 8px 32px rgba(0,0,0,0.25)',
         transform: exiting ? 'translateX(120%)' : 'translateX(0)',
         opacity: exiting ? 0 : 1,

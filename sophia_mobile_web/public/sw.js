@@ -1,5 +1,5 @@
 // Service Worker for Sophia PWA
-const CACHE_NAME = 'sophia-v1';
+const CACHE_NAME = 'sophia-v2';
 const urlsToCache = [
   '/',
   '/static/js/bundle.js',
@@ -11,6 +11,7 @@ const urlsToCache = [
 
 // Install event - cache resources
 self.addEventListener('install', (event) => {
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
@@ -19,8 +20,23 @@ self.addEventListener('install', (event) => {
   );
 });
 
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then((cacheNames) => Promise.all(
+      cacheNames
+        .filter((cacheName) => cacheName !== CACHE_NAME && cacheName !== 'sync-data')
+        .map((cacheName) => caches.delete(cacheName))
+    )).then(() => self.clients.claim())
+  );
+});
+
 // Fetch event - serve from cache or network
 self.addEventListener('fetch', (event) => {
+  if (event.request.mode === 'navigate') {
+    event.respondWith(fetch(event.request).catch(() => caches.match('/')));
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request)
       .then((response) => {

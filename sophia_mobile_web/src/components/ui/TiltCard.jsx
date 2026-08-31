@@ -13,8 +13,8 @@ import React, { useRef, useCallback, useState } from 'react';
  */
 export default function TiltCard({
   children,
-  maxTilt = 12,
-  scale = 1.03,
+  maxTilt = 5,
+  scale = 1.02,
   glare = true,
   className = '',
   style = {},

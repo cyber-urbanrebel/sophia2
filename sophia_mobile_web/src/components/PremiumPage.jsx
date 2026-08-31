@@ -122,7 +122,7 @@ export default function PremiumPage() {
   };
 
   const s = {
-    page: { minHeight: '100vh', padding: '32px 24px', color: '#e0ddd6', fontFamily: '"Inter", -apple-system, sans-serif', maxWidth: 540, margin: '0 auto' },
+    page: { minHeight: '100vh', padding: '32px 24px', color: '#e0ddd6', fontFamily: "'Dark Castle'", maxWidth: 540, margin: '0 auto' },
     header: { fontSize: 28, fontWeight: 700, marginBottom: 4, background: 'linear-gradient(135deg, #c9a84c, #f0d78c)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' },
     sub: { color: '#8a8a9a', fontSize: 14, marginBottom: 24 },
     activeCard: {

@@ -1,7 +1,23 @@
-import React, { useState, useCallback } from 'react';
+﻿import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../store/slices/authSlice.js';
 import AvatarUpload from './AvatarUpload.jsx';
+import {
+  FlameIcon,
+  BodyFitIcon,
+  MeditationIcon,
+  LightningIcon,
+  TrendUpIcon,
+  TargetIcon,
+  SunriseIcon,
+} from './SophiaIcons.jsx';
+
+const glass = {
+  background: 'rgba(255, 255, 255, 0.78)',
+  border: '1px solid rgba(0, 0, 0, 0.16)',
+  borderRadius: 16,
+  color: '#000',
+};
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
@@ -32,17 +48,17 @@ const ProfilePage = () => {
   const [formData, setFormData] = useState(profile);
 
   const achievements = [
-    { id: 1, icon: '🔥', name: 'Week Warrior', description: '7-day streak achieved' },
-    { id: 2, icon: '💪', name: 'Fitness First', description: 'Logged 10 workouts' },
-    { id: 3, icon: '🧠', name: 'Mindful Mind', description: '30 meditation sessions' },
-    { id: 4, icon: '⚡', name: 'Discipline Master', description: '30-day consistency' },
+    { id: 1, icon: <FlameIcon size={36} />, name: 'Week Warrior', description: 'Seven days in a row' },
+    { id: 2, icon: <BodyFitIcon size={36} />, name: 'Fitness First', description: 'Ten workouts logged' },
+    { id: 3, icon: <MeditationIcon size={36} />, name: 'Mindful Mind', description: 'Thirty quiet sessions' },
+    { id: 4, icon: <LightningIcon size={36} />, name: 'Discipline Master', description: 'Thirty days of follow-through' },
   ];
 
   const stats = [
-    { label: 'Level', value: growthProfile.level, icon: '📈' },
-    { label: 'Total XP', value: growthProfile.totalXp, icon: '⭐' },
-    { label: 'Member Since', value: profile.joinDate, icon: '📅' },
-    { label: 'Streak Days', value: '0', icon: '🔥' },
+    { label: 'Level', value: growthProfile.level, icon: <TrendUpIcon size={28} /> },
+    { label: 'Total XP', value: growthProfile.totalXp, icon: <TargetIcon size={28} /> },
+    { label: 'Member since', value: profile.joinDate, icon: <SunriseIcon size={28} /> },
+    { label: 'Streak days', value: '0', icon: <FlameIcon size={28} /> },
   ];
 
   const updateProfile = useCallback(() => {
@@ -56,13 +72,13 @@ const ProfilePage = () => {
   }, [dispatch]);
 
   return (
-    <div style={{ padding: '0', color: '#fff', background: 'transparent', fontFamily: '"DM Mono", monospace', paddingBottom: '40px' }}>
+    <div style={{ padding: '0', color: '#000', background: 'transparent', paddingBottom: '40px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
-        <h1 style={{ fontSize: '28px', margin: '0', color: '#00d4ff' }}>👤 Profile</h1>
+        <h1 style={{ fontSize: '28px', margin: '0', color: '#000' }}>You</h1>
         <button
           onClick={() => setEditMode(!editMode)}
           style={{
-            background: '#00d4ff',
+            background: 'var(--color-primary)',
             color: '#000',
             border: 'none',
             borderRadius: '8px',
@@ -79,8 +95,8 @@ const ProfilePage = () => {
 
       {editMode ? (
         // EDIT MODE
-        <div style={{ background: '#111111', border: '1px solid #222222', borderRadius: '12px', padding: '24px', marginBottom: '24px' }}>
-          <h3 style={{ marginTop: '0', marginBottom: '16px', color: '#00d4ff' }}>Edit Profile</h3>
+        <div style={{ ...glass, padding: '24px', marginBottom: '24px' }}>
+          <h3 style={{ marginTop: '0', marginBottom: '16px', color: '#000' }}>Edit profile</h3>
 
           <div style={{ marginBottom: '16px' }}>
             <label style={{ display: 'block', color: '#888', fontSize: '12px', marginBottom: '8px' }}>Name</label>
@@ -90,11 +106,11 @@ const ProfilePage = () => {
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               style={{
                 width: '100%',
-                background: '#0a0a0a',
-                border: '1px solid #222222',
+                background: '#fff',
+                border: '1px solid rgba(0,0,0,0.2)',
                 borderRadius: '8px',
                 padding: '10px 12px',
-                color: '#fff',
+                color: '#000',
                 fontFamily: 'inherit',
                 boxSizing: 'border-box',
               }}
@@ -109,11 +125,11 @@ const ProfilePage = () => {
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               style={{
                 width: '100%',
-                background: '#0a0a0a',
-                border: '1px solid #222222',
+                background: '#fff',
+                border: '1px solid rgba(0,0,0,0.2)',
                 borderRadius: '8px',
                 padding: '10px 12px',
-                color: '#fff',
+                color: '#000',
                 fontFamily: 'inherit',
                 boxSizing: 'border-box',
               }}
@@ -127,11 +143,11 @@ const ProfilePage = () => {
               onChange={(e) => setFormData({ ...formData, timezone: e.target.value })}
               style={{
                 width: '100%',
-                background: '#0a0a0a',
-                border: '1px solid #222222',
+                background: '#fff',
+                border: '1px solid rgba(0,0,0,0.2)',
                 borderRadius: '8px',
                 padding: '10px 12px',
-                color: '#fff',
+                color: '#000',
                 fontFamily: 'inherit',
                 boxSizing: 'border-box',
               }}
@@ -151,7 +167,7 @@ const ProfilePage = () => {
           <button
             onClick={updateProfile}
             style={{
-              background: '#00d4ff',
+              background: 'var(--color-primary)',
               color: '#000',
               border: 'none',
               borderRadius: '8px',
@@ -170,125 +186,97 @@ const ProfilePage = () => {
         // VIEW MODE
         <>
           {/* User Header */}
-          <div style={{ background: 'rgba(15,23,42,0.8)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '16px', padding: '32px 24px', marginBottom: '24px', textAlign: 'center' }}>
+          <div style={{ ...glass, padding: '32px 24px', marginBottom: '24px', textAlign: 'center' }}>
             <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
               <AvatarUpload size={100} fallbackName={profile.name} editable={true} />
             </div>
-            <h2 style={{ margin: '0 0 8px 0', fontSize: '24px', color: '#00d4ff' }}>{profile.name}</h2>
-            <p style={{ margin: '0 0 4px 0', color: '#888', fontSize: '14px' }}>{profile.email}</p>
-            <p style={{ margin: '0', color: '#666', fontSize: '12px' }}>Member since {profile.joinDate}</p>
+            <h2 style={{ margin: '0 0 8px 0', fontSize: '24px', color: '#000' }}>{profile.name}</h2>
+            <p style={{ margin: '0 0 4px 0', color: '#1a1a1a', fontSize: '16px', fontFamily: 'var(--font-display)' }}>{profile.email}</p>
+            <p style={{ margin: '0', color: '#1a1a1a', fontSize: '14px' }}>Member since {profile.joinDate}</p>
           </div>
 
-          {/* Stats Grid */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '12px', marginBottom: '24px' }}>
             {stats.map(stat => (
-              <div key={stat.label} style={{ background: '#111111', border: '1px solid #222222', borderRadius: '12px', padding: '16px', textAlign: 'center' }}>
-                <p style={{ fontSize: '24px', margin: '0 0 8px 0' }}>{stat.icon}</p>
-                <p style={{ color: '#888', fontSize: '12px', margin: '0 0 4px 0' }}>{stat.label}</p>
-                <p style={{ fontSize: '18px', color: '#00d4ff', margin: '0', fontWeight: 'bold' }}>{stat.value}</p>
+              <div key={stat.label} style={{ ...glass, padding: '16px', textAlign: 'center' }}>
+                <div style={{ margin: '0 0 8px 0', display: 'flex', justifyContent: 'center' }}>{stat.icon}</div>
+                <p style={{ color: '#000', fontSize: '13px', margin: '0 0 4px 0', fontFamily: 'var(--font-display)' }}>{stat.label}</p>
+                <p style={{ fontSize: '18px', color: '#000', margin: '0', fontWeight: 'bold' }}>{stat.value}</p>
               </div>
             ))}
           </div>
 
-          {/* Preferences */}
-          <div style={{ background: '#111111', border: '1px solid #222222', borderRadius: '12px', padding: '20px', marginBottom: '24px' }}>
-            <h3 style={{ marginTop: '0', marginBottom: '16px', color: '#00d4ff' }}>⚙️ Preferences</h3>
+          <div style={{ ...glass, padding: '20px', marginBottom: '24px' }}>
+            <h3 style={{ marginTop: '0', marginBottom: '16px', color: '#000' }}>Preferences</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '12px', borderBottom: '1px solid #1a1a1a' }}>
-                <span style={{ color: '#ccc' }}>Timezone</span>
-                <span style={{ color: '#888', fontSize: '12px' }}>{profile.timezone}</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '12px', borderBottom: '1px solid rgba(0,0,0,0.12)' }}>
+                <span style={{ color: '#000' }}>Timezone</span>
+                <span style={{ color: '#000', fontSize: '14px', fontFamily: 'var(--font-display)' }}>{profile.timezone}</span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '12px', borderBottom: '1px solid #1a1a1a' }}>
-                <span style={{ color: '#ccc' }}>Theme</span>
-                <span style={{ color: '#888', fontSize: '12px' }}>Dark Mode</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '12px', borderBottom: '1px solid rgba(0,0,0,0.12)' }}>
+                <span style={{ color: '#000' }}>Atmosphere</span>
+                <span style={{ color: '#000', fontSize: '14px', fontFamily: 'var(--font-display)' }}>Calm HUD</span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ color: '#ccc' }}>Focus Area</span>
-                <span style={{ color: '#888', fontSize: '12px' }}>{profile.focusArea || 'Not set'}</span>
+                <span style={{ color: '#000' }}>Focus</span>
+                <span style={{ color: '#000', fontSize: '14px', fontFamily: 'var(--font-display)' }}>{profile.focusArea || 'Not set'}</span>
               </div>
             </div>
           </div>
 
-          {/* Achievements */}
-          <h3 style={{ fontSize: '16px', marginBottom: '12px', color: '#888', margin: '24px 0 12px 0' }}>🏆 Achievements</h3>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '12px', marginBottom: '24px' }}>
+          <h3 style={{ fontSize: '20px', color: '#000', margin: '24px 0 12px 0' }}>Achievements</h3>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '12px', marginBottom: '24px' }}>
             {achievements.map(achievement => (
               <div
                 key={achievement.id}
-                style={{ background: '#111111', border: '1px solid #222222', borderRadius: '12px', padding: '16px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = '#00d4ff';
-                  e.currentTarget.style.background = '#161616';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = '#222222';
-                  e.currentTarget.style.background = '#111111';
-                }}
+                style={{ ...glass, padding: '18px 14px', textAlign: 'center' }}
               >
-                <p style={{ fontSize: '32px', margin: '0 0 8px 0' }}>{achievement.icon}</p>
-                <p style={{ margin: '0 0 4px 0', color: '#ccc', fontSize: '12px', fontWeight: 'bold' }}>{achievement.name}</p>
-                <p style={{ margin: '0', color: '#888', fontSize: '10px' }}>{achievement.description}</p>
+                <div style={{ margin: '0 0 10px 0', display: 'flex', justifyContent: 'center' }}>{achievement.icon}</div>
+                <p style={{ margin: '0 0 6px 0', color: '#000', fontSize: '15px' }}>{achievement.name}</p>
+                <p style={{ margin: '0', color: '#1a1a1a', fontSize: '13px', fontFamily: 'var(--font-display)' }}>{achievement.description}</p>
               </div>
             ))}
           </div>
 
-          {/* Goals */}
           {profile.goals && profile.goals.length > 0 && (
             <>
-              <h3 style={{ fontSize: '16px', marginBottom: '12px', color: '#888', margin: '24px 0 12px 0' }}>🎯 Your Goals</h3>
-              <div style={{ background: '#111111', border: '1px solid #222222', borderRadius: '12px', padding: '0', overflow: 'hidden' }}>
+              <h3 style={{ fontSize: '20px', color: '#000', margin: '24px 0 12px 0' }}>Your goals</h3>
+              <div style={{ ...glass, padding: '0', overflow: 'hidden' }}>
                 {profile.goals.map((goal, index) => (
                   <div
                     key={index}
                     style={{
                       padding: '16px',
-                      borderBottom: index < profile.goals.length - 1 ? '1px solid #1a1a1a' : 'none',
+                      borderBottom: index < profile.goals.length - 1 ? '1px solid rgba(0,0,0,0.12)' : 'none',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '12px',
                     }}
                   >
-                    <span style={{ fontSize: '16px' }}>✓</span>
-                    <span style={{ color: '#ccc' }}>{goal}</span>
+                    <span style={{ color: '#000' }}>{goal}</span>
                   </div>
                 ))}
               </div>
             </>
           )}
 
-          {/* Danger Zone */}
-          <div style={{ background: 'rgba(255, 23, 68, 0.1)', border: '1px solid rgba(255, 23, 68, 0.3)', borderRadius: '12px', padding: '20px', marginTop: '24px' }}>
-            <h3 style={{ marginTop: '0', marginBottom: '12px', color: '#ff1744' }}>⚠️ Danger Zone</h3>
+          <div style={{ ...glass, padding: '20px', marginTop: '24px' }}>
+            <h3 style={{ marginTop: '0', marginBottom: '12px', color: '#000' }}>Sign out</h3>
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
               <button
                 onClick={handleLogout}
                 style={{
-                  background: '#ff1744',
-                  color: '#fff',
+                  background: 'var(--color-primary)',
+                  color: '#000',
                   border: 'none',
                   borderRadius: '8px',
                   padding: '8px 16px',
-                  fontSize: '12px',
+                  fontSize: '14px',
                   cursor: 'pointer',
                   fontFamily: 'inherit',
                   fontWeight: 'bold',
                 }}
               >
                 Logout
-              </button>
-              <button
-                style={{
-                  background: 'transparent',
-                  color: '#ff1744',
-                  border: '1px solid #ff1744',
-                  borderRadius: '8px',
-                  padding: '8px 16px',
-                  fontSize: '12px',
-                  cursor: 'pointer',
-                  fontFamily: 'inherit',
-                }}
-              >
-                Delete Account
               </button>
             </div>
           </div>

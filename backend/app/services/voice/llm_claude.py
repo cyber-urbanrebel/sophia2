@@ -46,9 +46,14 @@ class ClaudeLlmProvider:
         self._model = model
         self._history: dict[str, list[dict[str, str]]] = {}
 
-    async def reply(self, conversation_id: str, user_text: str) -> str:
-        turns = self._history.setdefault(conversation_id, [])
-        turns.append({"role": "user", "content": user_text})
+    async def reply(self, conversation_id: str, user_text: str, prior: list | None = None) -> str:
+        if prior is not None:
+            turns = list(prior)
+            if not turns or turns[-1].get("role") != "user" or turns[-1].get("content") != user_text:
+                turns.append({"role": "user", "content": user_text})
+        else:
+            turns = self._history.setdefault(conversation_id, [])
+            turns.append({"role": "user", "content": user_text})
 
         async with httpx.AsyncClient(timeout=30.0) as client:
             response = await client.post(

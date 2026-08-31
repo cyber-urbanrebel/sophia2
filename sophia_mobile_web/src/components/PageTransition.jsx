@@ -1,71 +1,42 @@
 import React, { useEffect, useState } from 'react';
+import { DURATION_SLOW, EASING_CSS } from '../motion/tokens.js';
 
-export default function PageTransition({ message = 'Loading...' }) {
-  const [phase, setPhase] = useState('enter'); // 'enter' | 'visible' | 'exit'
+export default function PageTransition({ message = 'A quiet moment…' }) {
+  const [phase, setPhase] = useState('enter');
 
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase('visible'), 50);
-    const t2 = setTimeout(() => setPhase('exit'), 1400);
+    const t1 = setTimeout(() => setPhase('visible'), 40);
+    const t2 = setTimeout(() => setPhase('exit'), 900);
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, []);
 
-  const opacity = phase === 'enter' ? 0 : phase === 'exit' ? 0 : 1;
-  const scale = phase === 'enter' ? 0.95 : phase === 'exit' ? 1.03 : 1;
+  const opacity = phase === 'visible' ? 1 : 0;
+  const clip = phase === 'enter' ? 'circle(0% at 50% 50%)' : phase === 'exit' ? 'circle(0% at 50% 50%)' : 'circle(140% at 50% 50%)';
 
   return (
     <div style={{
       position: 'fixed', inset: 0, zIndex: 9999,
-      background: 'linear-gradient(135deg, #0a0a0a 0%, #0f0f1a 40%, #1a1a2e 100%)',
+      background: 'rgba(51, 8, 103, 0.28)',
+      clipPath: clip,
       display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
-      fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+      fontFamily: "'Dark Castle'",
+      transition: `opacity ${DURATION_SLOW}s ${EASING_CSS}, clip-path ${DURATION_SLOW}s ${EASING_CSS}`,
+      opacity,
     }}>
-      <style>{`
-        @keyframes pt-pulse { 0%,100% { opacity:0.6; transform:scale(1) } 50% { opacity:1; transform:scale(1.1) } }
-        @keyframes pt-glow { 0% { box-shadow:0 0 20px rgba(0,212,255,0.2) } 50% { box-shadow:0 0 40px rgba(187,134,252,0.3) } 100% { box-shadow:0 0 20px rgba(201,168,76,0.25) } }
-      `}</style>
-
       <div style={{
-        opacity, transform: `scale(${scale})`,
-        transition: 'opacity 0.5s cubic-bezier(0.22,1,0.36,1), transform 0.5s cubic-bezier(0.22,1,0.36,1)',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20,
+        width: 56, height: 56, borderRadius: '50%',
+        border: '1px solid rgba(48,207,208,0.4)',
+        display: 'grid', placeItems: 'center',
+        background: 'rgba(20, 6, 48, 0.55)',
+        boxShadow: '0 12px 32px rgba(51,8,103,0.28)',
       }}>
-        {/* Sophia logo mark */}
-        <div style={{
-          width: 64, height: 64, borderRadius: '50%',
-          background: 'linear-gradient(135deg, #00d4ff, #bb86fc, #c9a84c)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          animation: 'pt-pulse 1.6s ease-in-out infinite, pt-glow 2s ease-in-out infinite',
-        }}>
-          <span style={{ fontSize: 28, fontWeight: 700, color: '#000' }}>S</span>
-        </div>
-
-        {/* Message */}
-        <div style={{
-          fontSize: 20, fontWeight: 600, color: '#e0ddd6', letterSpacing: '-0.01em',
-          textAlign: 'center', maxWidth: 340,
-        }}>
-          {message}
-        </div>
-
-        {/* Shimmer bar */}
-        <div style={{
-          width: 200, height: 3, borderRadius: 2, overflow: 'hidden',
-          background: 'rgba(255,255,255,0.06)',
-        }}>
-          <div style={{
-            width: '40%', height: '100%', borderRadius: 2,
-            background: 'linear-gradient(90deg, #00d4ff, #bb86fc, #c9a84c)',
-            animation: 'pt-shimmer 1.2s ease-in-out infinite',
-          }} />
-        </div>
+        <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#30cfd0' }} />
       </div>
-
-      <style>{`
-        @keyframes pt-shimmer {
-          0% { transform: translateX(-100%) }
-          100% { transform: translateX(350%) }
-        }
-      `}</style>
+      <div style={{
+        marginTop: 18, fontFamily: "'Dark Castle'", fontSize: 22, color: '#F4FBFF', textAlign: 'center', maxWidth: 360,
+      }}>
+        {message}
+      </div>
     </div>
   );
 }

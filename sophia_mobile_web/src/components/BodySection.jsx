@@ -35,6 +35,7 @@ const styles = {
     padding: '0',
     width: '100%',
     paddingBottom: '40px',
+    color: '#000',
   },
   tabNav: {
     display: 'flex',
@@ -71,7 +72,7 @@ const styles = {
     backgroundColor: '#1a1a1a',
     border: '1px solid rgba(255,255,255,0.1)',
     borderRadius: '4px',
-    color: '#fff',
+    color: '#000',
     padding: '8px 12px',
     fontSize: '13px',
     marginBottom: '8px',
@@ -81,9 +82,9 @@ const styles = {
     backgroundColor: '#1a1a1a',
     border: '1px solid rgba(255,255,255,0.1)',
     borderRadius: '4px',
-    color: '#fff',
+    color: '#000',
     padding: '8px',
-    fontFamily: 'monospace',
+    fontFamily: 'inherit',
     fontSize: '13px',
     resize: 'vertical',
     minHeight: '60px',
@@ -421,8 +422,8 @@ export default function BodySection() {
             {Math.round(current)}
           </text>
         </svg>
-        <div style={{ fontSize: '12px', color: '#888', marginTop: '4px' }}>{label}</div>
-        <div style={{ fontSize: '11px', color: '#666' }}>/ {target}</div>
+        <div style={{ fontSize: '12px', color: '#000', marginTop: '4px' }}>{label}</div>
+        <div style={{ fontSize: '11px', color: '#000' }}>/ {target}</div>
       </div>
     );
   };
@@ -517,14 +518,14 @@ export default function BodySection() {
                   borderRadius: '3px',
                   opacity: idx === last14.length - 1 ? 1 : 0.8,
                 }} />
-                <div style={{ fontSize: '9px', color: '#888' }}>
+                <div style={{ fontSize: '9px', color: '#000' }}>
                   {['S', 'M', 'T', 'W', 'T', 'F', 'S'][new Date(s.date).getDay()]}
                 </div>
               </div>
             );
           })}
         </div>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginTop: '16px', fontSize: '11px', color: '#888' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginTop: '16px', fontSize: '11px', color: '#000' }}>
           <div>Recommended: 7-8h</div>
           <div>Optimal: 8h</div>
         </div>
@@ -556,7 +557,7 @@ export default function BodySection() {
 
   const getBMICategory = (bmi) => {
     if (bmi < 18.5) return { label: 'Underweight', color: '#4488FF' };
-    if (bmi < 25) return { label: 'Healthy', color: '#00FF88' };
+    if (bmi < 25) return { label: 'Healthy', color: '#000' };
     if (bmi < 30) return { label: 'Overweight', color: '#FFAA00' };
     return { label: 'Obese', color: '#FF4444' };
   };
@@ -685,7 +686,7 @@ export default function BodySection() {
                 backgroundColor: color,
                 borderRadius: '2px',
               }} />
-              <div style={{ fontSize: '9px', color: '#888' }}>
+              <div style={{ fontSize: '9px', color: '#000' }}>
                 {['S', 'M', 'T', 'W', 'T', 'F', 'S'][new Date(h.date).getDay()]}
               </div>
             </div>
@@ -754,7 +755,7 @@ export default function BodySection() {
     text-sm px-4 py-2 rounded-lg transition-all
     ${activeTab === tab 
       ? 'bg-primary text-black font-semibold' 
-      : 'text-neutral hover:text-primary'}
+      : 'text-black hover:text-black'}
   `;
 
   return (
@@ -778,20 +779,20 @@ export default function BodySection() {
             {/* WORKOUT STATS */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px', marginBottom: '16px' }}>
               <div style={styles.statCard}>
-                <div style={{ fontSize: '12px', color: '#888' }}>Workouts this week</div>
-                <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#00FFFF' }}>{stats.thisWeek}</div>
+                <div style={{ fontSize: '12px', color: '#000' }}>Workouts this week</div>
+                <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#000' }}>{stats.thisWeek}</div>
               </div>
               <div style={styles.statCard}>
-                <div style={{ fontSize: '12px', color: '#888' }}>Total minutes</div>
-                <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#00FF88' }}>{stats.totalMinutes}</div>
+                <div style={{ fontSize: '12px', color: '#000' }}>Total minutes</div>
+                <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#000' }}>{stats.totalMinutes}</div>
               </div>
               <div style={styles.statCard}>
-                <div style={{ fontSize: '12px', color: '#888' }}>Current streak</div>
+                <div style={{ fontSize: '12px', color: '#000' }}>Current streak</div>
                 <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#FFAA00' }}>{stats.streak}</div>
               </div>
               <div style={styles.statCard}>
-                <div style={{ fontSize: '12px', color: '#888' }}>Rest days</div>
-                <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#888' }}>{stats.restDays}</div>
+                <div style={{ fontSize: '12px', color: '#000' }}>Rest days</div>
+                <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#000' }}>{stats.restDays}</div>
               </div>
             </div>
 
@@ -823,8 +824,8 @@ export default function BodySection() {
                       <div style={{ fontSize: '11px', backgroundColor: '#333', padding: '3px 6px', borderRadius: '3px', display: 'inline-block', marginBottom: '6px' }}>
                         {day.type}
                       </div>
-                      {isCompleted && <div style={{ color: '#00FF88', fontSize: '12px' }}>✓ Done</div>}
-                      <div style={{ fontSize: '10px', color: '#888', marginTop: '4px' }}>
+                      {isCompleted && <div style={{ color: '#000', fontSize: '12px' }}>✓ Done</div>}
+                      <div style={{ fontSize: '10px', color: '#000', marginTop: '4px' }}>
                         {day.exercises}
                       </div>
                     </div>
@@ -870,7 +871,7 @@ export default function BodySection() {
                     style={{
                       ...styles.pillButton,
                       backgroundColor: newWorkout.intensity === intensity ? '#00FFFF' : 'transparent',
-                      color: newWorkout.intensity === intensity ? '#000' : '#fff',
+                      color: newWorkout.intensity === intensity ? '#000' : '#000',
                       borderColor: newWorkout.intensity === intensity ? '#00FFFF' : '#666',
                     }}
                   >
@@ -900,12 +901,12 @@ export default function BodySection() {
                         <div style={{ fontSize: '12px', fontWeight: 'bold' }}>
                           {workout.type} · {workout.duration}m · {workout.intensity}
                         </div>
-                        <div style={{ fontSize: '11px', color: '#888' }}>{workout.date}</div>
-                        {workout.notes && <div style={{ fontSize: '11px', color: '#aaa', marginTop: '4px' }}>{workout.notes}</div>}
+                        <div style={{ fontSize: '11px', color: '#000' }}>{workout.date}</div>
+                        {workout.notes && <div style={{ fontSize: '11px', color: '#000', marginTop: '4px' }}>{workout.notes}</div>}
                       </div>
                       <button
                         onClick={() => setWorkouts(prev => prev.filter(w => w.id !== workout.id))}
-                        style={{ background: 'none', border: 'none', color: '#888', cursor: 'pointer', fontSize: '16px' }}
+                        style={{ background: 'none', border: 'none', color: '#000', cursor: 'pointer', fontSize: '16px' }}
                       >
                         🗑️
                       </button>
@@ -923,7 +924,7 @@ export default function BodySection() {
                   <summary style={{ cursor: 'pointer', padding: '8px', backgroundColor: 'rgba(255,255,255,0.05)', borderRadius: '4px' }}>
                     {category}
                   </summary>
-                  <div style={{ paddingTop: '8px', paddingLeft: '16px', fontSize: '12px', color: '#aaa' }}>
+                  <div style={{ paddingTop: '8px', paddingLeft: '16px', fontSize: '12px', color: '#000' }}>
                     {category === 'Push' && '• Bench press — 4x6 | • Shoulder press — 4x8 | • Tricep dips — 3x8'}
                     {category === 'Pull' && '• Deadlift — 3x5 | • Barbell rows — 4x6 | • Bicep curls — 3x8'}
                     {category === 'Legs' && '• Squat — 4x6 | • Lunges — 3x8 | • Calf raises — 3x12'}
@@ -957,7 +958,7 @@ export default function BodySection() {
                     style={{
                       ...styles.pillButton,
                       backgroundColor: newMeal.type === type ? '#00FFFF' : 'transparent',
-                      color: newMeal.type === type ? '#000' : '#fff',
+                      color: newMeal.type === type ? '#000' : '#000',
                       borderColor: newMeal.type === type ? '#00FFFF' : '#666',
                       flex: 1,
                     }}
@@ -1025,13 +1026,13 @@ export default function BodySection() {
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <div>
                               <div style={{ fontSize: '12px', fontWeight: '500' }}>{meal.name}</div>
-                              <div style={{ fontSize: '11px', color: '#888', marginTop: '2px' }}>
+                              <div style={{ fontSize: '11px', color: '#000', marginTop: '2px' }}>
                                 {meal.calories}cal · {meal.protein}p · {meal.carbs}c · {meal.fat}f
                               </div>
                             </div>
                             <button
                               onClick={() => setMeals(prev => prev.filter(m => m.id !== meal.id))}
-                              style={{ background: 'none', border: 'none', color: '#888', cursor: 'pointer' }}
+                              style={{ background: 'none', border: 'none', color: '#000', cursor: 'pointer' }}
                             >
                               ✕
                             </button>
@@ -1064,12 +1065,12 @@ export default function BodySection() {
                     <span style={{ fontSize: '18px' }}>{renderIcon(principle.emoji, 20)}</span>
                     <div>
                       <div style={{ fontSize: '12px', fontWeight: '600' }}>{principle.title}</div>
-                      <div style={{ fontSize: '11px', color: '#888' }}>{principle.short}</div>
+                      <div style={{ fontSize: '11px', color: '#000' }}>{principle.short}</div>
                     </div>
                   </div>
                   {expandedPrinciples[idx] && (
                     <div style={{ ...styles.expandedContent, backgroundColor: 'rgba(255,255,255,0.02)', padding: '8px' }}>
-                      <p style={{ fontSize: '11px', color: '#aaa', margin: 0, lineHeight: '1.5' }}>{principle.long}</p>
+                      <p style={{ fontSize: '11px', color: '#000', margin: 0, lineHeight: '1.5' }}>{principle.long}</p>
                     </div>
                   )}
                 </div>
@@ -1084,25 +1085,25 @@ export default function BodySection() {
             {/* SLEEP STATS */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px', marginBottom: '16px' }}>
               <div style={styles.statCard}>
-                <div style={{ fontSize: '12px', color: '#888' }}>Avg duration</div>
+                <div style={{ fontSize: '12px', color: '#000' }}>Avg duration</div>
                 <div style={{ fontSize: '18px', fontWeight: 'bold', color: sleepStats.avgDuration >= 7 ? '#00FF88' : sleepStats.avgDuration >= 6 ? '#FFAA00' : '#FF4444' }}>
                   {sleepStats.avgDuration}h
                 </div>
               </div>
               <div style={styles.statCard}>
-                <div style={{ fontSize: '12px', color: '#888' }}>Avg quality</div>
-                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#00FFFF' }}>
+                <div style={{ fontSize: '12px', color: '#000' }}>Avg quality</div>
+                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#000' }}>
                   {sleepStats.avgQuality} ★
                 </div>
               </div>
               <div style={styles.statCard}>
-                <div style={{ fontSize: '12px', color: '#888' }}>Best night</div>
-                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#00FF88' }}>
+                <div style={{ fontSize: '12px', color: '#000' }}>Best night</div>
+                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#000' }}>
                   {sleepStats.bestNight}h
                 </div>
               </div>
               <div style={styles.statCard}>
-                <div style={{ fontSize: '12px', color: '#888' }}>Sleep debt</div>
+                <div style={{ fontSize: '12px', color: '#000' }}>Sleep debt</div>
                 <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#FF4444' }}>
                   {sleepStats.sleepDebt}h
                 </div>
@@ -1133,7 +1134,7 @@ export default function BodySection() {
                 </div>
               </div>
 
-              <div style={{ fontSize: '16px', fontFamily: 'monospace', fontWeight: 'bold', color: '#00FFFF', marginBottom: '12px' }}>
+              <div style={{ fontSize: '16px', fontFamily: "'Dark Castle'", fontWeight: 'bold', color: '#000', marginBottom: '12px' }}>
                 Duration: {calculateSleepDuration().hours}h {calculateSleepDuration().minutes}m
               </div>
 
@@ -1157,7 +1158,7 @@ export default function BodySection() {
                     style={{
                       ...styles.pillButton,
                       backgroundColor: newSleep.rested === opt.split(' ')[1] ? '#00FFFF' : 'transparent',
-                      color: newSleep.rested === opt.split(' ')[1] ? '#000' : '#fff',
+                      color: newSleep.rested === opt.split(' ')[1] ? '#000' : '#000',
                       borderColor: newSleep.rested === opt.split(' ')[1] ? '#00FFFF' : '#666',
                       flex: 1,
                     }}
@@ -1184,7 +1185,7 @@ export default function BodySection() {
                     style={{
                       ...styles.pillButton,
                       backgroundColor: newSleep.disruptors.includes(disruptor.split(' ')[1]) ? '#00FFFF' : 'transparent',
-                      color: newSleep.disruptors.includes(disruptor.split(' ')[1]) ? '#000' : '#fff',
+                      color: newSleep.disruptors.includes(disruptor.split(' ')[1]) ? '#000' : '#000',
                       borderColor: newSleep.disruptors.includes(disruptor.split(' ')[1]) ? '#00FFFF' : '#666',
                       marginRight: '6px',
                       marginBottom: '6px',
@@ -1228,7 +1229,7 @@ export default function BodySection() {
                   </div>
                   {expandedTips[idx] && (
                     <div style={{ ...styles.expandedContent, backgroundColor: 'rgba(255,255,255,0.02)', padding: '8px' }}>
-                      <p style={{ fontSize: '11px', color: '#aaa', margin: 0, lineHeight: '1.5' }}>{tip.text}</p>
+                      <p style={{ fontSize: '11px', color: '#000', margin: 0, lineHeight: '1.5' }}>{tip.text}</p>
                     </div>
                   )}
                 </div>
@@ -1249,7 +1250,7 @@ export default function BodySection() {
                   style={{
                     ...styles.pillButton,
                     backgroundColor: goal === g ? '#00FFFF' : 'transparent',
-                    color: goal === g ? '#000' : '#fff',
+                    color: goal === g ? '#000' : '#000',
                     borderColor: goal === g ? '#00FFFF' : '#666',
                     flex: 1,
                   }}
@@ -1348,28 +1349,28 @@ export default function BodySection() {
             {latestStats && (
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px', marginBottom: '16px' }}>
                 <div style={styles.statCard}>
-                  <div style={{ fontSize: '12px', color: '#888' }}>BMI</div>
+                  <div style={{ fontSize: '12px', color: '#000' }}>BMI</div>
                   <div style={{ fontSize: '20px', fontWeight: 'bold', color: bmiCat?.color }}>{bmi}</div>
-                  <div style={{ fontSize: '10px', color: '#888', marginTop: '2px' }}>{bmiCat?.label}</div>
+                  <div style={{ fontSize: '10px', color: '#000', marginTop: '2px' }}>{bmiCat?.label}</div>
                 </div>
                 {ffmi && (
                   <div style={styles.statCard}>
-                    <div style={{ fontSize: '12px', color: '#888' }}>FFMI</div>
-                    <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#00FFFF' }}>{ffmi}</div>
-                    <div style={{ fontSize: '10px', color: '#888', marginTop: '2px' }}>{ffmiCat}</div>
+                    <div style={{ fontSize: '12px', color: '#000' }}>FFMI</div>
+                    <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#000' }}>{ffmi}</div>
+                    <div style={{ fontSize: '10px', color: '#000', marginTop: '2px' }}>{ffmiCat}</div>
                   </div>
                 )}
                 {wth && (
                   <div style={styles.statCard}>
-                    <div style={{ fontSize: '12px', color: '#888' }}>Waist to Height</div>
-                    <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#00FFFF' }}>{wth}</div>
-                    <div style={{ fontSize: '10px', color: '#888', marginTop: '2px' }}>{wthCat}</div>
+                    <div style={{ fontSize: '12px', color: '#000' }}>Waist to Height</div>
+                    <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#000' }}>{wth}</div>
+                    <div style={{ fontSize: '10px', color: '#000', marginTop: '2px' }}>{wthCat}</div>
                   </div>
                 )}
                 {idealWeight && (
                   <div style={styles.statCard}>
-                    <div style={{ fontSize: '12px', color: '#888' }}>Ideal Weight</div>
-                    <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#00FFFF' }}>
+                    <div style={{ fontSize: '12px', color: '#000' }}>Ideal Weight</div>
+                    <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#000' }}>
                       {idealWeight.min} - {idealWeight.max}kg
                     </div>
                   </div>
@@ -1384,9 +1385,9 @@ export default function BodySection() {
                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
                   <thead>
                     <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                      <th style={{ textAlign: 'left', padding: '6px', color: '#888' }}>Date</th>
-                      <th style={{ textAlign: 'left', padding: '6px', color: '#888' }}>Weight</th>
-                      <th style={{ textAlign: 'left', padding: '6px', color: '#888' }}>BMI</th>
+                      <th style={{ textAlign: 'left', padding: '6px', color: '#000' }}>Date</th>
+                      <th style={{ textAlign: 'left', padding: '6px', color: '#000' }}>Weight</th>
+                      <th style={{ textAlign: 'left', padding: '6px', color: '#000' }}>BMI</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -1394,9 +1395,9 @@ export default function BodySection() {
                       const statBmi = calculateBMI(stat.weight, stat.height);
                       return (
                         <tr key={idx} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                          <td style={{ padding: '6px', color: '#aaa' }}>{stat.date}</td>
-                          <td style={{ padding: '6px', color: '#00FFFF', fontWeight: 'bold' }}>{stat.weight}kg</td>
-                          <td style={{ padding: '6px', color: '#888' }}>{statBmi}</td>
+                          <td style={{ padding: '6px', color: '#000' }}>{stat.date}</td>
+                          <td style={{ padding: '6px', color: '#000', fontWeight: 'bold' }}>{stat.weight}kg</td>
+                          <td style={{ padding: '6px', color: '#000' }}>{statBmi}</td>
                         </tr>
                       );
                     })}
@@ -1413,7 +1414,7 @@ export default function BodySection() {
             {/* WATER BOTTLE */}
             <div style={{ textAlign: 'center', marginBottom: '16px' }}>
               <WaterBottle />
-              <div style={{ marginTop: '8px', fontSize: '12px', color: '#888' }}>/ {hydrationTarget}ml</div>
+              <div style={{ marginTop: '8px', fontSize: '12px', color: '#000' }}>/ {hydrationTarget}ml</div>
             </div>
 
             {/* QUICK ADD BUTTONS */}
@@ -1452,12 +1453,12 @@ export default function BodySection() {
             </div>
 
             <div style={{ textAlign: 'center', marginBottom: '16px' }}>
-              <div style={{ fontSize: '20px', color: '#00FFFF', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '6px' }}>{renderIcon('💧', 22)} {hydrationStreak} day streak</div>
+              <div style={{ fontSize: '20px', color: '#000', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '6px' }}>{renderIcon('💧', 22)} {hydrationStreak} day streak</div>
               <button
                 onClick={() => {
                   setHydrationLog(prev => prev.filter(h => h.date !== getTodayDate()));
                 }}
-                style={{ ...styles.pillButton, color: '#888', borderColor: '#666', marginTop: '6px', fontSize: '11px' }}
+                style={{ ...styles.pillButton, color: '#000', borderColor: '#666', marginTop: '6px', fontSize: '11px' }}
               >
                 Reset today
               </button>
@@ -1482,7 +1483,7 @@ export default function BodySection() {
                     marginBottom: '6px',
                   }}
                 >
-                  <div style={{ fontSize: '11px', color: '#aaa', lineHeight: '1.4' }}>{fact}</div>
+                  <div style={{ fontSize: '11px', color: '#000', lineHeight: '1.4' }}>{fact}</div>
                 </div>
               ))}
             </div>
@@ -1505,10 +1506,10 @@ export default function BodySection() {
                       <span style={{ fontSize: '20px' }}>{renderIcon(challenge.emoji, 22)}</span>
                       <div style={{ flex: 1 }}>
                         <div style={{ fontSize: '12px', fontWeight: 'bold', marginBottom: '3px' }}>{challenge.name}</div>
-                        <div style={{ fontSize: '11px', color: '#888', marginBottom: '8px' }}>{challenge.description}</div>
+                        <div style={{ fontSize: '11px', color: '#000', marginBottom: '8px' }}>{challenge.description}</div>
                         {isJoined ? (
                           <div>
-                            <div style={{ fontSize: '11px', color: '#00FFFF', fontWeight: 'bold', marginBottom: '4px' }}>
+                            <div style={{ fontSize: '11px', color: '#000', fontWeight: 'bold', marginBottom: '4px' }}>
                               {userChallenge.progress} / {challenge.duration} days
                             </div>
                             <div style={{ backgroundColor: '#333', height: '6px', borderRadius: '3px', overflow: 'hidden', marginBottom: '8px' }}>
@@ -1545,7 +1546,7 @@ export default function BodySection() {
             {/* COMMUNITY LEADERBOARD */}
             <div style={styles.toolSection}>
               <h3>🌐 Community Leaderboard</h3>
-              <div style={{ fontSize: '12px', color: '#888', marginBottom: '12px' }}>
+              <div style={{ fontSize: '12px', color: '#000', marginBottom: '12px' }}>
                 Connect with the community to see how you rank.
               </div>
               {[
@@ -1557,11 +1558,11 @@ export default function BodySection() {
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <div>
                       <div style={{ fontSize: '12px', fontWeight: 'bold' }}>#{idx + 1}</div>
-                      <div style={{ fontSize: '11px', color: '#aaa' }}>{entry.name}</div>
+                      <div style={{ fontSize: '11px', color: '#000' }}>{entry.name}</div>
                     </div>
                     <div style={{ textAlign: 'right' }}>
-                      <div style={{ fontSize: '12px', color: '#00FFFF', fontWeight: 'bold' }}>{entry.streak} day streak</div>
-                      <div style={{ fontSize: '11px', color: '#888' }}>{entry.score} pts</div>
+                      <div style={{ fontSize: '12px', color: '#000', fontWeight: 'bold' }}>{entry.streak} day streak</div>
+                      <div style={{ fontSize: '11px', color: '#000' }}>{entry.score} pts</div>
                     </div>
                   </div>
                 </div>

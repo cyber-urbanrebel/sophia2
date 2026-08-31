@@ -155,7 +155,7 @@ function getGuidance(pathname) {
   }
   return {
     label: 'Sophia',
-    greeting: "I'm your AI guide. Ask me anything about your journey — I know every section of your path.",
+    greeting: "I'm your Sophia guide. Ask me anything about your journey — I know every section of your path.",
     tips: [
       "What should I work on today?",
       "How's my overall progress?",
@@ -234,7 +234,7 @@ const s = {
     background: '#13131f', border: '0.5px solid #1e1e2e', borderRadius: 16,
     boxShadow: '0 16px 48px rgba(0,0,0,0.5), 0 0 60px rgba(201,168,76,0.06)',
     zIndex: 9998, display: 'flex', flexDirection: 'column', overflow: 'hidden',
-    fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+    fontFamily: "'Dark Castle'",
     animation: 'floatAI-slideUp 0.3s cubic-bezier(0.22,1,0.36,1)',
   },
   header: {
@@ -348,6 +348,29 @@ export default function FloatingAI() {
     return next;
   });
 
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await api.getCoachHistory(conversationId);
+        const rows = Array.isArray(res?.messages) ? res.messages : [];
+        if (!cancelled && rows.length) {
+          const mapped = rows.map((row, index) => ({
+            id: row.id || index,
+            role: row.role,
+            content: row.content,
+            ts: Date.parse(row.created_at) || Date.now(),
+          }));
+          setMessages(mapped);
+          localStorage.setItem('sophia_floating_ai_msgs', JSON.stringify(mapped));
+        }
+      } catch {
+        /* keep local cache */
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [conversationId]);
+
   const sendMessage = useCallback(async (text) => {
     if (!text.trim()) return;
     const userMsg = { id: Date.now(), role: 'user', content: text, ts: Date.now() };
@@ -391,7 +414,7 @@ export default function FloatingAI() {
         className="floatAI-fab"
         style={s.fab}
         onClick={() => setOpen(!open)}
-        title="Sophia AI Guide"
+        title="Sophia Guide"
       >
         {open ? (
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a1200" strokeWidth="2.5" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -409,7 +432,7 @@ export default function FloatingAI() {
         <div style={s.panel}>
           {/* Header */}
           <div style={s.header}>
-            <span style={s.headerTitle}>Sophia AI Guide</span>
+            <span style={s.headerTitle}>Sophia Guide</span>
             <span style={s.headerBadge}>{isWelcomeMode ? '✨ Welcome' : guidance.label}</span>
           </div>
 

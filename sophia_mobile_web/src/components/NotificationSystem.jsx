@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+﻿import React, { useState, useCallback, useEffect } from 'react';
 
 const NotificationSystem = () => {
   const [notifications, setNotifications] = useState(() => {
@@ -17,7 +17,7 @@ const NotificationSystem = () => {
     };
   });
 
-  const addNotification = useCallback((message, type = 'info', icon = 'ℹ️') => {
+  const addNotification = useCallback((message, type = 'info', icon = 'â„¹ï¸') => {
     const notification = {
       id: Date.now(),
       message,
@@ -58,9 +58,9 @@ const NotificationSystem = () => {
   // Auto-generate sample notifications on mount
   useEffect(() => {
     if (notifications.length === 0) {
-      addNotification('🌟 Great job on your morning meditation!', 'success', '🧘');
-      addNotification('💧 Remember to drink water', 'info', '💧');
-      addNotification('🔥 5-day streak! Keep going!', 'success', '🔥');
+      addNotification('ðŸŒŸ Great job on your morning meditation!', 'success', 'ðŸ§˜');
+      addNotification('ðŸ’§ Remember to drink water', 'info', 'ðŸ’§');
+      addNotification('ðŸ”¥ 5-day streak! Keep going!', 'success', 'ðŸ”¥');
     }
   }, []);
 
@@ -69,15 +69,15 @@ const NotificationSystem = () => {
       case 'success': return '#00e676';
       case 'warning': return '#ffaa00';
       case 'error': return '#ff1744';
-      default: return '#00d4ff';
+      default: return 'var(--color-primary)';
     }
   };
 
   const unreadCount = notifications.filter(n => !n.read).length;
 
   return (
-    <div style={{ padding: '0', color: '#fff', background: 'transparent', fontFamily: '"DM Mono", monospace', paddingBottom: '40px' }}>
-      <h2 style={{ fontSize: '24px', marginBottom: '24px', color: '#00d4ff' }}>🔔 Notifications</h2>
+    <div style={{ padding: '0', color: '#fff', background: 'transparent', fontFamily: "'Dark Castle'", paddingBottom: '40px' }}>
+      <h2 style={{ fontSize: '24px', marginBottom: '24px', color: 'var(--color-primary)' }}>ðŸ”” Notifications</h2>
 
       {/* Unread Count Badge */}
       {unreadCount > 0 && (
@@ -88,7 +88,7 @@ const NotificationSystem = () => {
 
       {/* Tabs */}
       <div style={{ display: 'flex', gap: '12px', marginBottom: '20px', borderBottom: '1px solid #222222', paddingBottom: '12px' }}>
-        <button style={{ background: 'transparent', color: '#00d4ff', border: 'none', cursor: 'pointer', fontSize: '14px', fontFamily: 'inherit', fontWeight: 'bold' }}>
+        <button style={{ background: 'transparent', color: 'var(--color-primary)', border: 'none', cursor: 'pointer', fontSize: '14px', fontFamily: 'inherit', fontWeight: 'bold' }}>
           All ({notifications.length})
         </button>
         <button style={{ background: 'transparent', color: '#888', border: 'none', cursor: 'pointer', fontSize: '14px', fontFamily: 'inherit' }}>
@@ -141,7 +141,7 @@ const NotificationSystem = () => {
                   padding: '8px',
                 }}
               >
-                ✕
+                âœ•
               </button>
             </div>
           ))
@@ -150,7 +150,7 @@ const NotificationSystem = () => {
 
       {/* Settings */}
       <div style={{ background: '#111111', border: '1px solid #222222', borderRadius: '12px', padding: '20px', marginTop: '20px' }}>
-        <h3 style={{ marginTop: '0', marginBottom: '16px', color: '#00d4ff' }}>⚙️ Notification Preferences</h3>
+        <h3 style={{ marginTop: '0', marginBottom: '16px', color: 'var(--color-primary)' }}>âš™ï¸ Notification Preferences</h3>
         {[
           { key: 'dailyReminders', label: 'Daily Reminders' },
           { key: 'streakAlerts', label: 'Streak Alerts' },
@@ -176,7 +176,7 @@ const NotificationSystem = () => {
               onChange={(e) => updateSettings({ ...settings, time: e.target.value })}
               style={{
                 background: '#0a0a0a',
-                color: '#00d4ff',
+                color: 'var(--color-primary)',
                 border: '1px solid #222222',
                 borderRadius: '4px',
                 padding: '6px 12px',

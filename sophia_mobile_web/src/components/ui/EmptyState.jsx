@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 
 /**
  * Reusable empty state for pages with no data.
@@ -8,7 +8,7 @@ import React from 'react';
  * @param {string} actionLabel - Button label
  * @param {function} onAction - Button callback
  */
-export default function EmptyState({ icon = '📭', title, subtitle, actionLabel, onAction }) {
+export default function EmptyState({ icon = 'ðŸ“­', title, subtitle, actionLabel, onAction }) {
   return (
     <div style={{
       display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
@@ -23,7 +23,7 @@ export default function EmptyState({ icon = '📭', title, subtitle, actionLabel
           style={{
             padding: '10px 28px', borderRadius: 10, border: 'none', cursor: 'pointer',
             fontSize: 14, fontWeight: 600,
-            background: 'linear-gradient(135deg, #00d4ff, #bb86fc)', color: '#000',
+            background: 'linear-gradient(135deg, var(--color-primary), #bb86fc)', color: '#000',
             transition: 'transform 0.15s, box-shadow 0.15s',
           }}
           onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(0,212,255,0.25)'; }}

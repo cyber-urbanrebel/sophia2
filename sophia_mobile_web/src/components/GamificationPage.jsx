@@ -1,4 +1,13 @@
-import React, { useState, useEffect, useMemo } from 'react';
+﻿import React, { useState, useEffect, useMemo } from 'react';
+import {
+  FlameIcon,
+  MeditationIcon,
+  LightningIcon,
+  TrendUpIcon,
+  TargetIcon,
+  TaskCheckIcon,
+  LightbulbIcon,
+} from './SophiaIcons.jsx';
 
 const XP_KEY = 'sophia_xp_state';
 const STREAK_KEY = 'sophia_streak';
@@ -36,19 +45,34 @@ const LEVEL_TITLES = [
   'Eternal', 'Infinite', 'Absolute',
 ];
 
+const BADGE_ICONS = {
+  first_habit: <TrendUpIcon size={32} />,
+  habit_10: <TaskCheckIcon size={32} />,
+  habit_50: <FlameIcon size={32} />,
+  journal_5: <LightbulbIcon size={32} />,
+  journal_30: <LightbulbIcon size={32} />,
+  pomodoro_10: <MeditationIcon size={32} />,
+  pomodoro_50: <TargetIcon size={32} />,
+  streak_7: <FlameIcon size={32} />,
+  streak_30: <FlameIcon size={32} />,
+  level_5: <TrendUpIcon size={32} />,
+  level_10: <LightningIcon size={32} />,
+  tasks_25: <TaskCheckIcon size={32} />,
+};
+
 const BADGES = [
-  { id: 'first_habit', name: 'First Steps', desc: 'Complete your first habit', icon: '🌱', check: (s) => s.habitsCompleted >= 1 },
-  { id: 'habit_10', name: 'Habit Builder', desc: 'Complete 10 habits', icon: '⚡', check: (s) => s.habitsCompleted >= 10 },
-  { id: 'habit_50', name: 'Habit Master', desc: 'Complete 50 habits', icon: '🔥', check: (s) => s.habitsCompleted >= 50 },
-  { id: 'journal_5', name: 'Reflective', desc: 'Write 5 journal entries', icon: '📝', check: (s) => s.journalEntries >= 5 },
-  { id: 'journal_30', name: 'Storyteller', desc: 'Write 30 journal entries', icon: '📖', check: (s) => s.journalEntries >= 30 },
-  { id: 'pomodoro_10', name: 'Focused', desc: 'Complete 10 focus sessions', icon: '🎯', check: (s) => s.pomodorosCompleted >= 10 },
-  { id: 'pomodoro_50', name: 'Deep Worker', desc: 'Complete 50 focus sessions', icon: '🧠', check: (s) => s.pomodorosCompleted >= 50 },
-  { id: 'streak_7', name: 'Week Warrior', desc: '7-day login streak', icon: '🏆', check: (s) => s.maxStreak >= 7 },
-  { id: 'streak_30', name: 'Monthly Champion', desc: '30-day login streak', icon: '👑', check: (s) => s.maxStreak >= 30 },
-  { id: 'level_5', name: 'Rising Star', desc: 'Reach level 5', icon: '⭐', check: (s) => getLevelInfo(s.totalXP).level >= 5 },
-  { id: 'level_10', name: 'Elite', desc: 'Reach level 10', icon: '💎', check: (s) => getLevelInfo(s.totalXP).level >= 10 },
-  { id: 'tasks_25', name: 'Productive', desc: 'Complete 25 tasks', icon: '✅', check: (s) => s.tasksCompleted >= 25 },
+  { id: 'first_habit', name: 'First Steps', desc: 'Complete your first habit', check: (s) => s.habitsCompleted >= 1 },
+  { id: 'habit_10', name: 'Habit Builder', desc: 'Complete 10 habits', check: (s) => s.habitsCompleted >= 10 },
+  { id: 'habit_50', name: 'Habit Master', desc: 'Complete 50 habits', check: (s) => s.habitsCompleted >= 50 },
+  { id: 'journal_5', name: 'Reflective', desc: 'Write 5 journal entries', check: (s) => s.journalEntries >= 5 },
+  { id: 'journal_30', name: 'Storyteller', desc: 'Write 30 journal entries', check: (s) => s.journalEntries >= 30 },
+  { id: 'pomodoro_10', name: 'Focused', desc: 'Complete 10 focus sessions', check: (s) => s.pomodorosCompleted >= 10 },
+  { id: 'pomodoro_50', name: 'Deep Worker', desc: 'Complete 50 focus sessions', check: (s) => s.pomodorosCompleted >= 50 },
+  { id: 'streak_7', name: 'Week Warrior', desc: '7-day login streak', check: (s) => s.maxStreak >= 7 },
+  { id: 'streak_30', name: 'Monthly Champion', desc: '30-day login streak', check: (s) => s.maxStreak >= 30 },
+  { id: 'level_5', name: 'Rising Star', desc: 'Reach level 5', check: (s) => getLevelInfo(s.totalXP).level >= 5 },
+  { id: 'level_10', name: 'Elite', desc: 'Reach level 10', check: (s) => getLevelInfo(s.totalXP).level >= 10 },
+  { id: 'tasks_25', name: 'Productive', desc: 'Complete 25 tasks', check: (s) => s.tasksCompleted >= 25 },
 ];
 
 function loadState() {
@@ -170,37 +194,37 @@ export default function GamificationPage() {
   const recentXP = (state.xpHistory || []).slice(-10).reverse();
 
   const st = {
-    page: { minHeight: '100vh', padding: '32px 24px', color: '#e0ddd6', fontFamily: '"Inter", -apple-system, sans-serif' },
-    header: { fontSize: 28, fontWeight: 700, marginBottom: 4, background: 'linear-gradient(135deg, #c9a84c, #bb86fc)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' },
-    sub: { color: '#8a8a9a', fontSize: 14, marginBottom: 32 },
+    page: { minHeight: '100vh', padding: '32px 24px', color: '#000' },
+    header: { fontSize: 28, fontWeight: 400, marginBottom: 4, color: '#000' },
+    sub: { color: '#000', fontSize: 16, marginBottom: 32, fontFamily: 'var(--font-display)' },
     levelCard: {
-      background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 18,
-      padding: '28px 24px', marginBottom: 28, textAlign: 'center',
+      background: 'rgba(255,255,255,0.78)', border: '1px solid rgba(0,0,0,0.16)', borderRadius: 18,
+      padding: '28px 24px', marginBottom: 28, textAlign: 'center', color: '#000',
     },
-    levelNum: { fontSize: 64, fontWeight: 800, background: 'linear-gradient(135deg, #c9a84c, #00d4ff)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' },
-    levelTitle: { fontSize: 20, fontWeight: 600, color: '#c9a84c', marginTop: 4 },
-    xpText: { fontSize: 14, color: '#8a8a9a', marginTop: 8 },
-    progOuter: { width: '100%', maxWidth: 300, height: 8, borderRadius: 4, background: 'rgba(255,255,255,0.06)', margin: '12px auto 0', overflow: 'hidden' },
-    progInner: { height: '100%', borderRadius: 4, background: 'linear-gradient(90deg, #c9a84c, #00d4ff)', transition: 'width 0.8s ease' },
+    levelNum: { fontSize: 64, fontWeight: 400, color: '#000' },
+    levelTitle: { fontSize: 20, fontWeight: 400, color: '#000', marginTop: 4 },
+    xpText: { fontSize: 14, color: '#000', marginTop: 8, fontFamily: 'var(--font-display)' },
+    progOuter: { width: '100%', maxWidth: 300, height: 8, borderRadius: 4, background: 'rgba(0,0,0,0.12)', margin: '12px auto 0', overflow: 'hidden' },
+    progInner: { height: '100%', borderRadius: 4, background: 'linear-gradient(90deg, #5B1FA8, #7AF6F7)', transition: 'width 0.8s ease' },
     statsGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 12, marginBottom: 32 },
-    statCard: { padding: '16px', borderRadius: 14, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', textAlign: 'center' },
-    statVal: (color) => ({ fontSize: 24, fontWeight: 700, color }),
-    statLabel: { fontSize: 12, color: '#8a8a9a', marginTop: 4 },
-    sectionTitle: { fontSize: 18, fontWeight: 600, color: '#e0ddd6', marginBottom: 16 },
+    statCard: { padding: '16px', borderRadius: 14, background: 'rgba(255,255,255,0.78)', border: '1px solid rgba(0,0,0,0.16)', textAlign: 'center' },
+    statVal: () => ({ fontSize: 24, fontWeight: 700, color: '#000' }),
+    statLabel: { fontSize: 13, color: '#000', marginTop: 4, fontFamily: 'var(--font-display)' },
+    sectionTitle: { fontSize: 18, fontWeight: 400, color: '#000', marginBottom: 16 },
     badgeGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12, marginBottom: 32 },
     badge: (earned) => ({
       padding: '16px 12px', borderRadius: 14, textAlign: 'center',
-      background: earned ? 'rgba(201,168,76,0.06)' : 'rgba(255,255,255,0.02)',
-      border: earned ? '1px solid rgba(201,168,76,0.2)' : '1px solid rgba(255,255,255,0.05)',
-      opacity: earned ? 1 : 0.5,
+      background: 'rgba(255,255,255,0.78)',
+      border: '1px solid rgba(0,0,0,0.16)',
+      opacity: earned ? 1 : 0.55,
     }),
-    badgeIcon: { fontSize: 32, marginBottom: 8 },
-    badgeName: (earned) => ({ fontSize: 13, fontWeight: 600, color: earned ? '#c9a84c' : '#8a8a9a' }),
-    badgeDesc: { fontSize: 11, color: '#6a6a7a', marginTop: 4 },
+    badgeIcon: { marginBottom: 8, display: 'flex', justifyContent: 'center' },
+    badgeName: () => ({ fontSize: 15, fontWeight: 400, color: '#000' }),
+    badgeDesc: { fontSize: 13, color: '#1a1a1a', marginTop: 4, fontFamily: 'var(--font-display)' },
     historyItem: {
       display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-      padding: '8px 14px', borderRadius: 8, background: 'rgba(255,255,255,0.02)',
-      border: '1px solid rgba(255,255,255,0.04)', marginBottom: 4,
+      padding: '8px 14px', borderRadius: 8, background: 'rgba(255,255,255,0.78)',
+      border: '1px solid rgba(0,0,0,0.16)', marginBottom: 4,
     },
   };
 
@@ -213,7 +237,7 @@ export default function GamificationPage() {
       <div style={st.levelCard}>
         <div style={st.levelNum}>{levelInfo.level}</div>
         <div style={st.levelTitle}>{title}</div>
-        <div style={st.xpText}>{state.totalXP.toLocaleString()} total XP • {levelInfo.xpInLevel} / {levelInfo.nextThreshold} to next level</div>
+        <div style={st.xpText}>{state.totalXP.toLocaleString()} total XP â€¢ {levelInfo.xpInLevel} / {levelInfo.nextThreshold} to next level</div>
         <div style={st.progOuter}>
           <div style={{ ...st.progInner, width: `${progressPct}%` }} />
         </div>
@@ -223,21 +247,21 @@ export default function GamificationPage() {
       <div style={st.statsGrid}>
         <div style={st.statCard}><div style={st.statVal('#3fb950')}>{state.habitsCompleted || 0}</div><div style={st.statLabel}>Habits Completed</div></div>
         <div style={st.statCard}><div style={st.statVal('#bb86fc')}>{state.journalEntries || 0}</div><div style={st.statLabel}>Journal Entries</div></div>
-        <div style={st.statCard}><div style={st.statVal('#00d4ff')}>{state.pomodorosCompleted || 0}</div><div style={st.statLabel}>Focus Sessions</div></div>
+        <div style={st.statCard}><div style={st.statVal('var(--color-primary)')}>{state.pomodorosCompleted || 0}</div><div style={st.statLabel}>Focus Sessions</div></div>
         <div style={st.statCard}><div style={st.statVal('#f78166')}>{state.tasksCompleted || 0}</div><div style={st.statLabel}>Tasks Done</div></div>
         <div style={st.statCard}><div style={st.statVal('#c9a84c')}>{streak.current || 0}</div><div style={st.statLabel}>Day Streak</div></div>
         <div style={st.statCard}><div style={st.statVal('#c9a84c')}>{streak.max || 0}</div><div style={st.statLabel}>Best Streak</div></div>
       </div>
 
       {/* Earned Badges */}
-      <h2 style={st.sectionTitle}>🏆 Earned Badges ({earnedBadges.length})</h2>
+      <h2 style={st.sectionTitle}>Earned ({earnedBadges.length})</h2>
       {earnedBadges.length === 0 ? (
-        <div style={{ color: '#6a6a7a', fontSize: 14, marginBottom: 32 }}>Complete actions to earn your first badge!</div>
+        <div style={{ color: '#000', fontSize: 14, marginBottom: 32, fontFamily: 'var(--font-display)' }}>Complete a small action to earn your first mark.</div>
       ) : (
         <div style={st.badgeGrid}>
           {earnedBadges.map(b => (
             <div key={b.id} style={st.badge(true)}>
-              <div style={st.badgeIcon}>{b.icon}</div>
+              <div style={st.badgeIcon}>{BADGE_ICONS[b.id]}</div>
               <div style={st.badgeName(true)}>{b.name}</div>
               <div style={st.badgeDesc}>{b.desc}</div>
             </div>
@@ -245,12 +269,11 @@ export default function GamificationPage() {
         </div>
       )}
 
-      {/* Locked Badges */}
-      <h2 style={st.sectionTitle}>🔒 Locked ({lockedBadges.length})</h2>
+      <h2 style={st.sectionTitle}>Still open ({lockedBadges.length})</h2>
       <div style={st.badgeGrid}>
         {lockedBadges.map(b => (
           <div key={b.id} style={st.badge(false)}>
-            <div style={st.badgeIcon}>{b.icon}</div>
+            <div style={st.badgeIcon}>{BADGE_ICONS[b.id]}</div>
             <div style={st.badgeName(false)}>{b.name}</div>
             <div style={st.badgeDesc}>{b.desc}</div>
           </div>

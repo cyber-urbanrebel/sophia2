@@ -16,8 +16,7 @@ import {
   addDoc,
   updateDoc,
   deleteDoc,
-  query,
-  where,
+  serverTimestamp,
 } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -68,10 +67,12 @@ async function firebaseRegister(email, password, firstName, lastName) {
     email,
     firstName: firstName || '',
     lastName: lastName || '',
-    createdAt: new Date().toISOString(),
+    createdAt: serverTimestamp(),
   };
 
-  await setDoc(doc(db, 'users', user.uid), profile);
+  void setDoc(doc(db, 'users', user.uid), profile).catch((error) => {
+    console.warn('Firebase profile sync failed after registration:', error);
+  });
 
   return {
     user: { uid: user.uid, email, firstName, lastName },
@@ -84,11 +85,8 @@ async function firebaseLogin(email, password) {
   const result = await signInWithEmailAndPassword(auth, email, password);
   const user = result.user;
 
-  const userDoc = await getDoc(doc(db, 'users', user.uid));
-  const profile = userDoc.exists() ? userDoc.data() : { email };
-
   return {
-    user: { uid: user.uid, email: user.email, ...profile },
+    user: { uid: user.uid, email: user.email },
     token: await user.getIdToken(),
   };
 }
@@ -145,7 +143,11 @@ async function addCollectionItem(collectionName, data) {
   ensureFirebaseEnabled();
   const uid = getUserUid();
   const colRef = collection(db, 'users', uid, collectionName);
-  const docRef = await addDoc(colRef, { ...data, updatedAt: new Date().toISOString() });
+  const docRef = await addDoc(colRef, {
+    ...data,
+    createdAt: data.createdAt || serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  });
   return { id: docRef.id, ...data };
 }
 
@@ -153,7 +155,7 @@ async function updateCollectionItem(collectionName, id, data) {
   ensureFirebaseEnabled();
   const uid = getUserUid();
   const docRef = doc(db, 'users', uid, collectionName, id);
-  await updateDoc(docRef, { ...data, updatedAt: new Date().toISOString() });
+  await updateDoc(docRef, { ...data, updatedAt: serverTimestamp() });
   const updatedDoc = await getDoc(docRef);
   return { id: updatedDoc.id, ...updatedDoc.data() };
 }
@@ -166,7 +168,7 @@ async function deleteCollectionItem(collectionName, id) {
 }
 
 async function completeCollectionItem(collectionName, id) {
-  return updateCollectionItem(collectionName, id, { completed: true, completedAt: new Date().toISOString() });
+  return updateCollectionItem(collectionName, id, { completed: true, completedAt: serverTimestamp() });
 }
 
 async function firebaseGetHabitStats() {

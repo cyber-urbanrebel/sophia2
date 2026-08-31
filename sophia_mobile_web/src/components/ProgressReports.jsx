@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+﻿import React, { useState, useEffect, useCallback } from 'react';
 
 const SECTIONS = ['Overview', 'Habits', 'Study', 'Journal', 'Goals', 'Tasks'];
 
@@ -144,7 +144,7 @@ export default function ProgressReports() {
       doc.text('SOPHIA', 20, 22);
       doc.setFontSize(10);
       doc.setTextColor(180, 180, 180);
-      doc.text(`Weekly Progress Report — ${dateStr}`, 20, 32);
+      doc.text(`Weekly Progress Report â€” ${dateStr}`, 20, 32);
 
       let y = 52;
 
@@ -217,7 +217,7 @@ export default function ProgressReports() {
           head: [['Date', 'Mood', 'Preview']],
           body: journal.slice(0, 10).map(j => [
             formatDate(j.date || j.createdAt),
-            j.mood || '—',
+            j.mood || 'â€”',
             (j.content || j.text || '').substring(0, 60) + '...',
           ]),
           theme: 'striped',
@@ -252,7 +252,7 @@ export default function ProgressReports() {
         doc.setPage(i);
         doc.setFontSize(8);
         doc.setTextColor(150, 150, 150);
-        doc.text(`SOPHIA Progress Report — Page ${i}/${pageCount}`, 105, 290, { align: 'center' });
+        doc.text(`SOPHIA Progress Report â€” Page ${i}/${pageCount}`, 105, 290, { align: 'center' });
       }
 
       doc.save(`SOPHIA_Report_${now.toISOString().split('T')[0]}.pdf`);
@@ -265,19 +265,19 @@ export default function ProgressReports() {
   }, [weekSessions, totalFocusMin, streak, xpThisWeek, xpData, completedTasks, goalProgress, habits, weekPomodoro, journal, goals]);
 
   const s = {
-    page: { minHeight: '100vh', padding: '32px 24px', color: '#e0ddd6', fontFamily: '"Inter", -apple-system, sans-serif' },
-    header: { fontSize: 28, fontWeight: 700, marginBottom: 4, background: 'linear-gradient(135deg, #bb86fc, #00d4ff)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' },
+    page: { minHeight: '100vh', padding: '32px 24px', color: '#e0ddd6', fontFamily: "'Dark Castle'" },
+    header: { fontSize: 28, fontWeight: 700, marginBottom: 4, background: 'linear-gradient(135deg, #bb86fc, var(--color-primary))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' },
     sub: { color: '#8a8a9a', fontSize: 14, marginBottom: 24 },
     tabs: { display: 'flex', gap: 6, marginBottom: 24, overflowX: 'auto', paddingBottom: 4 },
     tab: (active) => ({
       padding: '8px 16px', borderRadius: 8, border: 'none', cursor: 'pointer', fontSize: 13, fontWeight: 500, whiteSpace: 'nowrap',
       background: active ? 'rgba(0,212,255,0.12)' : 'rgba(255,255,255,0.03)',
-      color: active ? '#00d4ff' : '#8a8a9a',
+      color: active ? 'var(--color-primary)' : '#8a8a9a',
       outline: active ? '1px solid rgba(0,212,255,0.2)' : '1px solid rgba(255,255,255,0.05)',
     }),
     downloadBtn: {
       padding: '12px 28px', borderRadius: 12, border: 'none', cursor: 'pointer', fontSize: 14, fontWeight: 600,
-      background: generating ? 'rgba(255,255,255,0.1)' : 'linear-gradient(135deg, #bb86fc, #00d4ff)',
+      background: generating ? 'rgba(255,255,255,0.1)' : 'linear-gradient(135deg, #bb86fc, var(--color-primary))',
       color: generating ? '#8a8a9a' : '#000', marginBottom: 28,
     },
     statsGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: 12, marginBottom: 28 },
@@ -309,7 +309,7 @@ export default function ProgressReports() {
       <p style={s.sub}>Track your growth and download weekly reports</p>
 
       <button style={s.downloadBtn} onClick={generatePDF} disabled={generating}>
-        {generating ? '⏳ Generating...' : '📄 Download PDF Report'}
+        {generating ? 'â³ Generating...' : 'ðŸ“„ Download PDF Report'}
       </button>
 
       <div style={s.tabs}>
@@ -322,7 +322,7 @@ export default function ProgressReports() {
         <>
           <div style={s.statsGrid}>
             <div style={s.statCard}>
-              <div style={{ ...s.statValue, color: '#00d4ff' }}>{weekSessions}</div>
+              <div style={{ ...s.statValue, color: 'var(--color-primary)' }}>{weekSessions}</div>
               <div style={s.statLabel}>Focus Sessions</div>
             </div>
             <div style={s.statCard}>
@@ -342,7 +342,7 @@ export default function ProgressReports() {
               <div style={s.statLabel}>Tasks Done</div>
             </div>
             <div style={s.statCard}>
-              <div style={{ ...s.statValue, color: '#00d4ff' }}>{goalProgress}%</div>
+              <div style={{ ...s.statValue, color: 'var(--color-primary)' }}>{goalProgress}%</div>
               <div style={s.statLabel}>Goal Progress</div>
             </div>
           </div>
@@ -351,7 +351,7 @@ export default function ProgressReports() {
             <div style={s.barRow}>
               {focusByDay.map((v, i) => (
                 <div key={i} style={{ flex: 1, textAlign: 'center' }}>
-                  <div style={s.bar(v / maxFocus * 100, '#00d4ff')} title={`${v} min`} />
+                  <div style={s.bar(v / maxFocus * 100, 'var(--color-primary)')} title={`${v} min`} />
                   <div style={s.barLabel}>{formatDate(days[i])}</div>
                 </div>
               ))}
@@ -366,7 +366,7 @@ export default function ProgressReports() {
           {habits.map((h, i) => (
             <div key={i} style={s.listItem}>
               <span style={{ fontSize: 14, color: '#e0ddd6' }}>{h.name || h.title}</span>
-              <span style={{ fontSize: 12, color: h.completed ? '#3fb950' : '#c9a84c' }}>{h.completed ? '✓ Done' : 'Active'}</span>
+              <span style={{ fontSize: 12, color: h.completed ? '#3fb950' : '#c9a84c' }}>{h.completed ? 'âœ“ Done' : 'Active'}</span>
             </div>
           ))}
         </div>
@@ -381,7 +381,7 @@ export default function ProgressReports() {
                 <div style={{ fontSize: 14, color: '#e0ddd6' }}>{s2.subject || 'General'}</div>
                 <div style={{ fontSize: 11, color: '#6a6a7a' }}>{formatDate(s2.date || s2.timestamp)}</div>
               </div>
-              <span style={{ fontSize: 13, color: '#00d4ff', fontWeight: 600 }}>{s2.duration || 25}m</span>
+              <span style={{ fontSize: 13, color: 'var(--color-primary)', fontWeight: 600 }}>{s2.duration || 25}m</span>
             </div>
           ))}
         </div>
@@ -425,7 +425,7 @@ export default function ProgressReports() {
             <div key={i} style={s.listItem}>
               <span style={{ fontSize: 14, color: '#e0ddd6', textDecoration: t.completed ? 'line-through' : 'none' }}>{t.title || t.name}</span>
               <span style={{ fontSize: 12, color: t.completed ? '#3fb950' : t.priority === 'high' ? '#ff6b6b' : '#8a8a9a' }}>
-                {t.completed ? '✓' : t.priority || 'todo'}
+                {t.completed ? 'âœ“' : t.priority || 'todo'}
               </span>
             </div>
           ))}

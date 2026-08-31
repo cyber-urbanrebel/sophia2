@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+﻿import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 const SESSIONS_KEY = 'sophia_pomodoro_sessions';
 const SETTINGS_KEY = 'sophia_pomodoro_settings';
@@ -87,7 +87,7 @@ export default function PomodoroTimer() {
         setTimeLeft(settings.shortBreak * 60);
       }
     } else {
-      // Break complete → back to focus
+      // Break complete â†’ back to focus
       if ('Notification' in window && Notification.permission === 'granted') {
         new Notification('Break over!', { body: 'Time to focus again.', icon: '/icon-192x192.png' });
       }
@@ -120,7 +120,7 @@ export default function PomodoroTimer() {
   const todayMinutes = todaySessions.reduce((sum, s) => sum + s.duration, 0);
   const streak = sessionCount;
 
-  const modeColors = { focus: '#00d4ff', shortBreak: '#3fb950', longBreak: '#bb86fc' };
+  const modeColors = { focus: 'var(--color-primary)', shortBreak: '#3fb950', longBreak: '#bb86fc' };
   const modeLabels = { focus: 'Focus', shortBreak: 'Short Break', longBreak: 'Long Break' };
   const color = modeColors[mode];
 
@@ -154,7 +154,7 @@ export default function PomodoroTimer() {
       boxShadow: 'var(--sophia-shadow)',
       minWidth: 0,
     },
-    header: { fontSize: 34, fontWeight: 800, marginBottom: 8, fontFamily: 'var(--sophia-display)', background: 'linear-gradient(135deg, #ffffff, #00d4ff 45%, #b9d7ff 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', letterSpacing: '-0.04em' },
+    header: { fontSize: 34, fontWeight: 800, marginBottom: 8, fontFamily: 'var(--sophia-display)', background: 'linear-gradient(135deg, #ffffff, var(--color-primary) 45%, #b9d7ff 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', letterSpacing: '-0.04em' },
     sub: { color: 'var(--sophia-text-dim)', fontSize: 15, marginBottom: 26, maxWidth: 520 },
     modeTabs: { display: 'inline-flex', gap: 8, marginBottom: 24, justifyContent: 'flex-start', padding: 6, borderRadius: 18, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)', flexWrap: 'wrap' },
     modeTab: (active) => ({

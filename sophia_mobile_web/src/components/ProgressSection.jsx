@@ -30,18 +30,18 @@ function useLive(key, def) {
 }
 
 const P = {
-  bg:     '#07090f',
-  card:   '#0e1219',
-  border: 'rgba(255,255,255,0.07)',
-  cyan:   '#00d4ff',
-  purple: '#7b4fff',
-  green:  '#22d37a',
-  amber:  '#ffb547',
-  red:    '#ff4d6d',
-  pink:   '#e879f9',
-  text:   '#e8eaf0',
-  muted:  '#6b7280',
-  glow:   'rgba(0,212,255,0.18)',
+  bg:     'transparent',
+  card:   'rgba(255,255,255,0.88)',
+  border: 'rgba(0,0,0,0.16)',
+  cyan:   '#000000',
+  purple: '#000000',
+  green:  '#000000',
+  amber:  '#000000',
+  red:    '#000000',
+  pink:   '#000000',
+  text:   '#000000',
+  muted:  '#000000',
+  glow:   'rgba(0,0,0,0.12)',
 };
 
 function Ring({ pct: p = 0, size = 80, stroke = 8, color = P.cyan, bg = P.border, children }) {
@@ -269,7 +269,7 @@ function LiveClock() {
   const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   return (
     <div style={{ textAlign: 'right' }}>
-      <div style={{ fontSize: 28, fontWeight: 800, color: P.text, letterSpacing: '-0.04em', lineHeight: 1, fontFamily: 'monospace' }}>
+      <div style={{ fontSize: 28, fontWeight: 400, color: P.text, letterSpacing: '-0.04em', lineHeight: 1, fontFamily: "'Dark Castle'" }}>
         {now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
       </div>
       <div style={{ fontSize: 11, color: P.muted }}>{days[now.getDay()]}, {fmtDate(now)}</div>
@@ -980,7 +980,7 @@ const ProgressSection = () => {
   };
 
   return (
-    <div style={{ color: P.text, fontFamily: "'DM Mono','Fira Code',monospace", padding: '0 0 60px 0', minWidth: 0 }}>
+    <div style={{ color: P.text, fontFamily: "'Dark Castle'", padding: '0 0 60px 0', minWidth: 0 }}>
       <style>{`
         @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
         @keyframes slide-in { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }

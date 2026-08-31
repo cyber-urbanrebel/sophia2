@@ -25,6 +25,7 @@ import {
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 const STATE_STORAGE_KEYS = ['sophia_dev_state_v1', 'sophia_state'];
 const AUTH_TOKEN_KEY = 'sophia-auth-token';
+const LOCAL_ACCOUNTS_KEY = 'sophia-local-accounts';
 
 class API {
   constructor() {
@@ -109,9 +110,17 @@ class API {
     return data.user || data.profile || data;
   }
 
-  createLocalAuthFallback(email) {
+  getLocalAccounts() {
+    try {
+      return JSON.parse(localStorage.getItem(LOCAL_ACCOUNTS_KEY) || '{}');
+    } catch {
+      return {};
+    }
+  }
+
+  createLocalAuthFallback(email, fullName = '') {
     const safeEmail = String(email || '').trim().toLowerCase();
-    const nameFromEmail = safeEmail.includes('@') ? safeEmail.split('@')[0] : 'Sophia User';
+    const nameFromEmail = fullName.trim() || (safeEmail.includes('@') ? safeEmail.split('@')[0] : 'Sophia User');
     const token = `local-${Date.now()}`;
 
     return {
@@ -127,6 +136,18 @@ class API {
       },
       fallback: true,
     };
+  }
+
+  saveLocalAccount(email, password, fullName) {
+    const safeEmail = String(email || '').trim().toLowerCase();
+    const accounts = this.getLocalAccounts();
+    accounts[safeEmail] = { password, fullName };
+    localStorage.setItem(LOCAL_ACCOUNTS_KEY, JSON.stringify(accounts));
+    return this.createLocalAuthFallback(safeEmail, fullName);
+  }
+
+  getLocalAccount(email) {
+    return this.getLocalAccounts()[String(email || '').trim().toLowerCase()];
   }
 
   async request(method, endpoint, data = null) {
@@ -165,13 +186,24 @@ class API {
       this.setToken(result.token);
       return result;
     }
-    const result = await this.request('POST', '/api/auth/register', {
-      email,
-      password,
-      fullName: [firstName, lastName].filter(Boolean).join(' ').trim(),
-    });
-
-    return this.normalizeAuthResponse(result);
+    const fullName = [firstName, lastName].filter(Boolean).join(' ').trim();
+    try {
+      const result = await this.request('POST', '/api/auth/register', {
+        email,
+        password,
+        fullName,
+      });
+      return this.normalizeAuthResponse(result);
+    } catch (error) {
+      if (!/failed to fetch|network|load failed/i.test(String(error?.message || ''))) throw error;
+      const normalizedEmail = String(email || '').trim().toLowerCase();
+      if (this.getLocalAccount(normalizedEmail)) {
+        throw new Error('An account with this email already exists on this device.');
+      }
+      const fallback = this.saveLocalAccount(normalizedEmail, password, fullName);
+      this.setToken(fallback.token);
+      return fallback;
+    }
   }
 
   async login(email, password) {
@@ -189,10 +221,14 @@ class API {
       const normalizedEmail = String(email || '').trim().toLowerCase();
       const isNetworkFailure = /failed to fetch|network|load failed/i.test(String(error?.message || ''));
       const isKnownTestUser = normalizedEmail === 'testuser@sophia.dev' && password === 'TestPass123!';
+      const localAccount = this.getLocalAccount(normalizedEmail);
 
       // Keep development flow usable when backend auth service is offline.
-      if (isNetworkFailure || isKnownTestUser) {
-        const fallback = this.createLocalAuthFallback(normalizedEmail);
+      if (isNetworkFailure && localAccount && localAccount.password !== password) {
+        throw new Error('Incorrect email or password.');
+      }
+      if ((isNetworkFailure && localAccount) || isKnownTestUser) {
+        const fallback = this.createLocalAuthFallback(normalizedEmail, localAccount?.fullName || '');
         this.setToken(fallback.token);
         return fallback;
       }
@@ -483,6 +519,10 @@ class API {
   }
 
   // ============ COACH ENDPOINTS ============
+  async getCoachHistory(conversationId) {
+    return this.request('GET', `/api/coach/history?conversation_id=${encodeURIComponent(conversationId)}`);
+  }
+
   async getCoachReply(message, conversationId) {
     return this.request('POST', '/api/coach/reply', { message, conversation_id: conversationId });
   }
