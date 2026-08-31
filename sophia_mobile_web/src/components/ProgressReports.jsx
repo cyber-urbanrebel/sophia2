@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 const SECTIONS = ['Overview', 'Habits', 'Study', 'Journal', 'Goals', 'Tasks'];
 
@@ -265,7 +265,7 @@ export default function ProgressReports() {
   }, [weekSessions, totalFocusMin, streak, xpThisWeek, xpData, completedTasks, goalProgress, habits, weekPomodoro, journal, goals]);
 
   const s = {
-    page: { minHeight: '100vh', padding: '32px 24px', color: '#e0ddd6', fontFamily: "'Dark Castle'" },
+    page: { minHeight: '100vh', padding: '32px 24px', color: '#e0ddd6', fontFamily: "var(--font-plain)" },
     header: { fontSize: 28, fontWeight: 700, marginBottom: 4, background: 'linear-gradient(135deg, #bb86fc, var(--color-primary))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' },
     sub: { color: '#8a8a9a', fontSize: 14, marginBottom: 24 },
     tabs: { display: 'flex', gap: 6, marginBottom: 24, overflowX: 'auto', paddingBottom: 4 },

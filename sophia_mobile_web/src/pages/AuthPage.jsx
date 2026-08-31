@@ -6,8 +6,6 @@ import { resetOnboarding } from '../store/slices/onboardingSlice.js';
 import api from '../services/api.js';
 import styles from '../styles/Auth.module.css';
 
-const ONBOARDING_KEY = 'sophia-onboarding-complete';
-
 export default function AuthPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -21,7 +19,6 @@ export default function AuthPage() {
   const [fieldErrors, setFieldErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [visible, setVisible] = useState(true);
   const [isOffline, setIsOffline] = useState(typeof navigator !== 'undefined' ? !navigator.onLine : false);
 
   useEffect(() => {
@@ -32,10 +29,8 @@ export default function AuthPage() {
   useEffect(() => {
     const goOnline = () => setIsOffline(false);
     const goOffline = () => setIsOffline(true);
-
     window.addEventListener('online', goOnline);
     window.addEventListener('offline', goOffline);
-
     return () => {
       window.removeEventListener('online', goOnline);
       window.removeEventListener('offline', goOffline);
@@ -137,8 +132,7 @@ export default function AuthPage() {
       dispatch(loginSuccess({ user, token }));
 
       const alreadyOnboarded = localStorage.getItem('sophia-onboarding-complete') === 'true';
-      setVisible(false);
-      setTimeout(() => navigate(alreadyOnboarded ? '/dashboard' : '/onboarding', { replace: true }), 500);
+      navigate(alreadyOnboarded ? '/dashboard' : '/onboarding', { replace: true });
     } catch (err) {
       const message = String(err?.message || 'Authentication failed. Check your credentials.');
       if (/failed to fetch|network|load failed/i.test(message)) {
@@ -151,22 +145,15 @@ export default function AuthPage() {
     }
   }
 
-  const focusBorder = (field) => fieldErrors[field] ? 'rgba(217,162,75,0.8)' : undefined;
+  const focusBorder = (field) => (fieldErrors[field] ? 'rgba(217,162,75,0.8)' : undefined);
+  const passwordStrength = mode === 'register' && password ? getPasswordStrength(password) : null;
 
   return (
-    <div className={styles.background}>
+    <div className={`${styles.background} authRoot`}>
       <img src="/assets/sophia-gyrate.svg" className={styles.gyrate} alt="" aria-hidden="true" />
       <div className={styles.neonRing} />
 
-      {/* Auth card */}
-      <div
-        className={styles.container}
-        style={{
-          opacity: visible ? 1 : 0,
-          transform: visible ? 'translateY(0) scale(1)' : 'translateY(30px) scale(0.96)',
-          transition: 'opacity 0.6s cubic-bezier(0.22,1,0.36,1), transform 0.6s cubic-bezier(0.22,1,0.36,1)',
-        }}
-      >
+      <div className={styles.container}>
         <p className={styles.kicker}>01 / welcome · est. 2026</p>
         <h1 className={styles.title}>
           <span className={styles.logoAccent}>S</span>ophia
@@ -180,7 +167,6 @@ export default function AuthPage() {
           </span>
         </div>
 
-        {/* Mode tabs */}
         <div className={styles.modeTabs}>
           <button className={`${styles.modeTab} ${mode === 'login' ? styles.modeTabActive : ''}`} onClick={() => switchMode('login')}>Sign In</button>
           <button className={`${styles.modeTab} ${mode === 'register' ? styles.modeTabActive : ''}`} onClick={() => switchMode('register')}>Create Account</button>
@@ -224,15 +210,17 @@ export default function AuthPage() {
               </button>
             </div>
             {fieldErrors.password && <div className={styles.fieldError}>{fieldErrors.password}</div>}
-            {mode === 'register' && password && (() => {
-              const str = getPasswordStrength(password);
-              return (
-                <div className={styles.strengthWrap}>
-                  <div className={styles.strengthBar} style={{ width: `${(str.score/5)*100}%`, background: str.color }} />
-                  <span className={styles.strengthLabel} style={{ color: str.color }}>{str.label}</span>
-                </div>
-              );
-            })()}
+            {passwordStrength && (
+              <div className={styles.strengthWrap}>
+                <div
+                  className={styles.strengthBar}
+                  style={{ width: `${(passwordStrength.score / 5) * 100}%`, background: passwordStrength.color }}
+                />
+                <span className={styles.strengthLabel} style={{ color: passwordStrength.color }}>
+                  {passwordStrength.label}
+                </span>
+              </div>
+            )}
           </div>
 
           {mode === 'register' && (

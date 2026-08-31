@@ -897,9 +897,9 @@ function ScoreTab() {
           <circle cx={cx} cy={cy} r={R} fill="none" stroke={level.color} strokeWidth={strokeW}
             strokeDasharray={`${dash} ${circumference}`} strokeLinecap="round"
             transform={`rotate(-90 ${cx} ${cy})`} style={{ transition: "stroke-dasharray 1s ease" }} />
-          <text x={cx} y={cy - 8} textAnchor="middle" fill={level.color} fontSize={36} fontWeight={400} fontFamily="Dark Castle">{todayScore}</text>
-          <text x={cx} y={cy + 16} textAnchor="middle" fill={C.muted} fontSize={11} fontFamily="Dark Castle">TODAY</text>
-          <text x={cx} y={cy + 34} textAnchor="middle" fill={level.color} fontSize={13} fontWeight={400} fontFamily="Dark Castle">{level.icon} {level.label}</text>
+          <text x={cx} y={cy - 8} textAnchor="middle" fill={level.color} fontSize={36} fontWeight={400} fontFamily="var(--font-plain)">{todayScore}</text>
+          <text x={cx} y={cy + 16} textAnchor="middle" fill={C.muted} fontSize={11} fontFamily="var(--font-plain)">TODAY</text>
+          <text x={cx} y={cy + 34} textAnchor="middle" fill={level.color} fontSize={13} fontWeight={400} fontFamily="var(--font-plain)">{level.icon} {level.label}</text>
         </svg>
         <div style={{ fontSize: 11, color: C.muted, marginTop: 8 }}>Score = Habits (40pts) + Schedule (30pts) + Journal (20pts)</div>
       </div>

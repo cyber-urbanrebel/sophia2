@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const AdvancedAnalytics = () => {
   const [stats, setStats] = useState({
@@ -53,7 +53,7 @@ const AdvancedAnalytics = () => {
   };
 
   return (
-    <div style={{ padding: '24px', color: '#fff', background: '#0a0a0a', minHeight: '100vh', fontFamily: "'Dark Castle'", paddingBottom: '100px' }}>
+    <div style={{ padding: '24px', color: '#fff', background: '#0a0a0a', minHeight: '100vh', fontFamily: "var(--font-plain)", paddingBottom: '100px' }}>
       <h1 style={{ fontSize: '28px', margin: '0 0 24px 0', color: 'var(--color-primary)' }}>ðŸ“Š Admin Analytics</h1>
 
       {/* Time Range Selector */}

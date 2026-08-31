@@ -1,4 +1,4 @@
-﻿import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import api from '../services/api.js';
 
 const CONVERSATION_ID_KEY = 'sophia_ai_coach_conversation_id';
@@ -116,7 +116,7 @@ const AICoach = () => {
   ];
 
   return (
-    <div style={{ padding: '0', color: '#fff', background: 'transparent', fontFamily: "'Dark Castle'", display: 'flex', flexDirection: 'column', minHeight: 'calc(100vh - 64px)' }}>
+    <div style={{ padding: '0', color: '#fff', background: 'transparent', fontFamily: "var(--font-plain)", display: 'flex', flexDirection: 'column', minHeight: 'calc(100vh - 64px)' }}>
       <h2 style={{ fontSize: '24px', marginBottom: '24px', color: 'var(--color-primary)' }}>🤖 AI Coach</h2>
 
       {/* Chat Area */}

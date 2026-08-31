@@ -269,8 +269,8 @@ const HomeDashboard = ({ onNavigate }) => {
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 16 }}>
                   <span style={{ color: 'var(--color-primary)', fontSize: 18 }}>{stat.icon}</span>
                 </div>
-                <div style={{ color: 'var(--color-text-muted)', fontSize: 12, fontFamily: "'Dark Castle'", marginBottom: 8, letterSpacing: '0.05em', textTransform: 'uppercase' }}>{stat.label}</div>
-                <div className="sophia-stat-number" data-sophia-count={stat.value} data-sophia-suffix={stat.suffix} style={{ fontSize: 32, fontWeight: 400, color: 'var(--color-primary)', fontFamily: "'Dark Castle'" }}>
+                <div style={{ color: 'var(--color-text-muted)', fontSize: 12, fontFamily: "var(--font-plain)", marginBottom: 8, letterSpacing: '0.05em', textTransform: 'uppercase' }}>{stat.label}</div>
+                <div className="sophia-stat-number" data-sophia-count={stat.value} data-sophia-suffix={stat.suffix} style={{ fontSize: 32, fontWeight: 400, color: 'var(--color-primary)', fontFamily: "var(--font-plain)" }}>
                   {stat.value}<span style={{ fontSize: 20, color: 'var(--color-text)', marginLeft: 4 }}>{stat.suffix}</span>
                 </div>
               </TiltCard>
@@ -290,7 +290,7 @@ const HomeDashboard = ({ onNavigate }) => {
           {quickLinks.map((item) => (
             <TiltCard key={item.key} className="section-card sophia-card-hover" maxTilt={6} scale={1.02} onClick={() => onNavigate && onNavigate(item.key)} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', minHeight: 240, padding: '28px 24px' }}>
               <div style={{ marginBottom: 18, color: 'var(--color-primary)', display: 'flex', justifyContent: 'center' }}>{item.icon}</div>
-              <div style={{ fontSize: 24, fontWeight: 400, marginBottom: 14, color: 'var(--color-text)', fontFamily: "'Dark Castle'", letterSpacing: '-0.02em' }}>{item.label}</div>
+              <div style={{ fontSize: 24, fontWeight: 400, marginBottom: 14, color: 'var(--color-text)', fontFamily: "var(--font-plain)", letterSpacing: '-0.02em' }}>{item.label}</div>
               <div style={{ color: 'var(--color-text-muted)', lineHeight: 1.65, fontSize: 14, maxWidth: '100%', wordWrap: 'break-word', hyphens: 'auto' }}>{item.copy}</div>
             </TiltCard>
           ))}

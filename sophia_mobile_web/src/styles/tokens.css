@@ -32,10 +32,11 @@
   --duration-base: 0.4s;
   --duration-slow: 0.6s;
 
-  --font-display: 'Dark Castle', Georgia, serif;
-  --font-ui: 'Dark Castle', Georgia, serif;
-  --font-charm: 'Urban Jungle', Georgia, serif;
-  --font-mono: 'Dark Castle', Georgia, serif;
+  --font-plain: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-display: var(--font-plain);
+  --font-ui: var(--font-plain);
+  --font-charm: var(--font-plain);
+  --font-mono: var(--font-plain);
 
   --sophia-bg: #5B1FA8;
   --sophia-bg-2: #6E2BC4;

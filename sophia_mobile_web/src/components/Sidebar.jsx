@@ -102,7 +102,7 @@ const styles = {
     boxShadow: '0 18px 40px rgba(26,16,51,0.28), 0 4px 12px rgba(0,0,0,0.1)',
     backdropFilter: 'blur(24px)',
     display: 'flex', flexDirection: 'column', zIndex: 100,
-    fontFamily: "'Dark Castle'",
+    fontFamily: "var(--font-plain)",
     color: '#000',
     overflowY: 'auto',
     transition: 'transform 220ms ease, opacity 220ms ease, box-shadow 220ms ease',
@@ -112,7 +112,7 @@ const styles = {
   },
   logo: {
     fontSize: '30px', fontWeight: 400, letterSpacing: '0.02em', lineHeight: 0.95,
-    color: '#000', fontFamily: "'Dark Castle'",
+    color: '#000', fontFamily: "var(--font-plain)",
     textTransform: 'none',
   },
   brandSub: {
@@ -124,7 +124,7 @@ const styles = {
     letterSpacing: '0.04em', textTransform: 'uppercase', color: '#000',
     background: 'rgba(255,255,255,0.95)', border: '1px solid rgba(0,0,0,0.16)',
     boxShadow: '0 6px 16px rgba(26,16,51,0.14)',
-    fontFamily: "'Dark Castle'",
+    fontFamily: "var(--font-plain)",
   },
   userCard: {
     marginTop: 16,
@@ -139,26 +139,26 @@ const styles = {
     display: 'grid', placeItems: 'center',
     background: 'linear-gradient(135deg, #30cfd0, #5b2aa8)', color: '#000',
     fontWeight: 400, fontSize: 16,
-    fontFamily: "'Dark Castle'",
+    fontFamily: "var(--font-plain)",
     boxShadow: '0 10px 20px rgba(26,16,51,0.22)',
   },
   userMeta: { minWidth: 0 },
   userLabel: {
     fontSize: 10, fontWeight: 400, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#000',
-    fontFamily: "'Dark Castle'",
+    fontFamily: "var(--font-plain)",
   },
   userName: {
     marginTop: 4, fontSize: 15, fontWeight: 400, color: '#000', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
-    fontFamily: "'Dark Castle'",
+    fontFamily: "var(--font-plain)",
   },
   userMode: {
     marginTop: 2, fontSize: 12, color: '#000',
-    fontFamily: "'Dark Castle'",
+    fontFamily: "var(--font-plain)",
   },
   navShell: { flex: 1, display: 'flex', flexDirection: 'column', padding: '6px 10px 10px' },
   navSectionLabel: {
     padding: '8px 12px', fontSize: 10, fontWeight: 400, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#000',
-    fontFamily: "'Dark Castle'",
+    fontFamily: "var(--font-plain)",
   },
   nav: { display: 'flex', flexDirection: 'column', gap: '4px' },
   link: {
@@ -166,7 +166,7 @@ const styles = {
     textDecoration: 'none', fontSize: '14px', fontWeight: '400', color: '#000',
     transition: 'all 0.2s', border: '1px solid transparent', background: 'transparent', cursor: 'pointer',
     width: '100%', textAlign: 'left', position: 'relative',
-    fontFamily: "'Dark Castle'",
+    fontFamily: "var(--font-plain)",
   },
   linkActive: {
     color: '#000',
@@ -179,7 +179,7 @@ const styles = {
     textDecoration: 'none', fontSize: '14px', fontWeight: '400', color: '#000',
     transition: 'all 0.2s', border: '1px solid rgba(0,0,0,0.16)', background: 'rgba(255,255,255,0.92)', cursor: 'pointer',
     width: 'calc(100% - 20px)', textAlign: 'left', margin: '8px 10px 18px',
-    fontFamily: "'Dark Castle'",
+    fontFamily: "var(--font-plain)",
     boxShadow: '0 8px 18px rgba(26,16,51,0.12)',
   },
   goldDot: {
@@ -194,11 +194,11 @@ const styles = {
   },
   footerKicker: {
     fontSize: 10, fontWeight: 400, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#000',
-    fontFamily: "'Dark Castle'",
+    fontFamily: "var(--font-plain)",
   },
   footerText: {
     marginTop: 6, fontSize: 13, lineHeight: 1.45, color: '#000',
-    fontFamily: "'Dark Castle'",
+    fontFamily: "var(--font-plain)",
   },
 };
 

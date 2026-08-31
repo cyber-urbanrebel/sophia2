@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import JournalPage from './JournalPage';
 import { renderIcon } from './SophiaIcons.jsx';
 
@@ -880,7 +880,7 @@ export default function MindSection() {
         {activeTab === 'reading' && (
           <div>
             <div style={styles.readingStats}>
-              <span style={{ fontFamily: "'Dark Castle'", fontSize: '12px' }}>
+              <span style={{ fontFamily: "var(--font-plain)", fontSize: '12px' }}>
                 {bookStats.finished} finished Â· {bookStats.reading} reading Â· {bookStats.toRead} to read
               </span>
               <div style={{ display: 'flex', gap: '4px', marginTop: '8px', height: '8px' }}>
@@ -1186,7 +1186,7 @@ export default function MindSection() {
                 <div style={{ marginBottom: '16px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '12px' }}>
                     <span>Question {currentQuestion + 1} of {QUIZ_QUESTIONS.length}</span>
-                    <span style={{ fontFamily: "'Dark Castle'" }}>Score: {score}/{QUIZ_QUESTIONS.length}</span>
+                    <span style={{ fontFamily: "var(--font-plain)" }}>Score: {score}/{QUIZ_QUESTIONS.length}</span>
                   </div>
                   <div style={{ backgroundColor: '#333', height: '4px', borderRadius: '2px', overflow: 'hidden' }}>
                     <div style={{ backgroundColor: '#00FFFF', height: '100%', width: `${((currentQuestion + 1) / QUIZ_QUESTIONS.length) * 100}%` }} />

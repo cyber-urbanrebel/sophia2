@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import api from '../services/api.js';
 
 const C = {
@@ -15,7 +15,7 @@ const C = {
 };
 
 const styles = {
-  wrap: { color: C.text, fontFamily: "'Dark Castle'", paddingBottom: 40 },
+  wrap: { color: C.text, fontFamily: "var(--font-plain)", paddingBottom: 40 },
   header: { display: "flex", alignItems: "center", gap: 14, marginBottom: 22, paddingBottom: 18, borderBottom: `1px solid ${C.border}` },
   icon: { width: 42, height: 42, borderRadius: 10, background: `linear-gradient(135deg, ${C.gold}, ${C.violet})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 },
   title: { fontSize: 20, fontWeight: 700, letterSpacing: "-0.02em", color: C.goldSoft },

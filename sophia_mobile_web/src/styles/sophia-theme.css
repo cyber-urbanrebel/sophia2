@@ -274,9 +274,10 @@ input,
 textarea,
 select,
 [contenteditable='true'] {
-  font-family: var(--font-charm) !important;
-  font-size: 22px;
-  font-weight: 800;
+  font-family: var(--font-plain) !important;
+  font-size: 16px;
+  font-weight: 500;
+  -webkit-text-stroke: 0;
 }
 
 body,

@@ -234,7 +234,7 @@ const s = {
     background: '#13131f', border: '0.5px solid #1e1e2e', borderRadius: 16,
     boxShadow: '0 16px 48px rgba(0,0,0,0.5), 0 0 60px rgba(201,168,76,0.06)',
     zIndex: 9998, display: 'flex', flexDirection: 'column', overflow: 'hidden',
-    fontFamily: "'Dark Castle'",
+    fontFamily: "var(--font-plain)",
     animation: 'floatAI-slideUp 0.3s cubic-bezier(0.22,1,0.36,1)',
   },
   header: {

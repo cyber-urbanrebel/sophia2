@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import api from '../services/api.js';
 
 function useLocalStorage(key, initial) {
@@ -39,7 +39,7 @@ const C = {
 };
 
 const styles = {
-  wrap: { background: "transparent", color: C.text, fontFamily: "'Dark Castle'", padding: 0, paddingBottom: 40 },
+  wrap: { background: "transparent", color: C.text, fontFamily: "var(--font-plain)", padding: 0, paddingBottom: 40 },
   header: { display: "flex", alignItems: "center", gap: 14, marginBottom: 22, paddingBottom: 18, borderBottom: `1px solid ${C.border}` },
   icon: { width: 42, height: 42, borderRadius: 10, background: `linear-gradient(135deg, ${C.violet}, ${C.gold})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 },
   title: { fontSize: 20, fontWeight: 700, letterSpacing: "-0.02em", color: C.goldSoft },

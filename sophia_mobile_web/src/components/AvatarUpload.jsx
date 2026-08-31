@@ -1,4 +1,4 @@
-﻿import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 
 const AVATAR_KEY = 'sophia_user_avatar';
 const MAX_SIZE = 512 * 1024; // 512KB max
@@ -167,7 +167,7 @@ export default function AvatarUpload({ size = 96, fallbackName = 'User', editabl
               color: '#fff',
               textShadow: '0 2px 8px rgba(0,0,0,0.5)',
               letterSpacing: '1px',
-              fontFamily: "'Dark Castle'",
+              fontFamily: "var(--font-plain)",
             }}
           >
             {initials}
@@ -296,7 +296,7 @@ export function AvatarDisplay({ size = 36, fallbackName = 'User' }) {
       {avatarUrl ? (
         <img src={avatarUrl} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
       ) : (
-        <span style={{ fontSize, fontWeight: 400, color: '#fff', fontFamily: "'Dark Castle'" }}>{initials}</span>
+        <span style={{ fontSize, fontWeight: 400, color: '#fff', fontFamily: "var(--font-plain)" }}>{initials}</span>
       )}
     </div>
   );

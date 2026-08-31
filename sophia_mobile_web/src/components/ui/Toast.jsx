@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useCallback, createContext, useContext } from 'react';
+import React, { useState, useEffect, useCallback, createContext, useContext } from 'react';
 import ReactDOM from 'react-dom';
 
 const ToastContext = createContext(null);
@@ -46,7 +46,7 @@ function Toast({ id, message, type = 'info', onRemove }) {
         padding: '12px 18px', borderRadius: 12,
         background: c.bg, border: `1px solid ${c.border}`,
         backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
-        color: '#e0ddd6', fontSize: 14, fontFamily: "'Dark Castle'",
+        color: '#e0ddd6', fontSize: 14, fontFamily: "var(--font-plain)",
         boxShadow: '0 8px 32px rgba(0,0,0,0.25)',
         transform: exiting ? 'translateX(120%)' : 'translateX(0)',
         opacity: exiting ? 0 : 1,

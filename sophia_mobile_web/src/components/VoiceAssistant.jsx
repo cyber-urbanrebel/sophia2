@@ -1,4 +1,4 @@
-﻿import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import api from '../services/api.js';
 
 const uid = () => Math.random().toString(36).slice(2, 9);
@@ -16,7 +16,7 @@ const C = {
 };
 
 const styles = {
-  wrap: { display: "flex", flexDirection: "column", alignItems: "center", color: C.text, fontFamily: "'Dark Castle'", minHeight: "calc(100vh - 64px)", padding: "0 0 40px" },
+  wrap: { display: "flex", flexDirection: "column", alignItems: "center", color: C.text, fontFamily: "var(--font-plain)", minHeight: "calc(100vh - 64px)", padding: "0 0 40px" },
   header: { textAlign: "center", marginBottom: 24 },
   title: { fontSize: 22, fontWeight: 700, letterSpacing: "0.04em", color: C.goldSoft, textTransform: "uppercase" },
   subtitle: { fontSize: 12, color: C.muted, marginTop: 6 },

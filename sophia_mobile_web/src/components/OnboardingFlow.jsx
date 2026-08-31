@@ -1,4 +1,4 @@
-﻿import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 
 const ONBOARDING_STEP_KEY = 'sophia-onboarding-step';
 
@@ -93,7 +93,7 @@ const OnboardingFlow = ({ onComplete }) => {
     container: {
       minHeight: '100vh', width: '100%',
       backgroundImage: 'linear-gradient(to top, #30cfd0 0%, #330867 100%)', color: '#F4FBFF',
-      fontFamily: "'Dark Castle'",
+      fontFamily: "var(--font-plain)",
       display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
       padding: '24px', position: 'relative', overflow: 'hidden',
       boxSizing: 'border-box',
@@ -122,7 +122,7 @@ const OnboardingFlow = ({ onComplete }) => {
       fontSize: '40px', marginBottom: '10px', fontWeight: '800', letterSpacing: '-0.05em',
       background: 'linear-gradient(135deg, #f5fbff, var(--color-primary) 55%, var(--color-violet))',
       WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
-      fontFamily: "'Dark Castle'", lineHeight: 0.98,
+      fontFamily: "var(--font-plain)", lineHeight: 0.98,
     },
     subtitle: { fontSize: '17px', marginBottom: '24px', color: '#8ea7c2', fontWeight: '500' },
     input: {

@@ -19,7 +19,7 @@ export default function PageTransition({ message = 'A quiet moment…' }) {
       background: 'rgba(51, 8, 103, 0.28)',
       clipPath: clip,
       display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
-      fontFamily: "'Dark Castle'",
+      fontFamily: "var(--font-plain)",
       transition: `opacity ${DURATION_SLOW}s ${EASING_CSS}, clip-path ${DURATION_SLOW}s ${EASING_CSS}`,
       opacity,
     }}>
@@ -33,7 +33,7 @@ export default function PageTransition({ message = 'A quiet moment…' }) {
         <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#30cfd0' }} />
       </div>
       <div style={{
-        marginTop: 18, fontFamily: "'Dark Castle'", fontSize: 22, color: '#F4FBFF', textAlign: 'center', maxWidth: 360,
+        marginTop: 18, fontFamily: "var(--font-plain)", fontSize: 22, color: '#F4FBFF', textAlign: 'center', maxWidth: 360,
       }}>
         {message}
       </div>

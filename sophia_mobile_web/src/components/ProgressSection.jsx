@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 
 // ── helpers ──────────────────────────────────────────────────────────────────
 const today  = () => new Date().toISOString().slice(0, 10);
@@ -269,7 +269,7 @@ function LiveClock() {
   const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   return (
     <div style={{ textAlign: 'right' }}>
-      <div style={{ fontSize: 28, fontWeight: 400, color: P.text, letterSpacing: '-0.04em', lineHeight: 1, fontFamily: "'Dark Castle'" }}>
+      <div style={{ fontSize: 28, fontWeight: 400, color: P.text, letterSpacing: '-0.04em', lineHeight: 1, fontFamily: "var(--font-plain)" }}>
         {now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
       </div>
       <div style={{ fontSize: 11, color: P.muted }}>{days[now.getDay()]}, {fmtDate(now)}</div>
@@ -980,7 +980,7 @@ const ProgressSection = () => {
   };
 
   return (
-    <div style={{ color: P.text, fontFamily: "'Dark Castle'", padding: '0 0 60px 0', minWidth: 0 }}>
+    <div style={{ color: P.text, fontFamily: "var(--font-plain)", padding: '0 0 60px 0', minWidth: 0 }}>
       <style>{`
         @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
         @keyframes slide-in { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }

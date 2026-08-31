@@ -48,26 +48,24 @@ input:not([type='button']):not([type='submit']):not([type='reset']):not([type='c
 textarea,
 select,
 [contenteditable='true'] {
-  font-family: var(--font-charm) !important;
-  font-size: 22px !important;
-  font-weight: 800 !important;
+  font-family: var(--font-plain) !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
   line-height: 1.45 !important;
-  letter-spacing: 0.03em !important;
-  font-synthesis: weight;
-  -webkit-text-stroke: 0.45px #000000;
-  paint-order: stroke fill;
+  letter-spacing: 0 !important;
+  -webkit-text-stroke: 0;
   color: #000000 !important;
   background: rgba(255, 255, 255, 0.94) !important;
 }
 
 input::placeholder,
 textarea::placeholder {
-  font-family: var(--font-charm) !important;
-  font-size: 22px !important;
-  font-weight: 800 !important;
-  letter-spacing: 0.03em !important;
-  -webkit-text-stroke: 0.35px #000000;
-  color: #111111 !important;
+  font-family: var(--font-plain) !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+  -webkit-text-stroke: 0;
+  color: #555555 !important;
   opacity: 1;
 }
 
@@ -288,27 +286,18 @@ html body input:not([type='button']):not([type='submit']):not([type='reset']):no
 html body textarea,
 html body select,
 html body [contenteditable='true'] {
-  font-family: var(--font-charm) !important;
-  font-size: 22px !important;
-  font-weight: 800 !important;
+  font-family: var(--font-plain) !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
   line-height: 1.45 !important;
-  -webkit-text-stroke: 0.45px #000000;
+  -webkit-text-stroke: 0 !important;
   color: #000000 !important;
 }
 
 html body,
 html body h1, html body h2, html body h3, html body h4, html body h5,
 html body p, html body li, html body a, html body button, html body span, html body div, html body label {
-  font-family: var(--font-display) !important;
-}
-
-html body input:not([type='button']):not([type='submit']):not([type='reset']):not([type='checkbox']):not([type='radio']):not([type='range']):not([type='file']):not([type='hidden']):not([type='color']),
-html body textarea,
-html body select {
-  font-family: var(--font-charm) !important;
-  font-size: 22px !important;
-  font-weight: 800 !important;
-  color: #000000 !important;
+  font-family: var(--font-plain) !important;
 }
 
 @media (max-width: 860px) {
@@ -334,6 +323,7 @@ html body select {
   transform: translate(-50%, -50%);
   z-index: 0;
   opacity: 0.82;
+  animation: sophia-gyrate-spin-centered 56s linear infinite;
 }
 
 .sophia-gyrate-load {
@@ -357,10 +347,6 @@ html body select {
 @keyframes sophia-gyrate-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
-}
-
-.sophia-gyrate-behind {
-  animation: sophia-gyrate-spin-centered 56s linear infinite;
 }
 
 @keyframes sophia-gyrate-spin-centered {

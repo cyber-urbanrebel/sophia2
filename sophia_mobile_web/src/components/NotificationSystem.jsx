@@ -1,4 +1,4 @@
-﻿import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 
 const NotificationSystem = () => {
   const [notifications, setNotifications] = useState(() => {
@@ -76,7 +76,7 @@ const NotificationSystem = () => {
   const unreadCount = notifications.filter(n => !n.read).length;
 
   return (
-    <div style={{ padding: '0', color: '#fff', background: 'transparent', fontFamily: "'Dark Castle'", paddingBottom: '40px' }}>
+    <div style={{ padding: '0', color: '#fff', background: 'transparent', fontFamily: "var(--font-plain)", paddingBottom: '40px' }}>
       <h2 style={{ fontSize: '24px', marginBottom: '24px', color: 'var(--color-primary)' }}>ðŸ”” Notifications</h2>
 
       {/* Unread Count Badge */}

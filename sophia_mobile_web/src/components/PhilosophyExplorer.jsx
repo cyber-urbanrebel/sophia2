@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 
 const C = {
   card: "#150e22",
@@ -15,7 +15,7 @@ const C = {
 };
 
 const styles = {
-  wrap: { color: C.text, fontFamily: "'Dark Castle'", paddingBottom: 40 },
+  wrap: { color: C.text, fontFamily: "var(--font-plain)", paddingBottom: 40 },
   header: { display: "flex", alignItems: "center", gap: 14, marginBottom: 22, paddingBottom: 18, borderBottom: `1px solid ${C.border}` },
   icon: { width: 42, height: 42, borderRadius: 10, background: `linear-gradient(135deg, ${C.violet}, ${C.gold})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 },
   title: { fontSize: 20, fontWeight: 700, letterSpacing: "-0.02em", color: C.goldSoft },
@@ -51,7 +51,7 @@ const styles = {
   questionBody: { padding: "0 16px 16px", fontSize: 12, color: C.muted, lineHeight: 1.7 },
   btn: { background: `linear-gradient(135deg, ${C.violet}, ${C.violetSoft})`, color: "#fff", border: "none", borderRadius: 8, padding: "10px 22px", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "inherit" },
   btnDisabled: { opacity: 0.4, cursor: "not-allowed" },
-  pre: { color: C.muted, fontSize: 12, whiteSpace: "pre-wrap", fontFamily: "'Dark Castle'", lineHeight: 1.7, padding: "0 16px 16px" },
+  pre: { color: C.muted, fontSize: 12, whiteSpace: "pre-wrap", fontFamily: "var(--font-plain)", lineHeight: 1.7, padding: "0 16px 16px" },
   summary: { padding: "14px 16px", fontWeight: 700, color: C.text, fontSize: 13, cursor: "pointer" },
 };
 

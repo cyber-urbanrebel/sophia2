@@ -1134,7 +1134,7 @@ export default function BodySection() {
                 </div>
               </div>
 
-              <div style={{ fontSize: '16px', fontFamily: "'Dark Castle'", fontWeight: 'bold', color: '#000', marginBottom: '12px' }}>
+              <div style={{ fontSize: '16px', fontFamily: "var(--font-plain)", fontWeight: 'bold', color: '#000', marginBottom: '12px' }}>
                 Duration: {calculateSleepDuration().hours}h {calculateSleepDuration().minutes}m
               </div>
 

@@ -5,13 +5,14 @@
   min-height: 100dvh;
   box-sizing: border-box;
   padding: 24px 16px;
-    background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
+  background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
   display: flex;
   justify-content: center;
   align-items: center;
   overflow-x: hidden;
   overflow-y: auto;
   position: relative;
+  font-family: var(--font-plain);
 }
 
 .gyrate {
@@ -50,10 +51,6 @@
   z-index: 0;
   box-shadow: 0 0 40px rgba(0, 212, 255, 0.12), 0 0 100px rgba(123, 47, 255, 0.08);
   animation: neuralHarmony 4.8s cubic-bezier(0.42, 0, 0.58, 1) infinite;
-}
-
-.neonRingInner {
-  display: none;
 }
 
 .neonRing::before {
@@ -169,17 +166,15 @@
 
 .title {
   text-align: center;
-  font-size: clamp(48px, 10vw, 82px);
-  font-weight: 900;
+  font-size: clamp(36px, 8vw, 56px);
+  font-weight: 700;
   margin: 0 auto 10px;
-  line-height: 0.88;
-  letter-spacing: -0.07em;
-  font-family: var(--font-display);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  font-family: var(--font-plain);
   color: #000000;
-  letter-spacing: 0.02em;
   text-shadow: none;
   text-transform: none;
-  font-weight: 650;
 }
 
 .logoAccent {
@@ -235,25 +230,6 @@
   border-color: rgba(217, 162, 75, 0.45);
 }
 
-.quickFillBtn {
-  border: 1px solid rgba(123, 47, 255, 0.35);
-  background: rgba(34, 18, 62, 0.62);
-  color: #d7c9ff;
-  border-radius: 999px;
-  padding: 6px 12px;
-  font-size: 11px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.quickFillBtn:hover {
-  transform: translateY(-1px);
-  border-color: rgba(161, 99, 255, 0.75);
-  color: #f2ecff;
-  box-shadow: 0 6px 18px rgba(123, 47, 255, 0.28);
-}
-
 .modeTabs {
   display: flex;
   gap: 0;
@@ -276,21 +252,21 @@
 
 .inputWrap input {
   width: 100%;
-  padding: 15px 18px;
-  border-radius: 18px;
-  border: 1px solid rgba(0, 212, 255, 0.12);
-  background: rgba(8, 19, 38, 0.88);
-  color: #f5fbff;
-  font-size: 14px;
-  font-family: inherit;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  background: #ffffff;
+  color: #111111;
+  font-size: 16px;
+  font-family: var(--font-plain);
+  font-weight: 500;
   outline: none;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
-  text-align: center;
+  text-align: left;
 }
 
 .inputWrap input::placeholder {
-  color: rgba(142, 167, 194, 0.58);
+  color: #666666;
+  font-family: var(--font-plain);
 }
 
 .inputWrap input:focus {
@@ -305,15 +281,15 @@
   margin-top: 6px;
   border-radius: 22px;
   border: none;
-  font-weight: 800;
+  font-family: var(--font-plain);
+  font-weight: 700;
   font-size: 15px;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
   cursor: pointer;
   background: linear-gradient(135deg, #30cfd0, #5b2aa8);
   color: #F4FBFF;
   box-shadow: 0 10px 28px rgba(42, 157, 143, 0.22);
-  transition: transform 0.24s ease, box-shadow 0.24s ease, background-position 0.4s ease, filter 0.24s ease;
-  text-shadow: 0 0 10px rgba(255,255,255,0.12);
+  transition: transform 0.24s ease, box-shadow 0.24s ease, filter 0.24s ease;
 }
 
 .primaryButton:not(:disabled):hover {
@@ -349,11 +325,11 @@
 }
 
 .forgotLink {
-  color: rgba(142, 167, 194, 0.64);
+  color: #333333;
 }
 
 .forgotLink:hover {
-  color: #f5fbff;
+  color: #111111;
 }
 
 .forgotLink:disabled {
@@ -367,7 +343,7 @@
 }
 
 .signupLink:hover {
-  color: #f5fbff;
+  color: #0d4f48;
 }
 
 .error {
@@ -411,25 +387,6 @@
   }
 }
 
-.particleBg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.modeTabs {
-  display: flex;
-  gap: 0;
-  margin-bottom: 24px;
-  border-radius: 18px;
-  overflow: hidden;
-  border: 1px solid var(--color-border);
-  background: rgba(255,255,255,0.55);
-}
-
 .modeTab {
   flex: 1;
   padding: 12px 0;
@@ -462,7 +419,7 @@
 
 .passwordRow input {
   padding-right: 44px;
-  text-align: center;
+  text-align: left;
 }
 
 .eyeBtn {
@@ -481,7 +438,7 @@
 }
 
 .eyeBtn:hover {
-  color: #f5fbff;
+  color: #111111;
 }
 
 .fieldError {
@@ -513,13 +470,13 @@
 .githubNote {
   margin: 18px 0 0;
   font-size: 12px;
-  color: rgba(244, 251, 255, 0.78);
-  font-family: var(--font-display);
-  letter-spacing: 0.02em;
+  color: #222222;
+  font-family: var(--font-plain);
+  letter-spacing: 0;
 }
 
 .githubNote a {
-  color: #9BE9EA;
+  color: #1E7268;
   text-decoration: underline;
   text-underline-offset: 3px;
 }

@@ -1,15 +1,1 @@
-@font-face {
-  font-family: 'Dark Castle';
-  src: url('/fonts/Darkcastle.otf') format('opentype');
-  font-weight: 400 800;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Urban Jungle';
-  src: url('/fonts/UrbanJungle.otf') format('opentype');
-  font-weight: 400 800;
-  font-style: normal;
-  font-display: swap;
-}
+/* Decorative OTF faces are not used. Type is system-ui via --font-plain. */
