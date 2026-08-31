@@ -105,57 +105,42 @@ sophia2/
   _archive/             Superseded prior attempts, kept for reference only
 ```
 
-## Going Live
+## Going Live (Render)
 
-Two separate deploys: the frontend (static site → Vercel) and the backend
-(Python server → Railway). Both connect straight to this GitHub repo
-(`cyber-urbanrebel/sophia2`), so every `git push` to `main` redeploys
-automatically once set up. Everything below is dashboard clicks — no local
-CLI install needed.
+One GitHub repo, three Render resources from `render.yaml`:
 
-**Backend first (Railway)**
-1. Sign up at railway.app, **New Project → Deploy from GitHub repo**, pick
-   `sophia2`.
-2. In the new service's **Settings → Source**, set **Root Directory** to
-   `backend`. Railway reads `backend/railway.json` automatically and detects
-   Python via `requirements.txt` (Nixpacks) — no build command to type in.
-3. **Settings → Variables**, add:
-   - `JWT_SECRET` — any long random string (e.g. mash the keyboard for 40+ characters)
-   - `WEB_ORIGIN` — leave as a placeholder for now, e.g. `http://localhost:5173`, you'll update it in step 3 below
-   - `DATABASE_PATH` — `/data/sophia.db` (see the volume step next — this path only persists once a volume is mounted there)
-   - Optional: `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `ELEVENLABS_API_KEY` if you have real ones
-4. **To make the database actually persist** (survive redeploys): in the
-   service, go to **Settings → Volumes → New Volume**, mount path `/data`.
-   Without this step the SQLite file resets on every redeploy.
-5. **Settings → Networking → Generate Domain** to get a public URL, e.g.
-   `https://sophia-api-production.up.railway.app`.
+- **sophia-db** — Postgres (persists habits, journal, auth)
+- **sophia-api** — FastAPI (`backend/`)
+- **sophia-web** — Vite static site (`sophia_mobile_web/`)
 
-**Frontend (Vercel)**
-1. Sign up at vercel.com, **Add New → Project**, import the same repo.
-2. Set **Root Directory** to `sophia_mobile_web` (Vercel auto-detects Vite;
-   `vercel.json` inside that folder handles the rest).
-3. Add an environment variable: `VITE_API_URL` = your Railway URL from above.
-4. Deploy. Note the URL Vercel gives you, e.g. `https://sophia.vercel.app`.
+**Blueprint deploy**
+1. Push this repo to GitHub (`main`).
+2. On [render.com](https://render.com) → **New → Blueprint**, pick
+   `cyber-urbanrebel/sophia2`.
+3. Render reads `render.yaml` and creates the database + both services.
+4. Fill the prompted env vars (leave AI keys blank if you are not using them).
+   For Firebase on the web app, paste the same `VITE_FIREBASE_*` values you use locally.
+5. After the first deploy, copy the **sophia-web** URL (e.g.
+   `https://sophia-web.onrender.com`) and set `WEB_ORIGIN` on **sophia-api**
+   to that URL (no trailing slash). CORS also allows `*.onrender.com`.
+6. Open the **sophia-web** URL. Free web services spin down after idle time;
+   the first request after that can take ~30–60 seconds.
 
-**Connect them**
-Back in Railway → your service → Variables, set `WEB_ORIGIN` to your Vercel
-URL (exact, no trailing slash) so the backend's CORS allows the frontend to
-call it. Railway redeploys automatically when you save a variable.
+**Manual deploy** (if you skip Blueprint)
+- Web service: root `backend`, build `pip install -r requirements.txt`,
+  start `uvicorn app.main:app --host 0.0.0.0 --port $PORT`, health `/api/health`.
+  Attach Postgres and set `DATABASE_URL` from Render.
+- Static site: root `sophia_mobile_web`, build `npm install && npm run build`,
+  publish `dist`. Set `VITE_API_URL` to the API’s public URL (with `https://`).
+  SPA rewrite: `/*` → `/index.html`.
 
-Visit your Vercel URL — that's Sophia, live.
-
-**Cost note**: Railway's free trial is credit-based, not unlimited — check
-current pricing on their site before relying on it long-term; a hobby plan
-is a few dollars/month once the trial credit runs out. If you'd rather avoid
-that entirely, say so and I'll switch the backend config to a platform with
-an uncapped free tier instead (e.g. Google Cloud Run, though it needs a
-Google Cloud account and doesn't do persistent local disk either, so the
-database would need to move to a managed Postgres either way).
+Do not use SQLite as the only production store on Render — the disk is
+ephemeral unless you add a paid disk. Use the Postgres `DATABASE_URL`.
 
 ## Known Gaps (Not Built In This Pass)
 
-- Payments (M-Pesa), production deployment/hosting, native mobile app
-  packaging, and full Admin/Community backend wiring were already
-  mock/placeholder before this pass and remain a follow-up.
+- Payments (M-Pesa), native mobile app packaging, and full Admin/Community
+  backend wiring were already mock/placeholder before this pass and remain a
+  follow-up.
 - Conversation history for the coach is in-process memory — fine for local
   single-server use, move to the database before scaling horizontally.

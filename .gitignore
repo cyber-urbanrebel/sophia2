@@ -1,1 +1,5 @@
 node_modules
+.hf-check/
+.hf-check-final/
+.hf-auth-check/
+*.static.hf.space

@@ -17,9 +17,14 @@ app = FastAPI(title="Sophia API", version="3.0.0")
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
+_cors_origins = [origin.strip() for origin in settings.web_origin.split(",") if origin.strip()]
+if "http://localhost:5173" not in _cors_origins:
+    _cors_origins.append("http://localhost:5173")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[settings.web_origin],
+    allow_origins=_cors_origins,
+    allow_origin_regex=r"https://.*\.onrender\.com",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -47,7 +52,7 @@ app.include_router(insights.router)
 def root():
     return {
         "service": "Sophia API",
-        "message": "This is the backend — the app itself is at http://localhost:5173",
+        "message": "Sophia API. The web app is the Render static site (sophia-web).",
         "docs": "/docs",
         "health": "/api/health",
     }
