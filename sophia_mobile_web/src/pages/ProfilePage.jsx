@@ -1,12 +1,14 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../store/slices/authSlice.js';
+import { useNavigate } from 'react-router-dom';
+import { signOutUser } from '../services/session.js';
 import { toggleAutoSave, toggleDarkMode, toggleNotifications } from '../store/slices/settingsSlice.js';
 import exportService from '../services/export.js';
 import styles from '../styles/Profile.module.css';
 
 export default function ProfilePage() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
   const { darkMode, notifications, autoSave } = useSelector((state) => state.settings);
 
@@ -40,7 +42,7 @@ export default function ProfilePage() {
   };
 
   const handleLogout = () => {
-    dispatch(logout());
+    void signOutUser(dispatch, navigate);
   };
 
   const handleExportWeekly = () => {

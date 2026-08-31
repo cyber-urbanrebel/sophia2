@@ -189,7 +189,9 @@ async function firebaseLoginWithGoogle() {
 }
 
 async function firebaseLogout() {
-  ensureFirebaseEnabled();
+  if (!auth) {
+    return { message: 'Logged out' };
+  }
   await signOut(auth);
   return { message: 'Logged out' };
 }

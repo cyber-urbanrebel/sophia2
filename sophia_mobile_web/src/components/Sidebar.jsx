@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { signOutUser } from '../services/session.js';
 import { ChartBarIcon, SettingsGearIcon, BrainIcon, BodyFitIcon, LightningIcon, TrendUpIcon, MoonIcon, TargetIcon, MeditationIcon, FlameIcon } from './SophiaIcons.jsx';
 
 const PRIMARY = [
@@ -101,7 +102,7 @@ const styles = {
     borderRadius: 30,
     boxShadow: '0 18px 40px rgba(26,16,51,0.28), 0 4px 12px rgba(0,0,0,0.1)',
     backdropFilter: 'blur(24px)',
-    display: 'flex', flexDirection: 'column', zIndex: 100,
+    display: 'flex', flexDirection: 'column', zIndex: 1200,
     fontFamily: "var(--font-plain)",
     color: '#000',
     overflowY: 'auto',
@@ -234,8 +235,7 @@ export default function Sidebar({ activeTab, setActiveTab, sidebarOpen = true, s
   useEffect(() => { if (isMobile) setMobileOpen(false); }, [location.pathname, isMobile]);
 
   const handleSignOut = () => {
-    dispatch(logout());
-    navigate('/auth', { replace: true });
+    void signOutUser(dispatch, navigate);
   };
 
   const sidebarStyle = {
@@ -252,7 +252,7 @@ export default function Sidebar({ activeTab, setActiveTab, sidebarOpen = true, s
       boxShadow: mobileOpen ? '18px 0 44px rgba(0,0,0,0.44)' : 'none',
       top: 10,
       left: 10,
-      bottom: 10,
+      bottom: 72,
     } : {}),
   };
 
@@ -478,6 +478,7 @@ export default function Sidebar({ activeTab, setActiveTab, sidebarOpen = true, s
           </div>
         )}
       <button
+        type="button"
         style={signOutStyle}
         aria-label="Sign out"
         title={isDesktopCollapsed ? 'Sign Out' : undefined}

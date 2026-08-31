@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../store/slices/authSlice.js';
+import { useNavigate } from 'react-router-dom';
+import { signOutUser } from '../services/session.js';
 import AvatarUpload from './AvatarUpload.jsx';
 import {
   FlameIcon,
@@ -21,6 +22,7 @@ const glass = {
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const authUser = useSelector((state) => state.auth.user);
   const [profile, setProfile] = useState(() => {
     const saved = localStorage.getItem('sophia_user_profile');
@@ -68,11 +70,11 @@ const ProfilePage = () => {
   }, [formData]);
 
   const handleLogout = useCallback(() => {
-    dispatch(logout());
-  }, [dispatch]);
+    void signOutUser(dispatch, navigate);
+  }, [dispatch, navigate]);
 
   return (
-    <div style={{ padding: '0', color: '#000', background: 'transparent', paddingBottom: '40px' }}>
+    <div style={{ padding: '0', color: '#000', background: 'transparent', paddingBottom: '96px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
         <h1 style={{ fontSize: '28px', margin: '0', color: '#000' }}>You</h1>
         <button
@@ -263,6 +265,7 @@ const ProfilePage = () => {
             <h3 style={{ marginTop: '0', marginBottom: '12px', color: '#000' }}>Sign out</h3>
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
               <button
+                type="button"
                 onClick={handleLogout}
                 style={{
                   background: 'var(--color-primary)',

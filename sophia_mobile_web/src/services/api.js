@@ -214,8 +214,12 @@ class API {
   }
 
   async logout() {
-    await requireFirebase();
-    await firebaseLogout();
+    try {
+      await requireFirebase();
+      await firebaseLogout();
+    } catch {
+      // Still clear the local session if Firebase is already signed out or offline.
+    }
     this.setToken(null);
     return { message: 'Logged out' };
   }

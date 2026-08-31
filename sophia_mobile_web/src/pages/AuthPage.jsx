@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { loginSuccess, logout } from '../store/slices/authSlice.js';
-import { resetOnboarding } from '../store/slices/onboardingSlice.js';
+import { loginSuccess } from '../store/slices/authSlice.js';
 import api from '../services/api.js';
 import styles from '../styles/Auth.module.css';
 
@@ -20,11 +19,6 @@ export default function AuthPage() {
   const [submitting, setSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [isOffline, setIsOffline] = useState(typeof navigator !== 'undefined' ? !navigator.onLine : false);
-
-  useEffect(() => {
-    dispatch(logout());
-    dispatch(resetOnboarding());
-  }, [dispatch]);
 
   useEffect(() => {
     const goOnline = () => setIsOffline(false);

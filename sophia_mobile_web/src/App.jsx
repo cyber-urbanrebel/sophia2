@@ -23,8 +23,6 @@ import SophiaFooter from './components/SophiaFooter.jsx';
 import HudBar from './components/HudBar.jsx';
 import { initSophiaAnimations } from './sophia-animations.js';
 import { completeOnboarding as completeOnboardingSlice } from './store/slices/onboardingSlice.js';
-import { logout } from './store/slices/authSlice.js';
-import { resetOnboarding } from './store/slices/onboardingSlice.js';
 import styles from './styles/App.module.css';
 
 const VoiceAssistant = lazy(() => import('./components/VoiceAssistant.jsx'));

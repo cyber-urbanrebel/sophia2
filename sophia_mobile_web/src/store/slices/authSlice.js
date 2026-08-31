@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const AUTH_TOKEN_KEY = 'sophia-auth-token';
 const USER_PROFILE_KEY = 'sophia-user-profile';
-const ONBOARDING_KEY = 'sophia-onboarding-complete';
 
 function loadPersistedAuthState() {
   try {
@@ -50,7 +49,6 @@ const authSlice = createSlice({
       state.token = null;
       state.error = null;
       localStorage.removeItem(AUTH_TOKEN_KEY);
-      localStorage.removeItem(ONBOARDING_KEY);
       localStorage.removeItem(USER_PROFILE_KEY);
     },
     clearError(state) {

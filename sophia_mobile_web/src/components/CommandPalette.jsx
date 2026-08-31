@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import ReactDOM from 'react-dom';
+import { signOutUser } from '../services/session.js';
 
 const ROUTES = [
   { id: 'path', label: 'Path', path: '/path', icon: '◎', keywords: 'home overview path' },
@@ -39,6 +41,7 @@ export default function CommandPalette() {
   const inputRef = useRef(null);
   const listRef = useRef(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // Open/close with Ctrl+K
   useEffect(() => {
@@ -91,9 +94,9 @@ export default function CommandPalette() {
       // Dispatch theme toggle if available (placeholder)
       document.body.classList.toggle('light-mode');
     } else if (item.action === 'sign-out') {
-      navigate('/auth');
+      void signOutUser(dispatch, navigate);
     }
-  }, [navigate]);
+  }, [dispatch, navigate]);
 
   const handleKeyDown = useCallback((e) => {
     if (e.key === 'ArrowDown') {
