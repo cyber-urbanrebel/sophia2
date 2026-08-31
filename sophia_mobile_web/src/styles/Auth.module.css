@@ -467,16 +467,55 @@
   white-space: nowrap;
 }
 
-.githubNote {
-  margin: 18px 0 0;
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0 14px;
+  color: #444444;
   font-size: 12px;
-  color: #222222;
-  font-family: var(--font-plain);
-  letter-spacing: 0;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
-.githubNote a {
-  color: #1E7268;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.googleButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  background: #ffffff;
+  color: #1f1f1f;
+  font-family: var(--font-plain);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.googleButton:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.googleButton:not(:disabled):hover {
+  border-color: rgba(0, 0, 0, 0.28);
+  background: #f7f7f7;
+}
+
+.googleIcon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
 }

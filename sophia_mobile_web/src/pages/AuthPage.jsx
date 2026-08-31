@@ -87,6 +87,50 @@ export default function AuthPage() {
     return { score, ...levels[score] };
   }
 
+  function formatAuthError(err) {
+    const raw = String(err?.code || err?.message || 'Authentication failed.');
+    const code = String(err?.code || '');
+    if (code === 'auth/popup-closed-by-user' || code === 'auth/cancelled-popup-request' || /popup-closed-by-user/i.test(raw)) {
+      return 'Google sign-in was cancelled.';
+    }
+    if (code === 'auth/popup-blocked' || /popup-blocked/i.test(raw)) {
+      return 'The Google window was blocked. Allow popups for this site and try again.';
+    }
+    if (code === 'auth/unauthorized-domain' || /unauthorized-domain/i.test(raw)) {
+      return 'This site is not yet allowed in Firebase. Add sophia-api-s7t4.onrender.com under Authentication → Settings → Authorized domains.';
+    }
+    if (code === 'auth/operation-not-allowed' || /operation-not-allowed/i.test(raw)) {
+      return 'Google sign-in is not enabled yet. Turn on Google in Firebase Authentication → Sign-in method.';
+    }
+    if (/failed to fetch|network|load failed/i.test(raw)) {
+      return 'We could not reach the server. Try again in a moment — your space is still here.';
+    }
+    return raw.replace(/^Firebase:\s*/i, '').replace(/auth\//, '').replaceAll('-', ' ');
+  }
+
+  async function enterSession(result, fallbackEmail = '') {
+    const token = result.token;
+    const rawUser = result.user || {};
+    const user = {
+      id: rawUser.id || rawUser.uid || null,
+      email: rawUser.email || fallbackEmail,
+      name: rawUser.name || rawUser.fullName || rawUser.full_name || (rawUser.email || fallbackEmail || '').split('@')[0] || 'Sophia User',
+      fullName: rawUser.fullName || rawUser.full_name || rawUser.name || '',
+      firstName: rawUser.firstName || '',
+      lastName: rawUser.lastName || '',
+      role: rawUser.role || 'user',
+      level: rawUser.level || 1,
+      experience: rawUser.experience || 0,
+      avatar: rawUser.avatar || null,
+    };
+    api.setToken(token);
+    localStorage.setItem('sophia-auth-token', token);
+    localStorage.setItem('sophia-user-profile', JSON.stringify(user));
+    dispatch(loginSuccess({ user, token }));
+    const alreadyOnboarded = localStorage.getItem('sophia-onboarding-complete') === 'true';
+    navigate(alreadyOnboarded ? '/dashboard' : '/onboarding', { replace: true });
+  }
+
   async function handleSubmit(e) {
     e?.preventDefault();
     setError('');
@@ -112,34 +156,23 @@ export default function AuthPage() {
       } else {
         result = await api.login(email, password);
       }
-      const token = result.token;
-      const rawUser = result.user || {};
-      const user = {
-        id: rawUser.id || rawUser.uid || null,
-        email: rawUser.email || email,
-        name: rawUser.name || rawUser.fullName || rawUser.full_name || email.split('@')[0],
-        fullName: rawUser.fullName || rawUser.full_name || rawUser.name || '',
-        firstName: rawUser.firstName || '',
-        lastName: rawUser.lastName || '',
-        role: rawUser.role || 'user',
-        level: rawUser.level || 1,
-        experience: rawUser.experience || 0,
-        avatar: rawUser.avatar || null,
-      };
-      api.setToken(token);
-      localStorage.setItem('sophia-auth-token', token);
-      localStorage.setItem('sophia-user-profile', JSON.stringify(user));
-      dispatch(loginSuccess({ user, token }));
-
-      const alreadyOnboarded = localStorage.getItem('sophia-onboarding-complete') === 'true';
-      navigate(alreadyOnboarded ? '/dashboard' : '/onboarding', { replace: true });
+      await enterSession(result, email);
     } catch (err) {
-      const message = String(err?.message || 'Authentication failed. Check your credentials.');
-      if (/failed to fetch|network|load failed/i.test(message)) {
-        setError('We could not reach the server. Try again in a moment — your space is still here.');
-      } else {
-        setError(message);
-      }
+      setError(formatAuthError(err));
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  async function handleGoogleSignIn() {
+    setError('');
+    setResetMessage('');
+    setSubmitting(true);
+    try {
+      const result = await api.loginWithGoogle();
+      await enterSession(result);
+    } catch (err) {
+      setError(formatAuthError(err));
     } finally {
       setSubmitting(false);
     }
@@ -240,6 +273,18 @@ export default function AuthPage() {
           </button>
         </form>
 
+        <div className={styles.divider}><span>or</span></div>
+
+        <button type="button" className={styles.googleButton} onClick={handleGoogleSignIn} disabled={submitting}>
+          <svg className={styles.googleIcon} viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="#4285F4" d="M23.49 12.27c0-.82-.07-1.64-.23-2.43H12v4.6h6.46a5.52 5.52 0 0 1-2.4 3.62v3h3.88c2.27-2.09 3.55-5.17 3.55-8.79z" />
+            <path fill="#34A853" d="M12 24c3.24 0 5.96-1.07 7.95-2.94l-3.88-3c-1.08.72-2.47 1.14-4.07 1.14-3.13 0-5.78-2.11-6.73-4.96H1.26v3.09A12 12 0 0 0 12 24z" />
+            <path fill="#FBBC05" d="M5.27 14.24A7.2 7.2 0 0 1 4.89 12c0-.78.14-1.53.38-2.24V6.67H1.26A12 12 0 0 0 0 12c0 1.94.46 3.77 1.26 5.33l4.01-3.09z" />
+            <path fill="#EA4335" d="M12 4.75c1.76 0 3.34.6 4.58 1.78l3.44-3.44C17.95 1.14 15.24 0 12 0 7.31 0 3.26 2.69 1.26 6.67l4.01 3.09C6.22 6.86 8.87 4.75 12 4.75z" />
+          </svg>
+          Continue with Google
+        </button>
+
         <div className={styles.footer}>
           <button
             type="button"
@@ -254,11 +299,6 @@ export default function AuthPage() {
           </button>
         </div>
         {resetMessage && <div className={styles.success}>{resetMessage}</div>}
-        <p className={styles.githubNote}>
-          Source lives on{' '}
-          <a href="https://github.com/cyber-urbanrebel/sophia2" target="_blank" rel="noreferrer">GitHub</a>
-          — not a demo replica.
-        </p>
       </div>
     </div>
   );

@@ -1,8 +1,10 @@
 import { initializeApp, getApps } from 'firebase/app';
 import {
   getAuth,
+  GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
   sendPasswordResetEmail,
 } from 'firebase/auth';
@@ -96,6 +98,50 @@ async function firebaseLogin(email, password) {
 
   return {
     user: { uid: user.uid, email: user.email },
+    token: await user.getIdToken(),
+  };
+}
+
+function profileFromFirebaseUser(user) {
+  const displayName = String(user.displayName || '').trim();
+  const parts = displayName.split(/\s+/).filter(Boolean);
+  return {
+    uid: user.uid,
+    id: user.uid,
+    email: user.email,
+    name: displayName || (user.email ? user.email.split('@')[0] : 'Sophia User'),
+    fullName: displayName,
+    firstName: parts[0] || '',
+    lastName: parts.slice(1).join(' '),
+    avatar: user.photoURL || null,
+  };
+}
+
+async function firebaseLoginWithGoogle() {
+  ensureFirebaseEnabled();
+  const provider = new GoogleAuthProvider();
+  provider.setCustomParameters({ prompt: 'select_account' });
+  const result = await signInWithPopup(auth, provider);
+  const user = result.user;
+  const profile = profileFromFirebaseUser(user);
+
+  void setDoc(
+    doc(db, 'users', user.uid),
+    {
+      email: profile.email,
+      firstName: profile.firstName,
+      lastName: profile.lastName,
+      avatar: profile.avatar,
+      provider: 'google',
+      updatedAt: serverTimestamp(),
+    },
+    { merge: true },
+  ).catch((error) => {
+    console.warn('Firebase profile sync failed after Google sign-in:', error);
+  });
+
+  return {
+    user: profile,
     token: await user.getIdToken(),
   };
 }
@@ -212,6 +258,7 @@ export {
   getUserUid,
   firebaseRegister,
   firebaseLogin,
+  firebaseLoginWithGoogle,
   firebaseLogout,
   firebaseForgotPassword,
   firebaseGetProfile,

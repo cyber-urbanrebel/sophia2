@@ -7,6 +7,7 @@ import {
   useFirebase,
   firebaseRegister,
   firebaseLogin,
+  firebaseLoginWithGoogle,
   firebaseLogout,
   firebaseForgotPassword,
   firebaseGetProfile,
@@ -205,6 +206,15 @@ class API {
       this.setToken(fallback.token);
       return fallback;
     }
+  }
+
+  async loginWithGoogle() {
+    if (!useFirebase) {
+      throw new Error('Google sign-in is not available. Firebase is not configured for this build.');
+    }
+    const result = this.normalizeAuthResponse(await firebaseLoginWithGoogle());
+    this.setToken(result.token);
+    return result;
   }
 
   async login(email, password) {
