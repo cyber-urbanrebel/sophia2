@@ -61,8 +61,7 @@ export default function AuthPage() {
       await api.forgotPassword(normalizedEmail);
       setResetMessage('Password reset email sent. Check your inbox.');
     } catch (err) {
-      const message = String(err?.message || 'Unable to send the reset email.');
-      setError(message.replace('auth/', '').replaceAll('-', ' '));
+      setError(formatAuthError(err));
     } finally {
       setSubmitting(false);
     }
@@ -103,8 +102,12 @@ export default function AuthPage() {
       return 'Google sign-in is not enabled yet. Turn on Google in Firebase Authentication → Sign-in method.';
     }
     if (/HTTP 401|invalid_credentials|invalid credentials/i.test(raw)) {
-      return 'Email or password did not match a Firebase account. Use Create Account, or Continue with Google.';
+      return 'Email or password did not match. Create an account, or continue with Google.';
     }
+    if (/HTTP 405|method not allowed/i.test(raw)) {
+      return 'Password reset is being sent through Firebase. Enter your email and try again in a moment.';
+    }
+    if (/failed to fetch|network|load failed/i.test(raw)) {
       return 'We could not reach the server. Try again in a moment — your space is still here.';
     }
     return raw.replace(/^Firebase:\s*/i, '').replace(/auth\//, '').replaceAll('-', ' ');

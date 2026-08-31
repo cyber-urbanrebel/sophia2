@@ -20,7 +20,7 @@ import {
   deleteDoc,
   serverTimestamp,
 } from 'firebase/firestore';
-import { FIREBASE_PUBLIC_CONFIG, FIRESTORE_DATABASE_ID } from '../config/firebasePublic.js';
+import { FIREBASE_PUBLIC_CONFIG } from '../config/firebasePublic.js';
 
 function pickConfig(source = {}) {
   return {
@@ -81,11 +81,7 @@ async function bootFirebase() {
     try {
       app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
       auth = getAuth(app);
-      try {
-        db = getFirestore(app, FIRESTORE_DATABASE_ID);
-      } catch {
-        db = getFirestore(app);
-      }
+      db = getFirestore(app);
       useFirebase = true;
       return true;
     } catch (error) {

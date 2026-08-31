@@ -6,4 +6,7 @@ export const FIREBASE_PUBLIC_CONFIG = {
   projectId: 'sophia-c1776',
   storageBucket: 'sophia-c1776.firebasestorage.app',
   messagingSenderId: '311499029369',
+  appId: '1:311499029369:web:55c266d33c6b77a6f8cda8',
+};
+
 export const FIRESTORE_DATABASE_ID = '(default)';
