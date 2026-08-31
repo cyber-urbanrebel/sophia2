@@ -1,6 +1,11 @@
+from pathlib import Path
+import os
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
@@ -47,15 +52,8 @@ app.include_router(coach.router)
 app.include_router(voice.router)
 app.include_router(insights.router)
 
-
-@app.get("/")
-def root():
-    return {
-        "service": "Sophia API",
-        "message": "Sophia API. The web app is the Render static site (sophia-web).",
-        "docs": "/docs",
-        "health": "/api/health",
-    }
+STATIC_DIR = Path(os.getenv("STATIC_DIR", "/app/static"))
+_API_ONLY_PREFIXES = ("api/", "docs", "redoc", "openapi.json")
 
 
 @app.get("/api/health")
@@ -65,3 +63,43 @@ def health(request: Request):
         "coach": "claude" if HAS_ANTHROPIC else "templated",
         "voice_pipeline": "elevenlabs+whisper" if HAS_VOICE_PIPELINE else "browser (Web Speech API)",
     }
+
+
+def _spa_index():
+    return STATIC_DIR / "index.html"
+
+
+@app.get("/")
+def root():
+    index = _spa_index()
+    if index.is_file():
+        return FileResponse(index)
+    return JSONResponse({
+        "service": "Sophia API",
+        "message": "Web UI is not bundled in this image. Rebuild from the repo-root Dockerfile.",
+        "docs": "/docs",
+        "health": "/api/health",
+    })
+
+
+if STATIC_DIR.is_dir():
+    for folder in ("assets", "fonts"):
+        folder_path = STATIC_DIR / folder
+        if folder_path.is_dir():
+            app.mount(f"/{folder}", StaticFiles(directory=str(folder_path)), name=folder)
+
+    @app.get("/{full_path:path}")
+    def spa(full_path: str):
+        if full_path.startswith(_API_ONLY_PREFIXES):
+            return JSONResponse({"detail": "Not Found"}, status_code=404)
+        candidate = (STATIC_DIR / full_path).resolve()
+        try:
+            candidate.relative_to(STATIC_DIR.resolve())
+        except ValueError:
+            return FileResponse(_spa_index())
+        if candidate.is_file():
+            return FileResponse(candidate)
+        index = _spa_index()
+        if index.is_file():
+            return FileResponse(index)
+        return JSONResponse({"detail": "Not Found"}, status_code=404)

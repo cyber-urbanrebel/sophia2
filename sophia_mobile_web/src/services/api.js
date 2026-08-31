@@ -22,7 +22,8 @@ import {
   firebaseGetStudyStats,
 } from './firebase.js';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+const API_URL = import.meta.env.VITE_API_URL
+  || (import.meta.env.DEV ? 'http://localhost:3001' : '');
 const STATE_STORAGE_KEYS = ['sophia_dev_state_v1', 'sophia_state'];
 const AUTH_TOKEN_KEY = 'sophia-auth-token';
 const LOCAL_ACCOUNTS_KEY = 'sophia-local-accounts';
